@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { Fraunces, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import {
+  ThemeProvider,
+  themeInitScript,
+} from "@/components/theme/ThemeProvider";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -34,9 +38,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      data-theme="dark"
+      suppressHydrationWarning
       className={`${fraunces.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable} h-full`}
     >
-      <body className="min-h-full bg-ink text-paper antialiased">{children}</body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="min-h-full bg-ink text-paper antialiased">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

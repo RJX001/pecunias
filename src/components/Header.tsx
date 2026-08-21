@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useState } from "react";
 import Link from "next/link";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 const NAV_LINKS = [
   { href: "#services", label: "Services" },
@@ -76,12 +77,15 @@ export function Header() {
               </li>
             ))}
           </ul>
-          <a
-            href="#contact"
-            className="btn btn-solid inline-grid place-items-center rounded-[2px] bg-brass px-4 py-[0.55rem] font-sans text-[12px] font-medium tracking-[0.08em] text-ink no-underline transition-colors hover:bg-brass-dim"
-          >
-            Request a Quote
-          </a>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <a
+              href="#contact"
+              className="btn btn-solid inline-grid place-items-center rounded-[2px] bg-brass px-4 py-[0.55rem] font-sans text-[12px] font-medium tracking-[0.08em] text-dark-text no-underline transition-colors hover:bg-brass-dim"
+            >
+              Request a Quote
+            </a>
+          </div>
         </nav>
 
         <button
@@ -136,13 +140,16 @@ export function Header() {
               </li>
             ))}
           </ul>
-          <a
-            href="#contact"
-            className="btn btn-solid mt-5 mb-6 inline-grid place-items-center rounded-[2px] bg-brass px-4 py-3 font-sans text-[12px] font-medium tracking-[0.08em] text-ink no-underline hover:bg-brass-dim"
-            onClick={closeMenu}
-          >
-            Request a Quote
-          </a>
+          <div className="mt-5 mb-6 flex flex-wrap items-center gap-3">
+            <ThemeToggle />
+            <a
+              href="#contact"
+              className="btn btn-solid inline-grid place-items-center rounded-[2px] bg-brass px-4 py-3 font-sans text-[12px] font-medium tracking-[0.08em] text-dark-text no-underline hover:bg-brass-dim"
+              onClick={closeMenu}
+            >
+              Request a Quote
+            </a>
+          </div>
         </div>
       </nav>
     </header>

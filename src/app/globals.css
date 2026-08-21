@@ -1,17 +1,34 @@
 @import "tailwindcss";
 
-:root {
-  --ink: #12181A;
-  --ink-2: #181f22;
-  --paper: #F6F0E4;
+/* Shared + dark (default) */
+:root,
+[data-theme="dark"] {
   --brass: #A9812E;
   --brass-dim: #7d611f;
   --ledger: #33473B;
   --ledger-light: #4c6858;
   --wine: #6B2E3A;
+  --dark-text: #12181A;
+
+  --ink: #12181A;
+  --ink-2: #181f22;
+  --paper: #F6F0E4;
   --stone: #9A9184;
   --line: rgba(246, 240, 228, 0.14);
   --line-strong: rgba(246, 240, 228, 0.28);
+  --header-bg: rgba(18, 24, 26, 0.92);
+  --recessed-bg: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] {
+  --ink: #F6F0E4;
+  --ink-2: #ECE2CC;
+  --paper: #181410;
+  --stone: #6E6558;
+  --line: rgba(24, 20, 16, 0.12);
+  --line-strong: rgba(24, 20, 16, 0.24);
+  --header-bg: rgba(246, 240, 228, 0.92);
+  --recessed-bg: rgba(24, 20, 16, 0.045);
 }
 
 @theme inline {
@@ -26,6 +43,9 @@
   --color-stone: var(--stone);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
+  --color-dark-text: var(--dark-text);
+  --color-header-bg: var(--header-bg);
+  --color-recessed-bg: var(--recessed-bg);
 
   --font-display: var(--font-fraunces);
   --font-sans: var(--font-ibm-plex-sans);
@@ -37,6 +57,14 @@ html {
   scroll-padding-top: 72px;
   color-scheme: dark;
   background: var(--ink);
+  transition:
+    background-color 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
 }
 
 body {
@@ -45,6 +73,10 @@ body {
   font-family: var(--font-sans), "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.6;
+  transition:
+    background-color 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease;
 }
 
 h1,
@@ -62,7 +94,7 @@ h6 {
 
 ::selection {
   background: var(--brass);
-  color: var(--ink);
+  color: var(--dark-text);
 }
 
 /* —— Layout —— */
@@ -132,14 +164,14 @@ main > section:first-child {
 
 .btn-solid {
   background: var(--brass);
-  color: var(--ink);
+  color: var(--dark-text);
   border-color: var(--brass);
 }
 
 .btn-solid:hover {
   background: var(--brass-dim);
   border-color: var(--brass-dim);
-  color: var(--ink);
+  color: var(--dark-text);
 }
 
 .btn-outline {
@@ -243,7 +275,7 @@ main > section:first-child {
 
 .ps-header {
   border-bottom-color: var(--line);
-  background-color: color-mix(in srgb, var(--ink) 94%, transparent);
+  background-color: var(--header-bg);
 }
 
 .ps-header-bar {
