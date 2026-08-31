@@ -26,7 +26,7 @@ export function Hero() {
               <a href="#contact" className="btn btn-solid">
                 Request a Quote
               </a>
-              <a href="#services" className="btn btn-outline">
+              <a href="/services" className="btn btn-outline">
                 View Services
               </a>
             </div>

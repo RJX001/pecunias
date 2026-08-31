@@ -5,9 +5,9 @@ import Link from "next/link";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 const NAV_LINKS = [
-  { href: "#services", label: "Services" },
-  { href: "#work", label: "Work" },
-  { href: "#about", label: "About" },
+  { href: "/services", label: "Services" },
+  { href: "/#work", label: "Work" },
+  { href: "/#about", label: "About" },
 ] as const;
 
 export function Header() {
@@ -68,19 +68,19 @@ export function Header() {
           <ul className="ps-header-links m-0 grid list-none p-0 font-sans">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
-                <a
+                <Link
                   href={link.href}
                   className="inline-grid h-full place-items-center px-5 text-[12px] tracking-[0.12em] text-stone no-underline transition-colors hover:text-paper"
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
           <div className="flex items-center gap-3">
             <ThemeToggle />
             <a
-              href="#contact"
+              href="/#contact"
               className="btn btn-solid inline-grid place-items-center rounded-[2px] px-4 py-[0.55rem] font-sans text-[12px] font-medium tracking-[0.08em] no-underline"
             >
               Request a Quote
@@ -130,20 +130,20 @@ export function Header() {
                 key={link.href}
                 className="border-b border-line"
               >
-                <a
+                <Link
                   href={link.href}
                   className="grid py-4 font-sans text-[14px] tracking-[0.14em] text-paper no-underline"
                   onClick={closeMenu}
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
           <div className="mt-5 mb-6 flex flex-wrap items-center gap-3">
             <ThemeToggle />
             <a
-              href="#contact"
+              href="/#contact"
               className="btn btn-solid inline-grid place-items-center rounded-[2px] px-4 py-3 font-sans text-[12px] font-medium tracking-[0.08em] no-underline"
               onClick={closeMenu}
             >

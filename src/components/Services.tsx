@@ -24,7 +24,7 @@ export function Services() {
   }
 
   return (
-    <section id="services" className="section">
+    <section className="section">
       <div className="wrap">
         <p className="eyebrow font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-brass">
           Statement of Services
