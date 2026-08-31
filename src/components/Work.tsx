@@ -1,55 +1,46 @@
+import { clientsOnTheBooks } from "@/data/clients";
 import { caseStudies } from "@/data/work";
+import { WorkCarousel } from "@/components/WorkCarousel";
 
 export function Work() {
-  const hasPlaceholders = caseStudies.some((study) => study.isPlaceholder);
-
   return (
     <section id="work" className="section border-t border-line py-[64px] lg:py-[100px]">
       <div className="wrap mx-auto max-w-[1180px] px-8">
         <p className="eyebrow mb-4 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-brass">
-          Statement Highlights
+          Our Work
         </p>
-        <h2 className="font-display mb-10 max-w-[18ch] text-[clamp(2rem,4vw,3.25rem)] font-light leading-[1.15] tracking-tight text-paper lg:mb-14">
-          Recent account performance.
+        <h2 className="font-display mb-5 max-w-[22ch] text-[clamp(2rem,4vw,3.25rem)] font-light leading-[1.15] tracking-tight text-paper">
+          Trusted by teams who needed a system, not more noise.
         </h2>
+        <p className="mb-10 max-w-[42rem] font-sans text-[0.95rem] leading-relaxed text-stone md:mb-12 md:text-base">
+          A running account of who we work with, and what we&apos;ve built for
+          them.
+        </p>
 
-        <div className="grid grid-cols-1 gap-px border border-line bg-line lg:grid-cols-3">
-          {caseStudies.map((study) => (
-            <article
-              key={study.name}
-              className="ledger-card relative grid grid-rows-[auto_auto_1fr_auto] gap-6 bg-ink-2 p-7 lg:p-8"
-            >
-              <header className="flex items-start justify-between gap-4">
-                <span className="font-mono text-[11px] font-medium tracking-[0.16em] text-brass">
-                  {study.tags}
-                </span>
-                {study.isPlaceholder ? (
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-stone">
-                    Illustrative
-                  </span>
-                ) : null}
-              </header>
-
-              <p className="font-display text-[clamp(2.75rem,5vw,3.75rem)] font-light leading-none tracking-tight text-paper">
-                {study.stat}
-              </p>
-
-              <h3 className="font-display text-xl font-normal tracking-tight text-paper">
-                {study.name}
-              </h3>
-
-              <p className="font-sans text-[15px] leading-relaxed text-stone">
-                {study.description}
-              </p>
-            </article>
-          ))}
+        <div className="mb-10 border border-line px-5 py-5 lg:mb-12 lg:px-8 lg:py-6">
+          <p className="mb-4 font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-stone">
+            Clients on the books
+          </p>
+          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5 lg:gap-4">
+            {clientsOnTheBooks.map((client) => (
+              <li
+                key={client.name}
+                className="flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-stone"
+              >
+                <span
+                  aria-hidden="true"
+                  className="size-1 shrink-0 rounded-full bg-stone"
+                />
+                <span>{client.name}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        {hasPlaceholders ? (
-          <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-stone">
-            Illustrative figures
-          </p>
-        ) : null}
+        <p className="mb-4 font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-stone">
+          Selected Case Studies
+        </p>
+        <WorkCarousel studies={caseStudies} />
       </div>
     </section>
   );

@@ -5,6 +5,8 @@ export type CaseStudy = {
   description: string;
   /** Mock figures — replace with real client results before launch. */
   isPlaceholder: boolean;
+  /** When true, this study is eligible for the hero Results carousel. */
+  featured?: boolean;
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -15,6 +17,7 @@ export const caseStudies: CaseStudy[] = [
     description:
       "Organic traffic growth in 6 months following an e-commerce rebuild and SEO retainer.",
     isPlaceholder: true,
+    featured: true,
   },
   {
     tags: "MS",
@@ -23,6 +26,7 @@ export const caseStudies: CaseStudy[] = [
     description:
       "Marketplace revenue increase after full Amazon and Etsy management handover.",
     isPlaceholder: true,
+    featured: true,
   },
   {
     tags: "AD",
@@ -31,5 +35,22 @@ export const caseStudies: CaseStudy[] = [
     description:
       "Installs in the first quarter following custom app development and launch support.",
     isPlaceholder: true,
+    featured: true,
+  },
+  {
+    tags: "DM · SEO",
+    name: "Fieldnote",
+    stat: "TBC",
+    description: "Placeholder — pending real result and copy.",
+    isPlaceholder: true,
+    featured: false,
+  },
+  {
+    tags: "CS",
+    name: "Orison",
+    stat: "TBC",
+    description: "Placeholder — pending real result and copy.",
+    isPlaceholder: true,
+    featured: false,
   },
 ];

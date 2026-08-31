@@ -33,8 +33,9 @@ function applyTheme(theme: Theme) {
 
 /**
  * Inline before `</head>` (or as first child of `<html>`) to avoid a flash of
- * the wrong theme. Layout already sets `data-theme="dark"` on `<html>` as the
- * SSR default; this script restores a persisted choice before paint.
+ * the wrong theme. Layout already sets `data-theme="light"` on `<html>` as the
+ * SSR default; this script restores a persisted choice before paint. If nothing
+ * is stored, the SSR light default is left in place — do not force dark.
  *
  * ```html
  * <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
@@ -43,7 +44,7 @@ function applyTheme(theme: Theme) {
 export const themeInitScript = `(function(){try{var t=localStorage.getItem("${STORAGE_KEY}");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();`;
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
+  const [theme, setThemeState] = useState<Theme>("light");
 
   useEffect(() => {
     try {
@@ -56,7 +57,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     } catch {
       // localStorage unavailable — keep default
     }
-    applyTheme("dark");
+    applyTheme("light");
   }, []);
 
   const setTheme = useCallback((next: Theme) => {

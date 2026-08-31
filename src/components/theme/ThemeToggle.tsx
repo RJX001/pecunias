@@ -19,7 +19,7 @@ export function ThemeToggle() {
       ) : (
         <Moon className="size-3.5 shrink-0" aria-hidden="true" strokeWidth={1.75} />
       )}
-      <span>{isDark ? "Dark" : "Light"}</span>
+      <span>{isDark ? "Light" : "Dark"}</span>
     </button>
   );
 }

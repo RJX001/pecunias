@@ -81,7 +81,7 @@ export function Header() {
             <ThemeToggle />
             <a
               href="#contact"
-              className="btn btn-solid inline-grid place-items-center rounded-[2px] bg-brass px-4 py-[0.55rem] font-sans text-[12px] font-medium tracking-[0.08em] text-dark-text no-underline transition-colors hover:bg-brass-dim"
+              className="btn btn-solid inline-grid place-items-center rounded-[2px] px-4 py-[0.55rem] font-sans text-[12px] font-medium tracking-[0.08em] no-underline"
             >
               Request a Quote
             </a>
@@ -144,7 +144,7 @@ export function Header() {
             <ThemeToggle />
             <a
               href="#contact"
-              className="btn btn-solid inline-grid place-items-center rounded-[2px] bg-brass px-4 py-3 font-sans text-[12px] font-medium tracking-[0.08em] text-dark-text no-underline hover:bg-brass-dim"
+              className="btn btn-solid inline-grid place-items-center rounded-[2px] px-4 py-3 font-sans text-[12px] font-medium tracking-[0.08em] no-underline"
               onClick={closeMenu}
             >
               Request a Quote

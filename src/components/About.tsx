@@ -17,12 +17,12 @@ export function About() {
               A studio, not a vendor.
             </h2>
             <div className="grid max-w-[54ch] gap-5 font-sans text-[17px] leading-[1.7] text-stone">
+              {/* Opening clause "PecuniaStudios was built on a simple idea:" dropped per redesign v2 mockup. */}
               <p>
-                PecuniaStudios was built on a simple idea: most businesses
-                don&apos;t need more marketing noise — they need a system. A
-                website that converts. A marketplace presence that&apos;s
-                actually managed. Creative that doesn&apos;t get made once and
-                forgotten.
+                Most businesses don&apos;t need more marketing noise — they
+                need a system that works. A website that converts. A
+                marketplace presence that&apos;s actually managed, not just
+                set up and forgotten. Creative that gets made and maintained.
               </p>
               <p>
                 We work as an extension of your team, across the full stack of
