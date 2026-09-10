@@ -4,9 +4,9 @@ import { Services } from "@/components/Services";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Services | PecuniaStudios",
+  title: "Stack | Pecunia Studios",
   description:
-    "Each engagement is scoped and quoted individually — no line item priced the same twice, because no two businesses are.",
+    "Digital, Acquisition, Automation, Commerce and Creative — one connected growth system.",
 };
 
 export default function ServicesPage() {

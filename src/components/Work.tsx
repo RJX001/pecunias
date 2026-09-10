@@ -1,46 +1,55 @@
-import { clientsOnTheBooks } from "@/data/clients";
-import { caseStudies } from "@/data/work";
-import { WorkCarousel } from "@/components/WorkCarousel";
+import { Reveal } from "./Reveal";
+import { Magnetic } from "./Magnetic";
 
 export function Work() {
   return (
-    <section id="work" className="section border-t border-line py-[64px] lg:py-[100px]">
-      <div className="wrap mx-auto max-w-[1180px] px-8">
-        <p className="eyebrow mb-4 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-brass">
-          Our Work
-        </p>
-        <h2 className="font-display mb-5 max-w-[22ch] text-[clamp(2rem,4vw,3.25rem)] font-light leading-[1.15] tracking-tight text-paper">
-          Trusted by teams who needed a system, not more noise.
-        </h2>
-        <p className="mb-10 max-w-[42rem] font-sans text-[0.95rem] leading-relaxed text-stone md:mb-12 md:text-base">
-          A running account of who we work with, and what we&apos;ve built for
-          them.
-        </p>
+    <section id="work" className="section-pad">
+      <div className="mx-auto max-w-[var(--maxw)]">
+        <Reveal>
+          <p className="kicker">Case study</p>
+          <h2 className="display max-w-[16ch] text-[clamp(34px,5vw,58px)]">
+            From [the problem] to [the outcome].
+          </h2>
+        </Reveal>
 
-        <div className="mb-10 border border-line px-5 py-5 lg:mb-12 lg:px-8 lg:py-6">
-          <p className="mb-4 font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-stone">
-            Clients on the books
-          </p>
-          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5 lg:gap-4">
-            {clientsOnTheBooks.map((client) => (
-              <li
-                key={client.name}
-                className="flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-stone"
-              >
-                <span
-                  aria-hidden="true"
-                  className="size-1 shrink-0 rounded-full bg-stone"
-                />
-                <span>{client.name}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <article className="mt-14 border border-line bg-bg-raised">
+          <div className="grid grid-cols-[1fr_auto] gap-4 border-b border-line px-6 py-4 text-[13px] text-fg-faint">
+            <p className="m-0">Template · pending live account</p>
+            <p className="m-0">Illustrative</p>
+          </div>
 
-        <p className="mb-4 font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-stone">
-          Selected Case Studies
-        </p>
-        <WorkCarousel studies={caseStudies} />
+          <div className="case-columns grid gap-px bg-line lg:grid-cols-3">
+            <div className="bg-bg-raised p-6">
+              <p className="m-0 text-[13px] font-medium text-fg-faint">Challenge</p>
+              <p className="mt-3 m-0 text-[15px] leading-relaxed text-fg-dim">
+                [the problem]
+              </p>
+            </div>
+            <div className="bg-bg-raised p-6">
+              <p className="m-0 text-[13px] font-medium text-fg-faint">
+                Intervention
+              </p>
+              <p className="mt-3 m-0 text-[15px] leading-relaxed text-fg-dim">
+                The connected system — not a one-off campaign.
+              </p>
+            </div>
+            <div className="bg-bg-raised p-6">
+              <p className="m-0 text-[13px] font-medium text-fg-faint">Outcome</p>
+              <p className="mt-3 m-0 text-[15px] leading-relaxed text-fg-dim">
+                [the outcome]
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-5">
+            <p className="m-0 text-[13px] text-fg-faint">Results row · 0 / 0 / 0</p>
+            <Magnetic>
+              <a href="#contact" className="btn btn-ghost">
+                Request a scoped proposal
+              </a>
+            </Magnetic>
+          </div>
+        </article>
       </div>
     </section>
   );

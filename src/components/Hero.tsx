@@ -1,39 +1,102 @@
-import { ResultsCarousel } from "./ResultsCarousel";
+"use client";
+
+import { useEffect, useState } from "react";
+import { Magnetic } from "./Magnetic";
+
+const NODES = [
+  "Strategy",
+  "Build",
+  "Acquire",
+  "Convert",
+  "Automate",
+  "Scale",
+] as const;
 
 export function Hero() {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setActive(NODES.length - 1);
+      return;
+    }
+    const id = window.setInterval(() => {
+      setActive((current) => (current + 1) % NODES.length);
+    }, 1400);
+    return () => window.clearInterval(id);
+  }, []);
+
   return (
-    <section className="section">
-      <div className="wrap">
-        <div className="grid grid-cols-1 items-center gap-12 min-[900px]:grid-cols-2 min-[900px]:gap-16 lg:grid-cols-[1.15fr_0.85fr]">
-          <div className="grid justify-items-start gap-6">
-            <p className="eyebrow">Digital Studio · Est. Quote-on-Request</p>
+    <section className="relative flex min-h-svh items-end overflow-hidden pb-[min(10vw,110px)]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, #242629 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+          maskImage:
+            "radial-gradient(ellipse 70% 60% at 70% 40%, black 10%, transparent 70%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 70% 60% at 70% 40%, black 10%, transparent 70%)",
+        }}
+      />
 
-            <h1 className="font-display text-balance text-[clamp(2.35rem,5.2vw,4.25rem)] font-light leading-[1.1] tracking-[-0.02em] text-paper">
-              Turn attention into{" "}
-              <em className="font-display font-normal italic text-ledger [font-synthesis:none]">
-                revenue.
-              </em>
-            </h1>
-
-            {/* Subhead has "creative that make" (mockup grammar); do not "fix" it. */}
-            <p className="max-w-[34rem] font-sans text-[1.05rem] leading-[1.7] text-stone">
-              PecuniaStudios builds the websites, runs the ads, manages the
-              marketplaces, and produces the creative that make growth actually
-              happen — under one roof, with one team who knows your business.
-            </p>
-
-            <div className="mt-1 grid grid-cols-[auto_auto] justify-start gap-3">
+      <div className="wrap relative grid w-full gap-12 pt-32">
+        <div>
+          <h1 className="display text-[clamp(38px,6.6vw,92px)] text-fg">
+            Growth is a system,
+            <br />
+            not a stack of vendors.
+          </h1>
+          <p className="support">
+            Pecunia builds the connected growth system — Digital, Acquisition,
+            Automation, Commerce, Creative — under one team that already knows
+            the business.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Magnetic>
               <a href="#contact" className="btn btn-solid">
-                Request a Quote
+                Start a project
               </a>
-              <a href="/services" className="btn btn-outline">
-                View Services
-              </a>
-            </div>
+            </Magnetic>
+            <a href="#system" className="btn btn-ghost">
+              See the system
+            </a>
           </div>
-
-          <ResultsCarousel />
         </div>
+
+        <ol className="m-0 grid list-none grid-cols-2 gap-0 border-t border-line p-0 sm:grid-cols-3 lg:grid-cols-6">
+          {NODES.map((node, index) => {
+            const done = index < active;
+            const current = index === active;
+            return (
+              <li
+                key={node}
+                className="relative border-r border-b border-line px-3 py-4 last:border-r-0 sm:[&:nth-child(3n)]:border-r-0 lg:border-b-0 lg:[&:nth-child(3n)]:border-r lg:last:border-r-0"
+              >
+                <span
+                  className="absolute top-0 left-0 h-px origin-left bg-green transition-transform duration-500"
+                  style={{
+                    transform: done || current ? "scaleX(1)" : "scaleX(0)",
+                    width: "100%",
+                  }}
+                />
+                <p
+                  className={`m-0 text-[13px] font-semibold ${
+                    current
+                      ? "text-green"
+                      : done
+                        ? "text-fg"
+                        : "text-fg-faint"
+                  }`}
+                >
+                  {node}
+                </p>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );

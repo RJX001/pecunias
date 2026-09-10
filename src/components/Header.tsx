@@ -2,154 +2,134 @@
 
 import { useEffect, useId, useState } from "react";
 import Link from "next/link";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { Magnetic } from "./Magnetic";
 
 const NAV_LINKS = [
-  { href: "/services", label: "Services" },
+  { href: "/#system", label: "System" },
+  { href: "/#stack", label: "Stack" },
   { href: "/#work", label: "Work" },
   { href: "/#about", label: "About" },
 ] as const;
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const menuId = useId();
 
   useEffect(() => {
-    if (!open) return;
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
+  useEffect(() => {
+    if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
     };
-
-    const html = document.documentElement;
-    const body = document.body;
-    const prevHtmlOverflow = html.style.overflow;
-    const prevBodyOverflow = body.style.overflow;
-
-    html.style.overflow = "hidden";
-    body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
     document.addEventListener("keydown", onKeyDown);
-
     return () => {
-      html.style.overflow = prevHtmlOverflow;
-      body.style.overflow = prevBodyOverflow;
+      document.body.style.overflow = "";
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [open]);
 
-  useEffect(() => {
-    const media = window.matchMedia("(min-width: 900px)");
-    const onChange = (event: MediaQueryListEvent) => {
-      if (event.matches) setOpen(false);
-    };
-
-    media.addEventListener("change", onChange);
-    return () => media.removeEventListener("change", onChange);
-  }, []);
-
   const closeMenu = () => setOpen(false);
 
   return (
-    <header className="ps-header sticky top-0 z-50 border-b border-line bg-ink/95 text-paper backdrop-blur-md">
-      <div className="wrap ps-header-bar">
+    <header
+      className={`fixed top-0 right-0 left-0 z-50 transition-[background-color,backdrop-filter,padding] duration-300 ${
+        scrolled || open
+          ? "bg-bg/92 py-3 backdrop-blur-md"
+          : "bg-transparent py-5"
+      }`}
+    >
+      <div className="wrap grid grid-cols-[1fr_auto] items-center gap-6 min-[960px]:grid-cols-[auto_1fr_auto]">
         <Link
           href="/"
-          className="ps-header-logo font-display text-[13px] font-medium tracking-[0.22em] text-paper uppercase no-underline"
+          className="text-[13px] font-semibold tracking-[0.14em] text-fg no-underline"
           onClick={closeMenu}
         >
           PECUNIA
-          <span className="mx-[0.55em] text-brass" aria-hidden="true">
-            ·
-          </span>
+          <span aria-hidden="true">·</span>
           STUDIOS
         </Link>
 
-        <nav className="ps-header-desktop" aria-label="Primary">
-          <ul className="ps-header-links m-0 grid list-none p-0 font-sans">
+        <nav
+          className="hidden justify-self-end min-[960px]:block"
+          aria-label="Primary"
+        >
+          <ul className="m-0 flex list-none items-center gap-8 p-0">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="inline-grid h-full place-items-center px-5 text-[12px] tracking-[0.12em] text-stone no-underline transition-colors hover:text-paper"
+                  className="text-[14px] font-medium text-fg-dim no-underline transition-colors hover:text-fg"
                 >
                   {link.label}
                 </Link>
               </li>
             ))}
           </ul>
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-            <a
-              href="/#contact"
-              className="btn btn-solid inline-grid place-items-center rounded-[2px] px-4 py-[0.55rem] font-sans text-[12px] font-medium tracking-[0.08em] no-underline"
-            >
-              Request a Quote
-            </a>
-          </div>
         </nav>
+
+        <div className="hidden min-[960px]:block">
+          <Magnetic>
+            <a href="/#contact" className="btn btn-solid">
+              Start a project
+            </a>
+          </Magnetic>
+        </div>
 
         <button
           type="button"
-          className="ps-header-toggle grid place-items-center border border-line bg-transparent text-paper"
+          className="grid size-11 place-items-center border border-line bg-transparent text-fg min-[960px]:hidden"
           aria-expanded={open}
           aria-controls={menuId}
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((value) => !value)}
         >
-          <span
-            className={`ps-header-burger${open ? " is-open" : ""}`}
-            aria-hidden="true"
-          >
-            <span />
-            <span />
-            <span />
+          <span className="flex w-4 flex-col gap-1.5" aria-hidden="true">
+            <span
+              className={`block h-px bg-fg transition-transform ${open ? "translate-y-[3.5px] rotate-45" : ""}`}
+            />
+            <span
+              className={`block h-px bg-fg transition-transform ${open ? "-translate-y-[3.5px] -rotate-45" : ""}`}
+            />
           </span>
         </button>
       </div>
 
-      <button
-        type="button"
-        className={`ps-header-overlay${open ? " is-open" : ""}`}
-        tabIndex={open ? 0 : -1}
-        aria-hidden={!open}
-        aria-label="Close menu"
-        onClick={closeMenu}
-      />
-
       <nav
         id={menuId}
-        className={`ps-header-panel bg-ink-2${open ? " is-open" : ""}`}
+        className={`overflow-hidden bg-bg min-[960px]:hidden ${open ? "max-h-screen" : "max-h-0"}`}
         aria-label="Mobile"
-        aria-hidden={!open}
-        inert={!open}
+        hidden={!open}
       >
-        <div className="wrap">
-          <ul className="m-0 grid list-none p-0">
-            {NAV_LINKS.map((link) => (
-              <li
-                key={link.href}
-                className="border-b border-line"
-              >
-                <Link
-                  href={link.href}
-                  className="grid py-4 font-sans text-[14px] tracking-[0.14em] text-paper no-underline"
-                  onClick={closeMenu}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-5 mb-6 flex flex-wrap items-center gap-3">
-            <ThemeToggle />
-            <a
-              href="/#contact"
-              className="btn btn-solid inline-grid place-items-center rounded-[2px] px-4 py-3 font-sans text-[12px] font-medium tracking-[0.08em] no-underline"
-              onClick={closeMenu}
+        <ul className="m-0 grid list-none gap-1 px-[var(--pad)] pt-8 pb-10">
+          {NAV_LINKS.map((link, index) => (
+            <li
+              key={link.href}
+              style={{
+                transitionDelay: open ? `${80 + index * 50}ms` : "0ms",
+              }}
             >
-              Request a Quote
-            </a>
-          </div>
+              <Link
+                href={link.href}
+                className="block py-3 text-[28px] font-bold tracking-[-0.02em] text-fg no-underline"
+                onClick={closeMenu}
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="px-[var(--pad)] pb-12">
+          <a href="/#contact" className="btn btn-solid" onClick={closeMenu}>
+            Start a project
+          </a>
         </div>
       </nav>
     </header>

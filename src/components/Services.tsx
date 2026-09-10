@@ -24,25 +24,22 @@ export function Services() {
   }
 
   return (
-    <section className="section">
-      <div className="wrap">
-        <p className="eyebrow font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-brass">
-          Statement of Services
-        </p>
-        <h2 className="font-display mt-4 text-[2rem] font-light leading-[1.15] tracking-tight text-paper md:text-[2.75rem]">
-          Every line item, accounted for.
+    <section className="section-pad pt-32">
+      <div className="mx-auto max-w-[var(--maxw)]">
+        <p className="kicker">Growth stack</p>
+        <h2 className="display mt-2 text-[clamp(34px,5vw,58px)]">
+          Five lines. One system.
         </h2>
-        <p className="mt-4 max-w-[42rem] font-sans text-[0.95rem] leading-relaxed text-stone md:text-base">
-          Each engagement is scoped and quoted individually — no line item
-          priced the same twice, because no two businesses are. Select a
-          category to see what&apos;s included.
+        <p className="support">
+          Each engagement is scoped and quoted individually. Select a category
+          to see what&apos;s included.
         </p>
 
-        <div className="mt-12 border-y border-line">
+        <div className="mt-14 border-y border-line">
           <div
-            className={`${COLS} border-b border-line py-3 text-[11px] font-medium uppercase tracking-[0.16em] text-stone`}
+            className={`${COLS} border-b border-line py-3 text-[12px] font-medium text-fg-faint`}
           >
-            <span className="font-mono">Code</span>
+            <span>Code</span>
             <span>Category</span>
             <span>Description</span>
             <span className="sr-only">Expand</span>
@@ -56,6 +53,12 @@ export function Services() {
               onToggle={() => toggle(category.code)}
             />
           ))}
+        </div>
+
+        <div className="mt-12">
+          <a href="/#contact" className="btn btn-solid">
+            Start a project
+          </a>
         </div>
       </div>
     </section>
@@ -79,18 +82,18 @@ function ServiceRow({
       <button
         type="button"
         id={headerId}
-        className={`${COLS} cursor-pointer py-5 text-left transition-colors hover:bg-ink-2 focus-visible:bg-ink-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brass`}
+        className={`${COLS} cursor-pointer py-5 text-left transition-colors hover:bg-bg-raised focus-visible:bg-bg-raised focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-green`}
         aria-expanded={open}
         aria-controls={panelId}
         onClick={onToggle}
       >
-        <span className="font-mono text-[13px] font-medium tracking-wide text-brass">
+        <span className="text-[13px] font-semibold text-green">
           {category.code}
         </span>
-        <span className="font-sans text-[0.95rem] font-medium text-paper">
+        <span className="text-[0.95rem] font-medium text-fg">
           {category.name}
         </span>
-        <span className="font-sans text-sm leading-relaxed text-stone">
+        <span className="text-sm leading-relaxed text-fg-dim">
           {category.description}
         </span>
         <span className="flex justify-end pt-0.5">
@@ -103,20 +106,16 @@ function ServiceRow({
         role="region"
         aria-labelledby={headerId}
         aria-hidden={!open}
-        className="overflow-hidden transition-[max-height] duration-[400ms] ease-in-out"
+        className="overflow-hidden transition-[max-height] duration-500"
         style={{
           maxHeight: open ? `${category.items.length * 9}rem` : "0px",
         }}
       >
         {category.items.map((item) => (
           <div key={item.code} className={`${COLS} border-t border-line py-4`}>
-            <span className="font-mono text-[12px] tracking-wide text-brass">
-              {item.code}
-            </span>
-            <span className="font-sans text-sm font-medium text-paper">
-              {item.name}
-            </span>
-            <span className="font-sans text-sm leading-relaxed text-stone">
+            <span className="text-[12px] text-green">{item.code}</span>
+            <span className="text-sm font-medium text-fg">{item.name}</span>
+            <span className="text-sm leading-relaxed text-fg-dim">
               {item.description}
             </span>
             <span aria-hidden="true" />
@@ -133,7 +132,7 @@ function Chevron({ open }: { open: boolean }) {
       viewBox="0 0 16 16"
       width="14"
       height="14"
-      className={`text-brass transition-transform duration-[400ms] ease-in-out ${
+      className={`text-green transition-transform duration-500 ${
         open ? "rotate-90" : "rotate-0"
       }`}
       aria-hidden="true"

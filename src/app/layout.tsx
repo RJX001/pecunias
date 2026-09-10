@@ -1,52 +1,26 @@
 import type { Metadata } from "next";
-import { Fraunces, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
-import {
-  ThemeProvider,
-  themeInitScript,
-} from "@/components/theme/ThemeProvider";
+import { Archivo } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const archivo = Archivo({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-fraunces",
-  axes: ["opsz"],
+  variable: "--font-archivo",
+  weight: ["400", "500", "600", "700", "800"],
   style: ["normal", "italic"],
 });
 
-const ibmPlexSans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-ibm-plex-sans",
-  weight: ["400", "500", "600"],
-});
-
-const ibmPlexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-ibm-plex-mono",
-  weight: ["400", "500"],
-});
-
 export const metadata: Metadata = {
-  title: "PecuniaStudios",
+  title: "Pecunia Studios",
   description:
-    "UK digital studio. PecuniaStudios builds, markets, and manages the systems that turn attention into revenue — websites, ads, marketplaces, and the creative that fuels them. Quote on request.",
+    "Pecunia is a growth systems company. One connected system across Digital, Acquisition, Automation, Commerce and Creative.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      data-theme="light"
-      suppressHydrationWarning
-      className={`${fraunces.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable} h-full`}
-    >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      </head>
-      <body className="min-h-full bg-ink text-paper antialiased">
-        <ThemeProvider>{children}</ThemeProvider>
+    <html lang="en" className={`${archivo.variable} h-full`}>
+      <body className="min-h-full bg-bg font-sans text-fg antialiased">
+        {children}
       </body>
     </html>
   );
