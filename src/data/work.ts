@@ -43,7 +43,7 @@ export const caseStudies: CaseStudy[] = [
     stat: "TBC",
     description: "Placeholder — pending real result and copy.",
     isPlaceholder: true,
-    featured: true,
+    featured: false,
   },
   {
     tags: "CS",

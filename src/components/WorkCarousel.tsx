@@ -35,8 +35,7 @@ export function WorkCarousel({ studies }: WorkCarouselProps) {
   const total = studies.length;
   const study = studies[index];
   const caption = statCaption(study.description);
-  const showCaption =
-    study.stat !== "TBC" && caption !== study.description;
+  const showCaption = caption !== study.description;
   const Decor = DECOR[index % DECOR.length];
 
   function go(direction: -1 | 1) {

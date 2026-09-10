@@ -1,36 +1,38 @@
 @import "tailwindcss";
 
-/* Shared accents (constant across themes). Light is the default; dark via toggle. */
-:root {
-  --brass: #A9812E;
-  --brass-dim: #7d611f;
+/* Shared accents. Light is the default; dark is available via toggle. No cream. */
+:root,
+[data-theme="light"] {
+  --brass: #D4AF37;
+  --brass-dim: #B8962A;
   --ledger: #33473B;
   --ledger-light: #4c6858;
   --wine: #6B2E3A;
   --dark-text: #12181A;
-  --btn-on-ink: #F6F0E4;
+  --btn-on-ink: #FFFFFF;
   --btn-ink-hover: #1c2428;
-}
 
-:root,
-[data-theme="light"] {
-  --ink: #F6F0E4;
-  --ink-2: #ECE2CC;
-  --paper: #181410;
-  --stone: #6E6558;
-  --line: rgba(24, 20, 16, 0.12);
-  --line-strong: rgba(24, 20, 16, 0.24);
-  --header-bg: rgba(246, 240, 228, 0.92);
-  --recessed-bg: rgba(24, 20, 16, 0.045);
+  --ink: #FFFFFF;
+  --ink-2: #FFFFFF;
+  --paper: #12181A;
+  --stone: #6B6B6B;
+  --line: rgba(18, 24, 26, 0.10);
+  --line-strong: rgba(18, 24, 26, 0.20);
+  --header-bg: #FFFFFF;
+  --recessed-bg: rgba(18, 24, 26, 0.04);
 }
 
 [data-theme="dark"] {
+  --brass: #D4AF37;
+  --brass-dim: #B8962A;
+  --btn-on-ink: #FFFFFF;
+
   --ink: #12181A;
   --ink-2: #181f22;
-  --paper: #F6F0E4;
-  --stone: #9A9184;
-  --line: rgba(246, 240, 228, 0.14);
-  --line-strong: rgba(246, 240, 228, 0.28);
+  --paper: #FFFFFF;
+  --stone: #9A9A9A;
+  --line: rgba(255, 255, 255, 0.14);
+  --line-strong: rgba(255, 255, 255, 0.28);
   --header-bg: rgba(18, 24, 26, 0.92);
   --recessed-bg: rgba(0, 0, 0, 0.15);
 }
