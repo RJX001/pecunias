@@ -26,9 +26,7 @@ export function Services() {
   return (
     <section className="section">
       <div className="wrap">
-        <p className="eyebrow font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-brass">
-          Statement of Services
-        </p>
+        <p className="eyebrow">Statement of Services</p>
         <h2 className="font-display mt-4 text-[2rem] font-light leading-[1.15] tracking-tight text-paper md:text-[2.75rem]">
           Every line item, accounted for.
         </h2>
@@ -56,6 +54,12 @@ export function Services() {
               onToggle={() => toggle(category.code)}
             />
           ))}
+        </div>
+
+        <div className="mt-12">
+          <a href="/#contact" className="btn btn-solid">
+            Request a Quote
+          </a>
         </div>
       </div>
     </section>

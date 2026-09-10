@@ -10,9 +10,7 @@ export function About() {
       <div className="wrap mx-auto max-w-[1180px] px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 lg:items-start">
           <div className="lg:border-r lg:border-line lg:pr-16">
-            <p className="eyebrow mb-4 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-brass">
-              About
-            </p>
+            <p className="eyebrow mb-4">About</p>
             <h2 className="font-display mb-8 max-w-[14ch] text-[clamp(2rem,4vw,3.25rem)] font-light leading-[1.15] tracking-tight text-paper">
               A studio, not a vendor.
             </h2>

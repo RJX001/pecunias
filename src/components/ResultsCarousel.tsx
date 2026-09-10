@@ -37,7 +37,9 @@ export function ResultsCarousel() {
   const slides = featuredSlides(caseStudies);
   const total = slides.length;
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const paused = hovered || focused;
 
   const current = slides[index] ?? slides[0];
 
@@ -47,7 +49,7 @@ export function ResultsCarousel() {
       setIndex((currentIndex) => (currentIndex + 1) % total);
     }, AUTOPLAY_MS);
     return () => window.clearInterval(id);
-  }, [paused, total, index]);
+  }, [paused, total]);
 
   if (!current) return null;
 
@@ -57,14 +59,14 @@ export function ResultsCarousel() {
     <aside
       aria-label="Results"
       aria-roledescription="carousel"
-      className="ledger-card grid grid-rows-[auto_1fr_auto] gap-8 bg-ink-2"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={(event) => {
+      className="ledger-card grid grid-rows-[auto_1fr_auto] gap-8"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={(event) => {
         const next = event.relatedTarget;
         if (next instanceof Node && event.currentTarget.contains(next)) return;
-        setPaused(false);
+        setFocused(false);
       }}
     >
       <header className="grid grid-cols-[1fr_auto] items-baseline gap-4 border-b border-dashed border-line pb-4">
@@ -81,7 +83,7 @@ export function ResultsCarousel() {
         aria-atomic="true"
         className="grid content-start gap-5"
       >
-        <span className="inline-grid w-fit place-items-center rounded-[2px] border border-line px-2.5 py-1 font-mono text-[11px] tracking-[0.12em] text-paper">
+        <span className="inline-grid w-fit place-items-center rounded-[2px] border border-brass px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-brass">
           {firstTag(current.tags)}
         </span>
         <p className="m-0 font-display text-[clamp(2.75rem,5vw,3.75rem)] font-light leading-none tracking-tight text-ledger">
@@ -106,10 +108,10 @@ export function ResultsCarousel() {
               type="button"
               aria-current={active ? "true" : undefined}
               aria-label={`Show result ${pad(slideIndex + 1)} of ${pad(total)}: ${slide.name}`}
-              className={`h-2 w-2 rounded-full transition-colors ${
+              className={`size-2 rounded-full transition-colors ${
                 active
-                  ? "bg-ledger"
-                  : "border border-line bg-transparent hover:border-ledger"
+                  ? "bg-brass"
+                  : "border border-stone bg-transparent hover:border-brass"
               }`}
               onClick={() => setIndex(slideIndex)}
             />

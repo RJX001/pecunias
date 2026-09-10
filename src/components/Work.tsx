@@ -21,11 +21,11 @@ export function Work() {
           <p className="mb-4 font-mono text-[10px] font-medium uppercase tracking-[0.2em] text-stone">
             Clients on the books
           </p>
-          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5 lg:gap-4">
+          <ul className="flex flex-wrap items-center gap-x-5 gap-y-3 sm:gap-x-6 lg:justify-between">
             {clientsOnTheBooks.map((client) => (
               <li
                 key={client.name}
-                className="flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-stone"
+                className="flex shrink-0 items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-stone"
               >
                 <span
                   aria-hidden="true"
