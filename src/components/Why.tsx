@@ -32,7 +32,7 @@ export function Why() {
             ))}
           </ol>
 
-          <p className="mt-10 m-0 max-w-[48ch] text-[17px] leading-relaxed text-fg-dim">
+          <p className="mt-10 m-0 max-w-[48ch] text-[17px] leading-relaxed text-content-text">
             {COMMITMENT.closing}
           </p>
         </Reveal>

@@ -10,7 +10,7 @@ export function BrandStatement() {
         {BUILT_FOR.copy.map((paragraph, index) => (
           <p
             key={paragraph}
-            className={`m-0 max-w-[54ch] text-[17px] leading-relaxed text-fg-dim ${
+            className={`m-0 max-w-[54ch] text-[17px] leading-relaxed text-content-text ${
               index === 0 ? "mt-10" : "mt-6"
             }`}
           >

@@ -10,20 +10,27 @@ export function Footer() {
           <p className="m-0 text-[13px] font-semibold tracking-[0.14em]">
             {FOOTER.brand}
           </p>
-          <p className="mt-4 m-0 max-w-[28ch] text-[14px] text-fg-dim">
+          <p className="mt-4 m-0 max-w-[28ch] text-[14px] text-content-text">
             {FOOTER.descriptor}
           </p>
         </div>
 
         <div>
           <p className="m-0 text-[13px] text-fg-faint">Services</p>
-          <p className="mt-4 m-0 max-w-[36ch] text-[14px] leading-relaxed text-fg-dim">
+          <p className="mt-4 m-0 max-w-[36ch] text-[14px] leading-relaxed text-content-text">
             {FOOTER.servicesLine}
           </p>
         </div>
 
         <div>
           <p className="m-0 text-[13px] text-fg-faint">Company</p>
+          <div className="mt-4">
+            <Magnetic>
+              <a href={NAV_CTA.href} className="btn btn-green btn-compact">
+                {NAV_CTA.label}
+              </a>
+            </Magnetic>
+          </div>
           <ul className="mt-4 m-0 grid list-none gap-2 p-0 text-[14px]">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
@@ -36,13 +43,6 @@ export function Footer() {
               </li>
             ))}
           </ul>
-          <div className="mt-6">
-            <Magnetic>
-              <a href={NAV_CTA.href} className="btn btn-solid">
-                {NAV_CTA.label}
-              </a>
-            </Magnetic>
-          </div>
         </div>
       </div>
       <div className="border-t border-line">

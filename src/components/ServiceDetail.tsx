@@ -17,10 +17,11 @@ export function ServiceDetail({ system }: { system: GrowthSystem }) {
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
           <Link
-            href="/services"
+            href="/"
+            aria-label="Back to Home"
             className="inline-flex min-h-11 items-center text-[14px] font-medium text-fg-dim no-underline transition-colors hover:text-fg"
           >
-            ← Services
+            ← Home
           </Link>
 
           <p className="kicker mt-10 font-mono text-green-text">{code}</p>

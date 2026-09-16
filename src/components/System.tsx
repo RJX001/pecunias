@@ -3,7 +3,10 @@ import { Reveal } from "./Reveal";
 
 export function System() {
   return (
-    <section id="system" className="section-pad">
+    <section
+      id="system"
+      className="px-[var(--pad)] pt-[min(14vw,150px)] pb-[min(6vw,64px)]"
+    >
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
           <p className="kicker">{GROWTH_PHILOSOPHY.heading}</p>

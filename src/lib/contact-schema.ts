@@ -13,8 +13,10 @@ export const SERVICE_OPTIONS = [
 export const contactSchema = z.object({
   name: z.string().trim().min(1).max(120),
   businessName: z.string().trim().max(160).default(""),
+  mobile: z.string().trim().max(40).default(""),
   service: z.enum(SERVICE_OPTIONS),
   details: z.string().trim().max(4000).default(""),
+  socialLinks: z.string().trim().max(2000).default(""),
 });
 
 export type ContactPayload = z.infer<typeof contactSchema>;

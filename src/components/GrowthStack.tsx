@@ -8,14 +8,23 @@ import { Reveal } from "./Reveal";
 
 export function GrowthStack() {
   return (
-    <section id="stack" className="section-pad">
+    <section
+      id="stack"
+      className="px-[var(--pad)] pt-[min(6vw,64px)] pb-[min(10vw,110px)]"
+    >
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
           <h2
             id="growth-stack-heading"
             className="display max-w-[18ch] text-[clamp(34px,5vw,58px)]"
           >
-            {GROWTH_STACK_HEADING}
+            <span className="text-fg">
+              {GROWTH_STACK_HEADING.slice(
+                0,
+                GROWTH_STACK_HEADING.indexOf("The Growth Stack"),
+              )}
+            </span>
+            <span className="text-green">The Growth Stack</span>
           </h2>
           <p className="support">{GROWTH_STACK_INTRO}</p>
         </Reveal>
@@ -35,7 +44,7 @@ export function GrowthStack() {
                     <span className="block text-[22px] font-bold tracking-[-0.02em] text-fg md:text-[28px]">
                       {row.title}
                     </span>
-                    <span className="mt-1 block text-[15px] text-fg-dim">
+                    <span className="mt-1 block text-[15px] text-content-text">
                       {row.description}
                     </span>
                   </span>

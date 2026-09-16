@@ -10,9 +10,15 @@ type Status = "idle" | "submitting" | "success" | "error";
 const EMPTY_FORM = {
   name: "",
   businessName: "",
+  mobile: "",
   service: "",
   details: "",
+  socialLinks: "",
 };
+
+const FINAL_CTA_SPLIT = FINAL_CTA.headline.indexOf(". ");
+const FINAL_CTA_INK = FINAL_CTA.headline.slice(0, FINAL_CTA_SPLIT + 1);
+const FINAL_CTA_GREEN = FINAL_CTA.headline.slice(FINAL_CTA_SPLIT + 2);
 
 export function Contact() {
   const [form, setForm] = useState(EMPTY_FORM);
@@ -33,8 +39,10 @@ export function Contact() {
         body: JSON.stringify({
           name: form.name,
           businessName: form.businessName,
+          mobile: form.mobile,
           service: form.service,
           details: form.details,
+          socialLinks: form.socialLinks,
         }),
       });
 
@@ -80,7 +88,8 @@ export function Contact() {
       <div className="relative mx-auto grid max-w-[var(--maxw)] gap-14 lg:grid-cols-[1fr_0.9fr] lg:items-start">
         <header>
           <h2 className="display max-w-[16ch] text-[clamp(34px,5vw,58px)]">
-            {FINAL_CTA.headline}
+            {FINAL_CTA_INK}{" "}
+            <span className="text-green">{FINAL_CTA_GREEN}</span>
           </h2>
           <p className="support">{FINAL_CTA.support}</p>
           <p className="mt-8 m-0 text-[18px] font-semibold text-green-text">
@@ -102,7 +111,9 @@ export function Contact() {
             className="grid gap-5 border border-line bg-bg-raised p-6 sm:p-8"
           >
             <div className="field">
-              <label htmlFor="contact-name">Name</label>
+              <label htmlFor="contact-name">
+                Name
+              </label>
               <input
                 id="contact-name"
                 name="name"
@@ -122,7 +133,9 @@ export function Contact() {
             </div>
 
             <div className="field">
-              <label htmlFor="contact-business">Business name</label>
+              <label htmlFor="contact-business">
+                Business Name
+              </label>
               <input
                 id="contact-business"
                 name="businessName"
@@ -141,7 +154,31 @@ export function Contact() {
             </div>
 
             <div className="field">
-              <label htmlFor="contact-service">Service needed</label>
+              <label htmlFor="contact-mobile">
+                Mobile Number
+              </label>
+              <input
+                id="contact-mobile"
+                name="mobile"
+                type="tel"
+                autoComplete="tel"
+                inputMode="tel"
+                maxLength={40}
+                disabled={submitting}
+                value={form.mobile}
+                onChange={(event) =>
+                  setForm((current) => ({
+                    ...current,
+                    mobile: event.target.value,
+                  }))
+                }
+              />
+            </div>
+
+            <div className="field">
+              <label htmlFor="contact-service">
+                Service Needed
+              </label>
               <select
                 id="contact-service"
                 name="service"
@@ -167,7 +204,9 @@ export function Contact() {
             </div>
 
             <div className="field">
-              <label htmlFor="contact-details">Project details</label>
+              <label htmlFor="contact-details">
+                Project Details
+              </label>
               <textarea
                 id="contact-details"
                 name="details"
@@ -184,14 +223,34 @@ export function Contact() {
               />
             </div>
 
+            <div className="field">
+              <label htmlFor="contact-social">
+                Social Media / Website Links
+              </label>
+              <textarea
+                id="contact-social"
+                name="socialLinks"
+                maxLength={2000}
+                placeholder="Add your website, Instagram, LinkedIn or other relevant links"
+                disabled={submitting}
+                value={form.socialLinks}
+                onChange={(event) =>
+                  setForm((current) => ({
+                    ...current,
+                    socialLinks: event.target.value,
+                  }))
+                }
+              />
+            </div>
+
             <Magnetic>
               <button
                 type="submit"
-                className="btn btn-solid disabled:cursor-not-allowed disabled:opacity-60"
+                className="btn btn-green disabled:cursor-not-allowed disabled:opacity-60"
                 disabled={submitting}
                 aria-busy={submitting}
               >
-                {submitting ? "Sending" : "Submit request"}
+                {submitting ? "Sending" : "Submit Request"}
               </button>
             </Magnetic>
             {status === "error" ? (

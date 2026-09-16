@@ -135,13 +135,13 @@ export function Problem() {
         </div>
 
         <div className="mt-12 max-w-[640px]">
-          <p className="m-0 text-[17px] leading-relaxed text-fg-dim">
+          <p className="m-0 text-[17px] leading-relaxed text-content-text">
             {WHY_PECUNIA.copy[2]}
           </p>
           <p className="display mt-6 max-w-[18ch] text-[clamp(24px,3.4vw,40px)] text-green">
             {WHY_PECUNIA.emphasis}
           </p>
-          <p className="mt-6 m-0 text-[17px] leading-relaxed text-fg-dim">
+          <p className="mt-6 m-0 text-[17px] leading-relaxed text-content-text">
             {WHY_PECUNIA.then}
           </p>
           <p className="mt-6 m-0 text-[20px] font-bold tracking-[-0.02em] text-fg">

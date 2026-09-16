@@ -53,8 +53,10 @@ async function persistLead(lead: ContactPayload) {
   existing.push({
     name: lead.name,
     businessName: lead.businessName,
+    mobile: lead.mobile,
     service: lead.service,
     details: lead.details,
+    socialLinks: lead.socialLinks,
     receivedAt: new Date().toISOString(),
   });
 
@@ -73,10 +75,14 @@ async function sendResendEmail(lead: ContactPayload) {
     "",
     `Name: ${asPlainText(lead.name)}`,
     `Business name: ${asPlainText(lead.businessName) || "—"}`,
+    `Mobile: ${asPlainText(lead.mobile) || "—"}`,
     `Service needed: ${lead.service}`,
     "",
     "Project details:",
     asPlainText(lead.details),
+    "",
+    "Social links:",
+    asPlainText(lead.socialLinks) || "—",
   ].join("\n");
 
   const response = await fetch("https://api.resend.com/emails", {

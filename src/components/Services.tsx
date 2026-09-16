@@ -13,7 +13,14 @@ export function Services() {
     <section className="section-pad pt-32 md:pt-44">
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
-          <h1 className="display max-w-[16ch] text-[clamp(40px,7vw,88px)]">
+          <Link
+            href="/"
+            aria-label="Back to Home"
+            className="inline-flex min-h-11 items-center text-[14px] font-medium text-fg-dim no-underline transition-colors hover:text-fg"
+          >
+            ← Home
+          </Link>
+          <h1 className="display mt-10 max-w-[16ch] text-[clamp(40px,7vw,88px)]">
             {GROWTH_STACK_HEADING}
           </h1>
           <p className="support">{GROWTH_STACK_INTRO}</p>

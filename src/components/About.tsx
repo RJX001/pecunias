@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ABOUT } from "@/data/homepage-copy";
 import { Reveal } from "./Reveal";
 
@@ -6,7 +7,14 @@ export function About() {
     <section className="section-pad pt-32 md:pt-44">
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
-          <p className="kicker">{ABOUT.subheading}</p>
+          <Link
+            href="/"
+            aria-label="Back to Home"
+            className="inline-flex min-h-11 items-center text-[14px] font-medium text-fg-dim no-underline transition-colors hover:text-fg"
+          >
+            ← Home
+          </Link>
+          <p className="kicker mt-10">{ABOUT.subheading}</p>
           <h1 className="display max-w-[12ch] text-[clamp(40px,7vw,88px)]">
             {ABOUT.heading}
           </h1>
