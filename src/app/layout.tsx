@@ -13,7 +13,7 @@ const archivo = Archivo({
 export const metadata: Metadata = {
   title: "Pecunia Studios",
   description:
-    "Pecunia is a growth systems company. One connected system across Digital, Acquisition, Automation, Commerce and Creative.",
+    "Pecunia brings strategy, marketing, technology and automation together to help ambitious businesses move beyond where they are now.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

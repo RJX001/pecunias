@@ -1,29 +1,41 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import {
+  HERO_CTA,
+  HERO_HEADLINES,
+  HERO_IDENTITY,
+  HERO_LEAD_IN,
+  HERO_RAIL,
+  HERO_SUPPORT,
+} from "@/data/hero-headlines";
 import { Magnetic } from "./Magnetic";
 
-const NODES = [
-  "Strategy",
-  "Build",
-  "Acquire",
-  "Convert",
-  "Automate",
-  "Scale",
-] as const;
+const HEADLINE_INTERVAL_MS = 4500;
+const RAIL_INTERVAL_MS = 1400;
 
 export function Hero() {
+  const [headlineIndex, setHeadlineIndex] = useState(0);
   const [active, setActive] = useState(0);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setActive(NODES.length - 1);
+      setActive(HERO_RAIL.length - 1);
       return;
     }
-    const id = window.setInterval(() => {
-      setActive((current) => (current + 1) % NODES.length);
-    }, 1400);
-    return () => window.clearInterval(id);
+
+    const headlineId = window.setInterval(() => {
+      setHeadlineIndex((current) => (current + 1) % HERO_HEADLINES.length);
+    }, HEADLINE_INTERVAL_MS);
+
+    const railId = window.setInterval(() => {
+      setActive((current) => (current + 1) % HERO_RAIL.length);
+    }, RAIL_INTERVAL_MS);
+
+    return () => {
+      window.clearInterval(headlineId);
+      window.clearInterval(railId);
+    };
   }, []);
 
   return (
@@ -44,30 +56,44 @@ export function Hero() {
 
       <div className="wrap relative grid w-full gap-12 pt-32">
         <div>
-          <h1 className="display text-[clamp(38px,6.6vw,92px)] text-fg">
-            Growth is a system,
-            <br />
-            not a stack of vendors.
-          </h1>
-          <p className="support">
-            Pecunia builds the connected growth system — Digital, Acquisition,
-            Automation, Commerce, Creative — under one team that already knows
-            the business.
+          <p className="kicker">{HERO_IDENTITY}</p>
+          <p className="m-0 text-[18px] font-medium text-fg-dim md:text-[20px]">
+            {HERO_LEAD_IN}
           </p>
+          <h1
+            className="display mt-3 grid text-[clamp(38px,6.6vw,92px)] text-fg"
+            aria-live="polite"
+          >
+            {HERO_HEADLINES.map((headline, index) => (
+              <span
+                key={headline}
+                className={`col-start-1 row-start-1 transition-opacity duration-500 ${
+                  index === headlineIndex
+                    ? "opacity-100"
+                    : "pointer-events-none opacity-0"
+                }`}
+                aria-hidden={index !== headlineIndex}
+              >
+                {headline}
+              </span>
+            ))}
+          </h1>
+          {HERO_SUPPORT.map((paragraph) => (
+            <p key={paragraph} className="support">
+              {paragraph}
+            </p>
+          ))}
           <div className="mt-8 flex flex-wrap gap-3">
             <Magnetic>
-              <a href="#contact" className="btn btn-solid">
-                Start a project
+              <a href="/#contact" className="btn btn-solid">
+                {HERO_CTA}
               </a>
             </Magnetic>
-            <a href="#system" className="btn btn-ghost">
-              See the system
-            </a>
           </div>
         </div>
 
         <ol className="m-0 grid list-none grid-cols-2 gap-0 border-t border-line p-0 sm:grid-cols-3 lg:grid-cols-6">
-          {NODES.map((node, index) => {
+          {HERO_RAIL.map((node, index) => {
             const done = index < active;
             const current = index === active;
             return (

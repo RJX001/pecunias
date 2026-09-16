@@ -2,14 +2,8 @@
 
 import { useEffect, useId, useState } from "react";
 import Link from "next/link";
+import { NAV_CTA, NAV_LINKS } from "@/data/homepage-copy";
 import { Magnetic } from "./Magnetic";
-
-const NAV_LINKS = [
-  { href: "/#system", label: "System" },
-  { href: "/#stack", label: "Stack" },
-  { href: "/#work", label: "Work" },
-  { href: "/#about", label: "About" },
-] as const;
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -77,8 +71,8 @@ export function Header() {
 
         <div className="hidden min-[960px]:block">
           <Magnetic>
-            <a href="/#contact" className="btn btn-solid">
-              Start a project
+            <a href={NAV_CTA.href} className="btn btn-solid">
+              {NAV_CTA.label}
             </a>
           </Magnetic>
         </div>
@@ -127,8 +121,8 @@ export function Header() {
           ))}
         </ul>
         <div className="px-[var(--pad)] pb-12">
-          <a href="/#contact" className="btn btn-solid" onClick={closeMenu}>
-            Start a project
+          <a href={NAV_CTA.href} className="btn btn-solid" onClick={closeMenu}>
+            {NAV_CTA.label}
           </a>
         </div>
       </nav>

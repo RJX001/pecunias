@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { FINAL_CTA } from "@/data/homepage-copy";
 import { SERVICE_OPTIONS } from "@/lib/contact-schema";
 import { Magnetic } from "./Magnetic";
 
@@ -12,12 +13,6 @@ const EMPTY_FORM = {
   service: "",
   details: "",
 };
-
-const NOTES = [
-  "No generic proposals",
-  "No public price list",
-  "Scoped to the actual constraint",
-] as const;
 
 export function Contact() {
   const [form, setForm] = useState(EMPTY_FORM);
@@ -84,21 +79,13 @@ export function Contact() {
       />
       <div className="relative mx-auto grid max-w-[var(--maxw)] gap-14 lg:grid-cols-[1fr_0.9fr] lg:items-start">
         <header>
-          <h2 className="display max-w-[12ch] text-[clamp(34px,5vw,58px)]">
-            Start with the constraint. Not a deck.
+          <h2 className="display max-w-[16ch] text-[clamp(34px,5vw,58px)]">
+            {FINAL_CTA.headline}
           </h2>
-          <p className="support">
-            Tell us what is broken. We come back with a scoped proposal — not a
-            generic capabilities PDF.
+          <p className="support">{FINAL_CTA.support}</p>
+          <p className="mt-8 m-0 text-[18px] font-semibold text-green">
+            {FINAL_CTA.cta}
           </p>
-          <ul className="mt-8 m-0 grid list-none gap-2 p-0">
-            {NOTES.map((note) => (
-              <li key={note} className="text-[14px] text-fg-dim">
-                <span className="mr-2 text-green">→</span>
-                {note}
-              </li>
-            ))}
-          </ul>
         </header>
 
         {status === "success" ? (

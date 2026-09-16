@@ -1,20 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { STANDARD } from "@/data/homepage-copy";
 
-const LINES = [
-  "Stop buying more channels.",
-  "Stop stacking more vendors.",
-  "Stop making creative once and forgetting it.",
-  "Build less noise.",
-  "Connect the work.",
-  "Keep the system running.",
-  "Create more growth.",
+const BLOCKS = [
+  STANDARD.statement,
+  STANDARD.support,
+  STANDARD.closing,
 ] as const;
 
 export function Philosophy() {
   const refs = useRef<(HTMLParagraphElement | null)[]>([]);
-  const [seen, setSeen] = useState<boolean[]>(() => LINES.map(() => false));
+  const [seen, setSeen] = useState<boolean[]>(() => BLOCKS.map(() => false));
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -43,21 +40,25 @@ export function Philosophy() {
   return (
     <section className="section-pad">
       <div className="mx-auto max-w-[var(--maxw)]">
-        <p className="kicker">Philosophy</p>
         <h2 className="display mb-16 max-w-[12ch] text-[clamp(34px,5vw,58px)]">
-          Build less noise. Create more growth.
+          {STANDARD.heading}
         </h2>
-        <div className="grid gap-4">
-          {LINES.map((line, index) => {
+        <div className="grid gap-8">
+          {BLOCKS.map((block, index) => {
             const active = seen[index];
-            const last = index === LINES.length - 1;
+            const last = index === BLOCKS.length - 1;
+            const first = index === 0;
             return (
               <p
-                key={line}
+                key={block}
                 ref={(node) => {
                   refs.current[index] = node;
                 }}
-                className={`m-0 text-[clamp(22px,3.2vw,40px)] font-bold tracking-[-0.02em] leading-[1.1] transition-colors duration-500 ${
+                className={`m-0 font-bold tracking-[-0.02em] leading-[1.15] transition-colors duration-500 ${
+                  first || last
+                    ? "max-w-[28ch] text-[clamp(22px,3.2vw,40px)]"
+                    : "max-w-[54ch] text-[clamp(18px,2.2vw,24px)] font-medium leading-relaxed"
+                } ${
                   active
                     ? last
                       ? "text-green"
@@ -65,7 +66,7 @@ export function Philosophy() {
                     : "text-fg-faint"
                 }`}
               >
-                {line}
+                {block}
               </p>
             );
           })}

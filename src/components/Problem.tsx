@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { WHY_PECUNIA } from "@/data/homepage-copy";
 import { Reveal } from "./Reveal";
 
 const CHIPS = [
@@ -34,13 +35,16 @@ export function Problem() {
   }, []);
 
   return (
-    <section className="section-pad pt-0">
+    <section id="why" className="section-pad">
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
-          <p className="kicker">The problem</p>
           <h2 className="display max-w-[16ch] text-[clamp(34px,5vw,58px)]">
-            Tools without a system is just noise.
+            {WHY_PECUNIA.heading}
           </h2>
+          <p className="mt-6 m-0 max-w-[36ch] text-[22px] font-bold tracking-[-0.02em] md:text-[26px]">
+            {WHY_PECUNIA.copy[0]}
+          </p>
+          <p className="support">{WHY_PECUNIA.copy[1]}</p>
         </Reveal>
 
         <div
@@ -75,6 +79,21 @@ export function Problem() {
           >
             PECUNIA
           </span>
+        </div>
+
+        <div className="mt-12 max-w-[640px]">
+          <p className="m-0 text-[17px] leading-relaxed text-fg-dim">
+            {WHY_PECUNIA.copy[2]}
+          </p>
+          <p className="display mt-6 max-w-[18ch] text-[clamp(24px,3.4vw,40px)] text-green">
+            {WHY_PECUNIA.emphasis}
+          </p>
+          <p className="mt-6 m-0 text-[17px] leading-relaxed text-fg-dim">
+            {WHY_PECUNIA.then}
+          </p>
+          <p className="mt-6 m-0 text-[20px] font-bold tracking-[-0.02em] text-fg">
+            {WHY_PECUNIA.closing}
+          </p>
         </div>
       </div>
     </section>

@@ -1,59 +1,39 @@
+import { COMMITMENT } from "@/data/homepage-copy";
 import { Reveal } from "./Reveal";
-
-const BLOCKS = [
-  {
-    title: "One owner",
-    copy: "One team accountable for the whole loop. No vendor ping-pong.",
-  },
-  {
-    title: "Commercial first",
-    copy: "If it doesn't move revenue, pipeline or margin, it doesn't ship.",
-  },
-  {
-    title: "Built as a system",
-    copy: "Digital, acquisition, automation, commerce and creative share one plan.",
-  },
-  {
-    title: "Quote on the work",
-    copy: "Scoped to the business. No public price list to guess from.",
-  },
-  {
-    title: "Kept running",
-    copy: "Install is the start. The system is managed, not handed over and forgotten.",
-  },
-] as const;
 
 export function Why() {
   return (
-    <section className="section-pad">
+    <section id="commitment" className="section-pad">
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
-          <p className="kicker">Why Pecunia</p>
           <h2 className="display max-w-[14ch] text-[clamp(34px,5vw,58px)]">
-            A growth system, not another agency.
+            {COMMITMENT.heading}
           </h2>
+          <p className="mt-6 m-0 max-w-[36ch] text-[22px] font-bold tracking-[-0.02em] md:text-[26px]">
+            {COMMITMENT.statement}
+          </p>
+          <p className="support">{COMMITMENT.support}</p>
         </Reveal>
 
-        <div className="why-grid mt-14 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-3">
-          {BLOCKS.map((block) => (
-            <article key={block.title} className="bg-bg p-7">
-              <h3 className="m-0 text-[20px] font-bold tracking-[-0.02em]">
-                {block.title}
-              </h3>
-              <p className="mt-3 m-0 max-w-[36ch] text-[15px] leading-relaxed text-fg-dim">
-                {block.copy}
-              </p>
-            </article>
+        <ol className="mt-14 m-0 grid list-none gap-0 border-t border-line p-0 sm:grid-cols-2">
+          {COMMITMENT.items.map((item, index) => (
+            <li
+              key={item}
+              className="grid grid-cols-[auto_1fr] items-baseline gap-4 border-b border-line px-0 py-5 sm:px-6 sm:odd:border-r"
+            >
+              <span className="text-[13px] font-semibold text-fg-faint">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="text-[16px] font-semibold tracking-[-0.01em] text-fg">
+                {item}
+              </span>
+            </li>
           ))}
-          <article className="bg-bg-raised p-7 sm:col-span-2 lg:col-span-1">
-            <p className="m-0 text-[20px] font-bold tracking-[-0.02em] text-green">
-              One growth system.
-            </p>
-            <p className="mt-3 m-0 max-w-[36ch] text-[15px] leading-relaxed text-fg-dim">
-              That is the product. Everything else is a line inside it.
-            </p>
-          </article>
-        </div>
+        </ol>
+
+        <p className="mt-10 m-0 max-w-[48ch] text-[17px] leading-relaxed text-fg-dim">
+          {COMMITMENT.closing}
+        </p>
       </div>
     </section>
   );
