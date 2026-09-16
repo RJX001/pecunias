@@ -97,7 +97,7 @@ export function Problem() {
                 aria-hidden="true"
                 className={`pointer-events-none absolute whitespace-nowrap border px-3 py-2 text-[13px] font-medium sm:px-4 sm:text-[14px] transition-[left,top,opacity,transform] duration-700 ease-[var(--ease)] ${
                   merged
-                    ? "border-green-deep text-green"
+                    ? "border-green-deep text-green-text"
                     : "border-line text-fg-dim"
                 }`}
                 style={{
@@ -126,7 +126,7 @@ export function Problem() {
           <span
             className={`relative z-10 border px-6 py-3 text-[18px] font-bold tracking-[0.08em] transition-[border-color,background-color,color] duration-700 ease-[var(--ease)] ${
               merged
-                ? "border-green-deep bg-green-soft text-green"
+                ? "border-green-deep bg-green-soft text-green-text"
                 : "border-line text-fg-faint"
             }`}
           >

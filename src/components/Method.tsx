@@ -81,7 +81,7 @@ export function Method() {
                 <div>
                   <p
                     className={`m-0 text-[20px] font-bold tracking-[-0.02em] ${
-                      complete && isLast ? "text-green" : ""
+                      complete && isLast ? "text-green-text" : ""
                     }`}
                   >
                     {stage.title}
@@ -101,7 +101,7 @@ export function Method() {
                       filled ? "scale-x-100" : "scale-x-0"
                     } ${
                       complete && isLast
-                        ? "shadow-[0_0_14px_color-mix(in_srgb,var(--ledger)_55%,transparent)]"
+                        ? "shadow-[0_0_14px_color-mix(in_srgb,var(--green)_70%,transparent)]"
                         : ""
                     }`}
                     style={{

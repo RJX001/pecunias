@@ -79,23 +79,27 @@ export function Header() {
           </Magnetic>
         </div>
 
-        <button
-          type="button"
-          className="grid size-11 place-items-center border border-line bg-transparent text-fg min-[960px]:hidden"
-          aria-expanded={open}
-          aria-controls={menuId}
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((value) => !value)}
-        >
-          <span className="flex w-4 flex-col gap-1.5" aria-hidden="true">
-            <span
-              className={`block h-px bg-fg transition-transform ${open ? "translate-y-[3.5px] rotate-45" : ""}`}
-            />
-            <span
-              className={`block h-px bg-fg transition-transform ${open ? "-translate-y-[3.5px] -rotate-45" : ""}`}
-            />
-          </span>
-        </button>
+        {/* Mobile bar controls: theme toggle stays visible whether the menu is open or closed */}
+        <div className="flex items-center gap-2 min-[960px]:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            className="grid size-11 shrink-0 place-items-center border border-line bg-transparent text-fg"
+            aria-expanded={open}
+            aria-controls={menuId}
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((value) => !value)}
+          >
+            <span className="flex w-4 flex-col gap-1.5" aria-hidden="true">
+              <span
+                className={`block h-px bg-fg transition-transform ${open ? "translate-y-[3.5px] rotate-45" : ""}`}
+              />
+              <span
+                className={`block h-px bg-fg transition-transform ${open ? "-translate-y-[3.5px] -rotate-45" : ""}`}
+              />
+            </span>
+          </button>
+        </div>
       </div>
 
       <nav
@@ -123,7 +127,6 @@ export function Header() {
           ))}
         </ul>
         <div className="flex flex-col items-start gap-4 px-[var(--pad)] pb-12">
-          <ThemeToggle />
           <a href={NAV_CTA.href} className="btn btn-solid" onClick={closeMenu}>
             {NAV_CTA.label}
           </a>

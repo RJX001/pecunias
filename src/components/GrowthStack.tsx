@@ -58,7 +58,7 @@ export function GrowthStack() {
                     </span>
                   </span>
                   <span
-                    className={`inline-block text-green transition-transform duration-300 ease-[var(--ease)] ${
+                    className={`inline-block text-green-text transition-transform duration-300 ease-[var(--ease)] ${
                       isOpen ? "rotate-45" : "rotate-0"
                     }`}
                     aria-hidden="true"

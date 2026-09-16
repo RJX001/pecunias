@@ -184,7 +184,7 @@ export function Hero() {
                 />
                 <p
                   className={`m-0 text-[13px] font-semibold ${
-                    current ? "text-green" : done ? "text-fg" : "text-fg-faint"
+                    current ? "text-green-text" : done ? "text-fg" : "text-fg-faint"
                   }`}
                   aria-current={current ? "step" : undefined}
                 >

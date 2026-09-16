@@ -6,7 +6,6 @@ import { Method } from "@/components/Method";
 import { Why } from "@/components/Why";
 import { Problem } from "@/components/Problem";
 import { BrandStatement } from "@/components/BrandStatement";
-import { About } from "@/components/About";
 import { Philosophy } from "@/components/Philosophy";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
@@ -23,7 +22,6 @@ export default function Home() {
         <Why />
         <Problem />
         <BrandStatement />
-        <About />
         <Philosophy />
         <Contact />
       </main>

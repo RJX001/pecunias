@@ -7,7 +7,7 @@
 export const NAV_LINKS = [
   { href: "/#stack", label: "Services" },
   { href: "/#approach", label: "Approach" },
-  { href: "/#about", label: "About" },
+  { href: "/about", label: "About" },
 ] as const;
 
 export const NAV_CTA = {

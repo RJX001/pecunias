@@ -83,14 +83,14 @@ export function Contact() {
             {FINAL_CTA.headline}
           </h2>
           <p className="support">{FINAL_CTA.support}</p>
-          <p className="mt-8 m-0 text-[18px] font-semibold text-green">
+          <p className="mt-8 m-0 text-[18px] font-semibold text-green-text">
             {FINAL_CTA.cta}
           </p>
         </header>
 
         {status === "success" ? (
           <div className="border border-line bg-bg-raised p-8" role="status">
-            <p className="m-0 text-[13px] text-green">Received</p>
+            <p className="m-0 text-[13px] text-green-text">Received</p>
             <p className="mt-3 m-0 text-[28px] font-bold tracking-[-0.02em]">
               Request received.
             </p>

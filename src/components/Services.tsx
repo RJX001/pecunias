@@ -82,12 +82,12 @@ function ServiceRow({
       <button
         type="button"
         id={headerId}
-        className={`${COLS} cursor-pointer py-5 text-left transition-colors hover:bg-bg-raised focus-visible:bg-bg-raised focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-green`}
+        className={`${COLS} cursor-pointer py-5 text-left transition-colors hover:bg-bg-raised focus-visible:bg-bg-raised focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-green-text`}
         aria-expanded={open}
         aria-controls={panelId}
         onClick={onToggle}
       >
-        <span className="text-[13px] font-semibold text-green">
+        <span className="text-[13px] font-semibold text-green-text">
           {category.code}
         </span>
         <span className="min-w-0">
@@ -117,7 +117,7 @@ function ServiceRow({
         <div className="min-h-0 overflow-hidden">
           {category.items.map((item) => (
             <div key={item.code} className={`${COLS} border-t border-line py-4`}>
-              <span className="text-[12px] text-green">{item.code}</span>
+              <span className="text-[12px] text-green-text">{item.code}</span>
               <span className="min-w-0">
                 <span className="block text-sm font-medium text-fg">
                   {item.name}
@@ -144,7 +144,7 @@ function Chevron({ open }: { open: boolean }) {
       viewBox="0 0 16 16"
       width="14"
       height="14"
-      className={`text-green transition-transform duration-500 ${
+      className={`text-green-text transition-transform duration-500 ${
         open ? "rotate-90" : "rotate-0"
       }`}
       aria-hidden="true"

@@ -3,18 +3,20 @@ import { Reveal } from "./Reveal";
 
 export function About() {
   return (
-    <section id="about" className="section-pad">
+    <section className="section-pad pt-32 md:pt-44">
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
           <p className="kicker">{ABOUT.subheading}</p>
-          <h2 className="display max-w-[14ch] text-[clamp(34px,5vw,58px)]">
+          <h1 className="display max-w-[12ch] text-[clamp(40px,7vw,88px)]">
             {ABOUT.heading}
-          </h2>
-          {ABOUT.copy.map((paragraph) => (
-            <p key={paragraph} className="support">
-              {paragraph}
-            </p>
-          ))}
+          </h1>
+          <div className="mt-6 md:mt-10">
+            {ABOUT.copy.map((paragraph) => (
+              <p key={paragraph} className="support max-w-[60ch]">
+                {paragraph}
+              </p>
+            ))}
+          </div>
         </Reveal>
       </div>
     </section>
