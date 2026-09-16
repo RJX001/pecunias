@@ -1,161 +1,58 @@
-"use client";
-
-import { useState } from "react";
-import { services, type ServiceCategory } from "@/data/services";
-
-const COLS =
-  "grid w-full grid-cols-[56px_minmax(0,1fr)_32px] items-start gap-x-3 sm:grid-cols-[80px_minmax(0,1fr)_minmax(0,1.5fr)_40px] sm:gap-x-4";
+import Link from "next/link";
+import {
+  GROWTH_STACK_HEADING,
+  GROWTH_STACK_INTRO,
+  growthStack,
+  splitGrowthSystemTitle,
+} from "@/data/growth-stack";
+import { FINAL_CTA } from "@/data/homepage-copy";
+import { Reveal } from "./Reveal";
 
 export function Services() {
-  const [openCodes, setOpenCodes] = useState<ReadonlySet<string>>(
-    () => new Set(),
-  );
-
-  function toggle(code: string) {
-    setOpenCodes((prev) => {
-      const next = new Set(prev);
-      if (next.has(code)) {
-        next.delete(code);
-      } else {
-        next.add(code);
-      }
-      return next;
-    });
-  }
-
   return (
-    <section className="section-pad pt-32">
+    <section className="section-pad pt-32 md:pt-44">
       <div className="mx-auto max-w-[var(--maxw)]">
-        <p className="kicker">Growth stack</p>
-        <h2 className="display mt-2 text-[clamp(34px,5vw,58px)]">
-          Five lines. One system.
-        </h2>
-        <p className="support">
-          Each engagement is scoped and quoted individually. Select a category
-          to see what&apos;s included.
-        </p>
+        <Reveal>
+          <h1 className="display max-w-[16ch] text-[clamp(40px,7vw,88px)]">
+            {GROWTH_STACK_HEADING}
+          </h1>
+          <p className="support">{GROWTH_STACK_INTRO}</p>
+        </Reveal>
 
-        <div className="mt-14 border-y border-line">
-          <div
-            className={`${COLS} border-b border-line py-3 text-[12px] font-medium text-fg-faint`}
-          >
-            <span>Code</span>
-            <span>Category</span>
-            <span className="hidden sm:block">Description</span>
-            <span className="sr-only">Expand</span>
-          </div>
-
-          {services.map((category) => (
-            <ServiceRow
-              key={category.code}
-              category={category}
-              open={openCodes.has(category.code)}
-              onToggle={() => toggle(category.code)}
-            />
-          ))}
-        </div>
+        <nav aria-label={GROWTH_STACK_HEADING} className="mt-14 border-y border-line">
+          {growthStack.map((system) => {
+            const { code, name } = splitGrowthSystemTitle(system.title);
+            return (
+              <Link
+                key={system.slug}
+                href={`/services/${system.slug}`}
+                className="group grid min-h-[72px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-line py-6 text-fg no-underline last:border-b-0 transition-colors hover:bg-bg-raised sm:min-h-[88px] sm:py-8"
+              >
+                <span className="min-w-0">
+                  <span className="block font-mono text-[13px] font-semibold text-green-text">
+                    {code}
+                  </span>
+                  <span className="mt-1 block font-display text-[22px] font-bold tracking-[-0.02em] text-fg md:text-[28px]">
+                    {name}
+                  </span>
+                </span>
+                <span
+                  className="inline-block pr-1 text-[22px] leading-none text-green-text transition-transform duration-300 ease-[var(--ease)] group-hover:translate-x-1"
+                  aria-hidden="true"
+                >
+                  →
+                </span>
+              </Link>
+            );
+          })}
+        </nav>
 
         <div className="mt-12">
-          <a href="/#contact" className="btn btn-solid">
-            Start a project
+          <a href={FINAL_CTA.href} className="btn btn-solid">
+            {FINAL_CTA.cta}
           </a>
         </div>
       </div>
     </section>
-  );
-}
-
-function ServiceRow({
-  category,
-  open,
-  onToggle,
-}: {
-  category: ServiceCategory;
-  open: boolean;
-  onToggle: () => void;
-}) {
-  const panelId = `service-panel-${category.code}`;
-  const headerId = `service-header-${category.code}`;
-
-  return (
-    <div className="border-b border-line last:border-b-0">
-      <button
-        type="button"
-        id={headerId}
-        className={`${COLS} cursor-pointer py-5 text-left transition-colors hover:bg-bg-raised focus-visible:bg-bg-raised focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-green-text`}
-        aria-expanded={open}
-        aria-controls={panelId}
-        onClick={onToggle}
-      >
-        <span className="text-[13px] font-semibold text-green-text">
-          {category.code}
-        </span>
-        <span className="min-w-0">
-          <span className="block text-[0.95rem] font-medium text-fg">
-            {category.name}
-          </span>
-          <span className="mt-1 block text-sm leading-relaxed text-fg-dim sm:hidden">
-            {category.description}
-          </span>
-        </span>
-        <span className="hidden min-w-0 text-sm leading-relaxed text-fg-dim sm:block">
-          {category.description}
-        </span>
-        <span className="flex justify-end pt-0.5">
-          <Chevron open={open} />
-        </span>
-      </button>
-
-      <div
-        id={panelId}
-        role="region"
-        aria-labelledby={headerId}
-        aria-hidden={!open}
-        className="grid transition-[grid-template-rows] duration-500 ease-[var(--ease)]"
-        style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
-      >
-        <div className="min-h-0 overflow-hidden">
-          {category.items.map((item) => (
-            <div key={item.code} className={`${COLS} border-t border-line py-4`}>
-              <span className="text-[12px] text-green-text">{item.code}</span>
-              <span className="min-w-0">
-                <span className="block text-sm font-medium text-fg">
-                  {item.name}
-                </span>
-                <span className="mt-1 block text-sm leading-relaxed text-fg-dim sm:hidden">
-                  {item.description}
-                </span>
-              </span>
-              <span className="hidden min-w-0 text-sm leading-relaxed text-fg-dim sm:block">
-                {item.description}
-              </span>
-              <span aria-hidden="true" />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Chevron({ open }: { open: boolean }) {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width="14"
-      height="14"
-      className={`text-green-text transition-transform duration-500 ${
-        open ? "rotate-90" : "rotate-0"
-      }`}
-      aria-hidden="true"
-    >
-      <path
-        d="M6 3.5 11 8 6 12.5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.25"
-        strokeLinecap="square"
-      />
-    </svg>
   );
 }

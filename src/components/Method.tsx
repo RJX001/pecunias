@@ -64,7 +64,7 @@ export function Method() {
           <h2 className="display max-w-[16ch] text-[clamp(34px,5vw,58px)]">
             {APPROACH_HEADING}
           </h2>
-          <p className="mt-6 m-0 max-w-[36ch] text-[22px] font-bold tracking-[-0.02em] md:text-[26px]">
+          <p className="mt-6 m-0 max-w-[36ch] text-[22px] font-bold tracking-[-0.02em] text-green md:text-[26px]">
             {APPROACH_INTRO}
           </p>
           <p className="support">{APPROACH_SUPPORT}</p>

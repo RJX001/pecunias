@@ -20,7 +20,7 @@
   --recessed-bg: rgba(24, 20, 16, 0.045);
 
   /* Primary bright growth accent. --ledger stays the muted secondary green. */
-  --green: #84e4a8;
+  --green: #00C978;
   /*
    * Approved soft value is #1c3628 (opaque dark green). On a white canvas that
    * turns glows/soft fills into dark smudges under ink headlines, so the light
@@ -29,7 +29,7 @@
   --green-soft: color-mix(in srgb, var(--green) 22%, transparent);
   --green-deep: #25422f;
   /*
-   * Small-text green (codes, badges, 13–18px labels). #84E4A8 on white is ~1.6:1,
+   * Small-text green (codes, badges, 13–18px labels). #00C978 on white is ~2.2:1,
    * so light uses the muted ledger green; dark maps back to the bright accent.
    * Rails, dots, fills and display-size emphasis keep --green.
    */
@@ -57,7 +57,7 @@
   --line-strong: rgba(246, 240, 228, 0.28);
   --header-bg: rgba(18, 24, 26, 0.92);
   --recessed-bg: rgba(0, 0, 0, 0.15);
-  --green: #84e4a8;
+  --green: #00C978;
   --green-soft: #1c3628;
   --green-deep: #25422f;
   --green-text: var(--green);
@@ -217,6 +217,18 @@ h2 {
 .btn-solid:hover {
   background: color-mix(in srgb, var(--dark-text) 88%, white);
   border-color: color-mix(in srgb, var(--dark-text) 88%, white);
+}
+
+.btn-green {
+  background: var(--green);
+  color: var(--dark-text);
+  border-color: var(--green);
+}
+
+.btn-green:hover {
+  background: color-mix(in srgb, var(--green) 82%, black);
+  border-color: color-mix(in srgb, var(--green) 82%, black);
+  color: var(--dark-text);
 }
 
 .btn:focus-visible {

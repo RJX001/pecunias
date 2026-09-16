@@ -1,13 +1,20 @@
 /**
- * Approved homepage Growth Stack (four systems) from
- * PecuniaStudios-Cursor-4-SubAgent-Implementation.md §9.
+ * Approved Growth Stack (four systems) from
+ * PecuniaStudios-Cursor-4-SubAgent-Implementation.md §9 / Update_1 §43.
  *
- * This is marketing grouping for the homepage accordion.
- * Do NOT merge into or duplicate `src/data/services.ts` (6 codes / 18 items
- * for `/services`).
+ * Single source of truth for homepage Growth Stack, `/services` index,
+ * and `/services/[slug]` pages. Do not duplicate paragraphs elsewhere.
+ * Do NOT merge into or duplicate `src/data/services.ts`.
  */
 
+export type GrowthSystemSlug =
+  | "digital-ecommerce"
+  | "paid-growth"
+  | "organic-growth-content"
+  | "ai-automation-crm";
+
 export type GrowthSystem = {
+  slug: GrowthSystemSlug;
   title: string;
   description: string;
   body: readonly string[];
@@ -20,8 +27,11 @@ export const GROWTH_STACK_HEADING = "Our Services — The Growth Stack";
 export const GROWTH_STACK_INTRO =
   "Four connected systems. Not four separate suppliers.";
 
+const TITLE_SEPARATOR = " — ";
+
 export const growthStack: readonly GrowthSystem[] = [
   {
+    slug: "digital-ecommerce",
     title: "01 — Digital & E-commerce",
     description: "Digital infrastructure built to convert.",
     body: [
@@ -36,6 +46,7 @@ export const growthStack: readonly GrowthSystem[] = [
     ],
   },
   {
+    slug: "paid-growth",
     title: "02 — Paid Growth",
     description: "Put your offer in front of the right people.",
     body: [
@@ -52,6 +63,7 @@ export const growthStack: readonly GrowthSystem[] = [
     ],
   },
   {
+    slug: "organic-growth-content",
     title: "03 — Organic Growth & Content",
     description: "Build demand that compounds.",
     body: [
@@ -70,6 +82,7 @@ export const growthStack: readonly GrowthSystem[] = [
     ],
   },
   {
+    slug: "ai-automation-crm",
     title: "04 — AI, Automation & CRM",
     description: "Turn manual processes into growth infrastructure.",
     body: [
@@ -88,3 +101,21 @@ export const growthStack: readonly GrowthSystem[] = [
     ],
   },
 ];
+
+export function getGrowthSystem(slug: string): GrowthSystem | undefined {
+  return growthStack.find((system) => system.slug === slug);
+}
+
+export function splitGrowthSystemTitle(title: string): {
+  code: string;
+  name: string;
+} {
+  const at = title.indexOf(TITLE_SEPARATOR);
+  if (at === -1) {
+    return { code: title, name: title };
+  }
+  return {
+    code: title.slice(0, at),
+    name: title.slice(at + TITLE_SEPARATOR.length),
+  };
+}

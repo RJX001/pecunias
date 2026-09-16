@@ -12,20 +12,24 @@ import {
 import { Magnetic } from "./Magnetic";
 
 const HEADLINE_HOLD_MS = 4500;
-const HEADLINE_FADE_MS = 400;
+const HEADLINE_EXIT_MS = 400;
+const HEADLINE_GAP_MS = 150;
+const HEADLINE_ENTER_MS = 500;
 const RAIL_STEP_MS = 2800;
 const RAIL_HOLD_MS = 4200;
+
+type HeadlinePhase = "hold" | "exiting" | "entering";
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const [headlineIndex, setHeadlineIndex] = useState(0);
-  const [headlineVisible, setHeadlineVisible] = useState(true);
+  const [headlinePhase, setHeadlinePhase] = useState<HeadlinePhase>("hold");
   const [active, setActive] = useState(0);
 
   useLayoutEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setActive(HERO_RAIL.length - 1);
-      setHeadlineVisible(true);
+      setHeadlinePhase("hold");
       setHeadlineIndex(0);
     }
   }, []);
@@ -41,26 +45,37 @@ export function Hero() {
     let cancelled = false;
     let running = false;
     let headlineHoldId = 0;
-    let headlineFadeId = 0;
+    let headlineExitId = 0;
+    let headlineGapId = 0;
+    let headlineEnterId = 0;
     let railId = 0;
     let railIndex = 0;
 
     const clearTimers = () => {
       window.clearTimeout(headlineHoldId);
-      window.clearTimeout(headlineFadeId);
+      window.clearTimeout(headlineExitId);
+      window.clearTimeout(headlineGapId);
+      window.clearTimeout(headlineEnterId);
       window.clearTimeout(railId);
     };
 
     const scheduleHeadline = () => {
       headlineHoldId = window.setTimeout(() => {
         if (cancelled) return;
-        setHeadlineVisible(false);
-        headlineFadeId = window.setTimeout(() => {
+        setHeadlinePhase("exiting");
+        headlineExitId = window.setTimeout(() => {
           if (cancelled) return;
-          setHeadlineIndex((current) => (current + 1) % HERO_HEADLINES.length);
-          setHeadlineVisible(true);
-          scheduleHeadline();
-        }, HEADLINE_FADE_MS);
+          headlineGapId = window.setTimeout(() => {
+            if (cancelled) return;
+            setHeadlineIndex((current) => (current + 1) % HERO_HEADLINES.length);
+            setHeadlinePhase("entering");
+            headlineEnterId = window.setTimeout(() => {
+              if (cancelled) return;
+              setHeadlinePhase("hold");
+              scheduleHeadline();
+            }, HEADLINE_ENTER_MS);
+          }, HEADLINE_GAP_MS);
+        }, HEADLINE_EXIT_MS);
       }, HEADLINE_HOLD_MS);
     };
 
@@ -78,7 +93,7 @@ export function Hero() {
     const start = () => {
       if (running || cancelled) return;
       running = true;
-      setHeadlineVisible(true);
+      setHeadlinePhase("hold");
       scheduleHeadline();
       scheduleRail();
     };
@@ -126,26 +141,38 @@ export function Hero() {
       <div className="wrap relative grid w-full min-w-0 gap-12 pt-32">
         <div className="min-w-0">
           <p className="kicker">{HERO_IDENTITY}</p>
-          <p className="m-0 text-[18px] font-medium text-fg-dim md:text-[20px]">
+          <p className="m-0 text-[18px] font-medium text-fg md:text-[20px]">
             {HERO_LEAD_IN}
           </p>
           <h1
-            className="display mt-3 grid min-w-0 text-[clamp(36px,8vw,92px)] text-fg"
+            className="display mt-3 grid min-w-0 text-[clamp(36px,8vw,92px)]"
             aria-live="polite"
           >
-            {HERO_HEADLINES.map((headline, index) => (
-              <span
-                key={headline}
-                className={`col-start-1 row-start-1 min-w-0 wrap-break-word transition-opacity duration-[400ms] ease-[var(--ease)] ${
-                  index === headlineIndex && headlineVisible
-                    ? "opacity-100"
-                    : "pointer-events-none opacity-0"
-                }`}
-                aria-hidden={index !== headlineIndex}
-              >
-                {headline}
-              </span>
-            ))}
+            {HERO_HEADLINES.map((headline, index) => {
+              const isCurrent = index === headlineIndex;
+              const isShown =
+                isCurrent &&
+                (headlinePhase === "hold" || headlinePhase === "entering");
+              const isExiting = isCurrent && headlinePhase === "exiting";
+              const duration =
+                headlinePhase === "entering" ? "duration-[500ms]" : "duration-[400ms]";
+
+              return (
+                <span
+                  key={headline}
+                  className={`col-start-1 row-start-1 min-w-0 wrap-break-word text-green transition-[opacity,transform] ${duration} ease-[var(--ease)] motion-reduce:translate-y-0 motion-reduce:transition-opacity ${
+                    isShown
+                      ? "translate-y-0 opacity-100"
+                      : isExiting
+                        ? "pointer-events-none -translate-y-[10px] opacity-0"
+                        : "pointer-events-none translate-y-[10px] opacity-0"
+                  }`}
+                  aria-hidden={index !== headlineIndex}
+                >
+                  {headline}
+                </span>
+              );
+            })}
           </h1>
           {HERO_SUPPORT.map((paragraph) => (
             <p key={paragraph} className="support">
@@ -154,7 +181,10 @@ export function Hero() {
           ))}
           <div className="mt-8 flex flex-wrap gap-3">
             <Magnetic>
-              <a href="/#contact" className="btn btn-solid">
+              <a
+                href="/#contact"
+                className="btn btn-green bg-green text-dark-text"
+              >
                 {HERO_CTA}
               </a>
             </Magnetic>

@@ -35,14 +35,6 @@ export function Footer() {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link
-                href="/services"
-                className="text-fg-dim no-underline hover:text-fg"
-              >
-                Stack
-              </Link>
-            </li>
           </ul>
           <div className="mt-6">
             <Magnetic>
