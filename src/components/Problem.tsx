@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { WHY_PECUNIA } from "@/data/homepage-copy";
 import { Reveal } from "./Reveal";
 
@@ -14,24 +14,60 @@ const CHIPS = [
   "Marketplace",
 ] as const;
 
+const CHIP_SLOTS = [
+  { left: "22%", top: "20%" },
+  { left: "78%", top: "18%" },
+  { left: "16%", top: "50%" },
+  { left: "84%", top: "48%" },
+  { left: "26%", top: "80%" },
+  { left: "74%", top: "82%" },
+  { left: "50%", top: "12%" },
+] as const;
+
+const CLUSTER_SLOTS = [
+  { left: "30%", top: "28%" },
+  { left: "70%", top: "28%" },
+  { left: "22%", top: "50%" },
+  { left: "78%", top: "50%" },
+  { left: "32%", top: "72%" },
+  { left: "68%", top: "72%" },
+  { left: "50%", top: "20%" },
+] as const;
+
 export function Problem() {
   const ref = useRef<HTMLDivElement>(null);
   const [merged, setMerged] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  useLayoutEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setReduceMotion(true);
+      setMerged(true);
+    }
+  }, []);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
     const node = ref.current;
     if (!node) return;
+    let timeoutId = 0;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          window.setTimeout(() => setMerged(true), 400);
+          timeoutId = window.setTimeout(() => setMerged(true), 400);
           observer.disconnect();
         }
       },
       { threshold: 0.4 },
     );
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(timeoutId);
+    };
   }, []);
 
   return (
@@ -49,29 +85,46 @@ export function Problem() {
 
         <div
           ref={ref}
-          className="relative mt-16 flex min-h-[280px] flex-wrap items-center justify-center gap-3"
+          className="relative mt-16 flex min-h-[240px] items-center justify-center overflow-hidden px-2 sm:min-h-[280px]"
         >
-          {CHIPS.map((chip, index) => (
-            <span
-              key={chip}
-              className={`border px-4 py-2 text-[14px] font-medium transition-all duration-700 ${
-                merged
-                  ? "absolute border-green-deep bg-green-soft text-green opacity-0"
-                  : "relative border-line text-fg-dim"
-              }`}
-              style={{
-                transitionDelay: merged ? `${index * 40}ms` : "0ms",
-                transform: merged
-                  ? "translate(0, 0) scale(0.6)"
-                  : `translate(${(index - 3) * 4}px, ${(index % 2) * 8}px)`,
-              }}
-            >
-              {chip}
-            </span>
-          ))}
+          {CHIPS.map((chip, index) => {
+            const slot = CHIP_SLOTS[index];
+            const cluster = CLUSTER_SLOTS[index];
+            const stayVisible = reduceMotion && merged;
+            return (
+              <span
+                key={chip}
+                aria-hidden="true"
+                className={`pointer-events-none absolute whitespace-nowrap border px-3 py-2 text-[13px] font-medium sm:px-4 sm:text-[14px] transition-[left,top,opacity,transform] duration-700 ease-[var(--ease)] ${
+                  merged
+                    ? "border-green-deep text-green"
+                    : "border-line text-fg-dim"
+                }`}
+                style={{
+                  left: merged
+                    ? stayVisible
+                      ? cluster.left
+                      : "50%"
+                    : slot.left,
+                  top: merged
+                    ? stayVisible
+                      ? cluster.top
+                      : "50%"
+                    : slot.top,
+                  opacity: merged && !stayVisible ? 0 : 1,
+                  transform: merged && !stayVisible
+                    ? "translate(-50%, -50%) scale(0.7)"
+                    : "translate(-50%, -50%)",
+                  transitionDelay: merged && !stayVisible ? `${index * 55}ms` : "0ms",
+                }}
+              >
+                {chip}
+              </span>
+            );
+          })}
 
           <span
-            className={`relative z-10 border px-6 py-3 text-[18px] font-bold tracking-[0.08em] transition-all duration-700 ${
+            className={`relative z-10 border px-6 py-3 text-[18px] font-bold tracking-[0.08em] transition-[border-color,background-color,color] duration-700 ease-[var(--ease)] ${
               merged
                 ? "border-green-deep bg-green-soft text-green"
                 : "border-line text-fg-faint"

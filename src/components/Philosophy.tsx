@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { STANDARD } from "@/data/homepage-copy";
 
 const BLOCKS = [
@@ -13,28 +13,41 @@ export function Philosophy() {
   const refs = useRef<(HTMLParagraphElement | null)[]>([]);
   const [seen, setSeen] = useState<boolean[]>(() => BLOCKS.map(() => false));
 
+  useLayoutEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setSeen(BLOCKS.map(() => true));
+    }
+  }, []);
+
   useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    refs.current.forEach((node, index) => {
-      if (!node) return;
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setSeen((current) => {
-              if (current[index]) return current;
-              const next = [...current];
-              next[index] = true;
-              return next;
-            });
-            observer.disconnect();
-          }
-        },
-        { threshold: 0.6 },
-      );
-      observer.observe(node);
-      observers.push(observer);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const index = refs.current.indexOf(
+            entry.target as HTMLParagraphElement,
+          );
+          if (index < 0) return;
+          setSeen((current) => {
+            if (current[index]) return current;
+            const next = [...current];
+            next[index] = true;
+            return next;
+          });
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.6 },
+    );
+
+    refs.current.forEach((node) => {
+      if (node) observer.observe(node);
     });
-    return () => observers.forEach((observer) => observer.disconnect());
+    return () => observer.disconnect();
   }, []);
 
   return (

@@ -3,6 +3,7 @@
 import { useEffect, useId, useState } from "react";
 import Link from "next/link";
 import { NAV_CTA, NAV_LINKS } from "@/data/homepage-copy";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { Magnetic } from "./Magnetic";
 
 export function Header() {
@@ -36,7 +37,7 @@ export function Header() {
     <header
       className={`fixed top-0 right-0 left-0 z-50 transition-[background-color,backdrop-filter,padding] duration-300 ${
         scrolled || open
-          ? "bg-bg/92 py-3 backdrop-blur-md"
+          ? "bg-header-bg py-3 backdrop-blur-md"
           : "bg-transparent py-5"
       }`}
     >
@@ -69,7 +70,8 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="hidden min-[960px]:block">
+        <div className="hidden items-center gap-3 min-[960px]:flex">
+          <ThemeToggle />
           <Magnetic>
             <a href={NAV_CTA.href} className="btn btn-solid">
               {NAV_CTA.label}
@@ -120,7 +122,8 @@ export function Header() {
             </li>
           ))}
         </ul>
-        <div className="px-[var(--pad)] pb-12">
+        <div className="flex flex-col items-start gap-4 px-[var(--pad)] pb-12">
+          <ThemeToggle />
           <a href={NAV_CTA.href} className="btn btn-solid" onClick={closeMenu}>
             {NAV_CTA.label}
           </a>

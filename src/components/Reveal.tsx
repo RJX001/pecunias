@@ -23,6 +23,7 @@ export function Reveal({
       ([entry]) => {
         if (entry.isIntersecting) {
           node.classList.add("is-in");
+          observer.unobserve(node);
           observer.disconnect();
         }
       },

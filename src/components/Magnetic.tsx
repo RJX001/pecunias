@@ -2,6 +2,8 @@
 
 import { useRef, type MouseEvent, type ReactNode } from "react";
 
+const STRENGTH = 0.1;
+
 export function Magnetic({
   children,
   className = "",
@@ -12,13 +14,18 @@ export function Magnetic({
   const ref = useRef<HTMLDivElement>(null);
 
   function onMove(event: MouseEvent<HTMLDivElement>) {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce), (pointer: coarse)")
+        .matches
+    ) {
+      return;
+    }
     const node = ref.current;
     if (!node) return;
     const rect = node.getBoundingClientRect();
     const x = event.clientX - rect.left - rect.width / 2;
     const y = event.clientY - rect.top - rect.height / 2;
-    node.style.transform = `translate(${x * 0.18}px, ${y * 0.18}px)`;
+    node.style.transform = `translate(${x * STRENGTH}px, ${y * STRENGTH}px)`;
   }
 
   function onLeave() {

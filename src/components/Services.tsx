@@ -4,7 +4,7 @@ import { useState } from "react";
 import { services, type ServiceCategory } from "@/data/services";
 
 const COLS =
-  "grid w-full grid-cols-[56px_minmax(0,1fr)_minmax(0,1.5fr)_32px] items-start gap-x-3 sm:grid-cols-[80px_1fr_2fr_40px] sm:gap-x-4";
+  "grid w-full grid-cols-[56px_minmax(0,1fr)_32px] items-start gap-x-3 sm:grid-cols-[80px_minmax(0,1fr)_minmax(0,1.5fr)_40px] sm:gap-x-4";
 
 export function Services() {
   const [openCodes, setOpenCodes] = useState<ReadonlySet<string>>(
@@ -41,7 +41,7 @@ export function Services() {
           >
             <span>Code</span>
             <span>Category</span>
-            <span>Description</span>
+            <span className="hidden sm:block">Description</span>
             <span className="sr-only">Expand</span>
           </div>
 
@@ -90,10 +90,15 @@ function ServiceRow({
         <span className="text-[13px] font-semibold text-green">
           {category.code}
         </span>
-        <span className="text-[0.95rem] font-medium text-fg">
-          {category.name}
+        <span className="min-w-0">
+          <span className="block text-[0.95rem] font-medium text-fg">
+            {category.name}
+          </span>
+          <span className="mt-1 block text-sm leading-relaxed text-fg-dim sm:hidden">
+            {category.description}
+          </span>
         </span>
-        <span className="text-sm leading-relaxed text-fg-dim">
+        <span className="hidden min-w-0 text-sm leading-relaxed text-fg-dim sm:block">
           {category.description}
         </span>
         <span className="flex justify-end pt-0.5">
@@ -106,21 +111,28 @@ function ServiceRow({
         role="region"
         aria-labelledby={headerId}
         aria-hidden={!open}
-        className="overflow-hidden transition-[max-height] duration-500"
-        style={{
-          maxHeight: open ? `${category.items.length * 9}rem` : "0px",
-        }}
+        className="grid transition-[grid-template-rows] duration-500 ease-[var(--ease)]"
+        style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
       >
-        {category.items.map((item) => (
-          <div key={item.code} className={`${COLS} border-t border-line py-4`}>
-            <span className="text-[12px] text-green">{item.code}</span>
-            <span className="text-sm font-medium text-fg">{item.name}</span>
-            <span className="text-sm leading-relaxed text-fg-dim">
-              {item.description}
-            </span>
-            <span aria-hidden="true" />
-          </div>
-        ))}
+        <div className="min-h-0 overflow-hidden">
+          {category.items.map((item) => (
+            <div key={item.code} className={`${COLS} border-t border-line py-4`}>
+              <span className="text-[12px] text-green">{item.code}</span>
+              <span className="min-w-0">
+                <span className="block text-sm font-medium text-fg">
+                  {item.name}
+                </span>
+                <span className="mt-1 block text-sm leading-relaxed text-fg-dim sm:hidden">
+                  {item.description}
+                </span>
+              </span>
+              <span className="hidden min-w-0 text-sm leading-relaxed text-fg-dim sm:block">
+                {item.description}
+              </span>
+              <span aria-hidden="true" />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
