@@ -1,101 +1,95 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { COMMITMENT } from "@/data/homepage-copy";
 import { Reveal } from "./Reveal";
 
 const CLOSING_GREEN = "We find out why. Then we fix it.";
+const RAIL_STEP_MS = 2800;
+const RAIL_HOLD_MS = 4200;
+const ITEM_COUNT = COMMITMENT.items.length;
+const REDUCE_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
-function isMobileViewport() {
-  return window.matchMedia("(max-width: 767px)").matches;
+function subscribeReducedMotion(onChange: () => void) {
+  const mq = window.matchMedia(REDUCE_MOTION_QUERY);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
 }
 
-function isTwoColViewport() {
-  return window.matchMedia("(min-width: 640px)").matches;
+function getReducedMotion() {
+  return window.matchMedia(REDUCE_MOTION_QUERY).matches;
 }
 
-function activeZoneMargin() {
-  return isMobileViewport() ? "-28% 0px -52% 0px" : "-38% 0px -42% 0px";
-}
-
-function activeZoneY() {
-  return window.innerHeight * (isMobileViewport() ? 0.38 : 0.48);
-}
-
-function itemActivationY(node: HTMLElement, index: number, twoCol: boolean) {
-  const rect = node.getBoundingClientRect();
-  const mid = (rect.top + rect.bottom) / 2;
-  if (!twoCol) return mid;
-  const offset = rect.height * 0.28;
-  return index % 2 === 0 ? mid - offset : mid + offset;
+function getReducedMotionServer() {
+  return false;
 }
 
 export function Why() {
-  const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
-  const [activeItem, setActiveItem] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [active, setActive] = useState(0);
+  const reduceMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotion,
+    getReducedMotionServer,
+  );
   const closingInk = COMMITMENT.closing
     .slice(0, COMMITMENT.closing.indexOf(CLOSING_GREEN))
     .trim();
 
   useEffect(() => {
-    const ratios = new Map<Element, number>();
-    let observer: IntersectionObserver | null = null;
+    if (reduceMotion) return;
 
-    const pickActive = () => {
-      const zoneY = activeZoneY();
-      const twoCol = isTwoColViewport();
-      let bestIndex = 0;
-      let bestScore = Number.NEGATIVE_INFINITY;
-      itemRefs.current.forEach((node, index) => {
-        if (!node) return;
-        const ratio = ratios.get(node) ?? 0;
-        const mid = itemActivationY(node, index, twoCol);
-        const score = ratio * 10000 - Math.abs(mid - zoneY);
-        if (score > bestScore) {
-          bestScore = score;
-          bestIndex = index;
-        }
-      });
-      setActiveItem((current) => (current === bestIndex ? current : bestIndex));
+    const section = sectionRef.current;
+    if (!section) return;
+
+    let cancelled = false;
+    let running = false;
+    let railId = 0;
+    let railIndex = 0;
+
+    const clearTimers = () => {
+      window.clearTimeout(railId);
     };
 
-    const connect = () => {
-      observer?.disconnect();
-      observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            ratios.set(
-              entry.target,
-              entry.isIntersecting ? entry.intersectionRatio : 0,
-            );
-          }
-          pickActive();
-        },
-        {
-          root: null,
-          rootMargin: activeZoneMargin(),
-          threshold: [0, 0.15, 0.35, 0.5, 0.75, 1],
-        },
-      );
-      itemRefs.current.forEach((node) => {
-        if (node) observer?.observe(node);
-      });
+    const scheduleRail = () => {
+      const delay = railIndex >= ITEM_COUNT - 1 ? RAIL_HOLD_MS : RAIL_STEP_MS;
+      railId = window.setTimeout(() => {
+        if (cancelled) return;
+        railIndex = (railIndex + 1) % ITEM_COUNT;
+        setActive(railIndex);
+        scheduleRail();
+      }, delay);
     };
 
-    connect();
-    const mobileMq = window.matchMedia("(max-width: 767px)");
-    const twoColMq = window.matchMedia("(min-width: 640px)");
-    mobileMq.addEventListener("change", connect);
-    twoColMq.addEventListener("change", connect);
+    const start = () => {
+      if (running || cancelled) return;
+      running = true;
+      scheduleRail();
+    };
+
+    const stop = () => {
+      running = false;
+      clearTimers();
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) start();
+        else stop();
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(section);
+
     return () => {
-      mobileMq.removeEventListener("change", connect);
-      twoColMq.removeEventListener("change", connect);
-      observer?.disconnect();
+      cancelled = true;
+      stop();
+      observer.disconnect();
     };
-  }, []);
+  }, [reduceMotion]);
 
   return (
-    <section id="commitment" className="section-pad">
+    <section id="commitment" ref={sectionRef} className="section-pad">
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
           <h2 className="display max-w-[14ch] text-[clamp(34px,5vw,58px)]">
@@ -110,26 +104,35 @@ export function Why() {
         <Reveal>
           <ol className="mt-14 m-0 grid list-none gap-0 border-t border-line p-0 sm:grid-cols-2">
             {COMMITMENT.items.map((item, index) => {
-              const isActive = index === activeItem;
+              const current = !reduceMotion && index === active;
+              const done = reduceMotion || index < active;
+              const reached = done || current;
               return (
                 <li
                   key={item}
-                  ref={(node) => {
-                    itemRefs.current[index] = node;
-                  }}
-                  className="grid grid-cols-[auto_1fr] items-baseline gap-4 border-b border-line px-0 py-5 sm:px-6 sm:odd:border-r"
+                  className="relative grid grid-cols-[auto_1fr] items-baseline gap-4 border-b border-line px-0 py-5 sm:px-6 sm:odd:border-r"
                 >
                   <span
-                    className={`text-[13px] font-semibold transition-[color] duration-300 ease-[var(--ease)] motion-reduce:duration-0 ${
-                      isActive ? "text-green" : "text-fg-faint"
+                    aria-hidden="true"
+                    className="absolute top-0 left-0 h-px w-full origin-left bg-green transition-transform duration-700 ease-[var(--ease)] motion-reduce:duration-0"
+                    style={{ transform: reached ? "scaleX(1)" : "scaleX(0)" }}
+                  />
+                  <span
+                    className={`text-[13px] font-semibold transition-[color] duration-700 ease-[var(--ease)] motion-reduce:duration-0 ${
+                      current
+                        ? "text-green-text"
+                        : done
+                          ? "text-fg"
+                          : "text-fg-faint"
                     }`}
                   >
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <span
-                    className={`text-[16px] font-semibold tracking-[-0.01em] transition-[color] duration-300 ease-[var(--ease)] motion-reduce:duration-0 ${
-                      isActive ? "text-green" : "text-fg"
+                    className={`text-[16px] font-semibold tracking-[-0.01em] transition-[color] duration-700 ease-[var(--ease)] motion-reduce:duration-0 ${
+                      current ? "text-green" : done ? "text-fg" : "text-fg-faint"
                     }`}
+                    aria-current={current ? "step" : undefined}
                   >
                     {item}
                   </span>

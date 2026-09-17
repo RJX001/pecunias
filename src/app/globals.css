@@ -46,6 +46,9 @@
 
   --maxw: 1240px;
   --pad: clamp(20px, 5vw, 64px);
+  --section-y: clamp(56px, 9vw, 96px);
+  --section-y-end: clamp(48px, 7vw, 72px);
+  --section-y-tight: clamp(44px, 5vw, 56px);
   --ease: cubic-bezier(0.16, 0.8, 0.24, 1);
 }
 
@@ -158,7 +161,28 @@ a {
 }
 
 .section-pad {
-  padding: min(14vw, 150px) var(--pad) min(10vw, 110px);
+  --section-pad-top: var(--section-y);
+  --section-pad-bottom: var(--section-y-end);
+  padding: var(--section-pad-top) var(--pad) var(--section-pad-bottom);
+}
+
+.section-pad-cluster {
+  --section-pad-top: var(--section-y-tight);
+  --section-pad-bottom: var(--section-y-tight);
+}
+
+.section-pad-tight-top {
+  --section-pad-top: var(--section-y-tight);
+}
+
+.section-page-top {
+  --section-pad-top: max(8rem, var(--section-y));
+}
+
+@media (min-width: 768px) {
+  .section-page-top {
+    --section-pad-top: max(11rem, var(--section-y));
+  }
 }
 
 .kicker {
@@ -238,6 +262,54 @@ h2 {
   background: color-mix(in srgb, var(--green) 82%, black);
   border-color: color-mix(in srgb, var(--green) 82%, black);
   color: #000000;
+}
+
+/* Shared WHAT WE DO list + numbered service rows */
+.what-we-do {
+  margin-top: 4rem;
+}
+
+.what-we-do-label {
+  margin: 0 0 12px;
+  color: var(--fg);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.what-we-do-list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.what-we-do-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 1rem;
+  padding-block: 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.service-row-num {
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.what-we-do-name {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--green);
+}
+
+.service-cta {
+  margin-top: 3rem;
 }
 
 .btn:focus-visible {

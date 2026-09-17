@@ -13,7 +13,7 @@ function splitAtComma(statement: string) {
 
 export function BrandStatement() {
   return (
-    <section className="section-pad border-t border-line">
+    <section className="section-pad section-pad-tight-top border-t border-line">
       <div className="mx-auto max-w-[var(--maxw)]">
         <h2 className="display max-w-[24ch] text-[clamp(34px,5vw,72px)]">
           <span className="block">{BUILT_FOR.headingInk}</span>

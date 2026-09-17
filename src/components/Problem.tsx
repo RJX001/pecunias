@@ -96,7 +96,7 @@ export function Problem() {
           <p className="mt-6 m-0 text-[17px] leading-relaxed text-content-text">
             {WHY_PECUNIA.then}
           </p>
-          <p className="mt-6 m-0 text-[20px] font-bold tracking-[-0.02em] text-fg">
+          <p className="mt-6 m-0 text-[20px] font-bold tracking-[-0.02em] text-green">
             {WHY_PECUNIA.closing}
           </p>
         </div>

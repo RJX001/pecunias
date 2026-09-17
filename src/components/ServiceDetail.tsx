@@ -7,6 +7,14 @@ import {
 } from "@/data/growth-stack";
 import { FINAL_CTA } from "@/data/homepage-copy";
 import { Reveal } from "./Reveal";
+import { WhatWeDo } from "./WhatWeDo";
+
+const SUBHEADLINE = "text-[22px] font-bold tracking-[-0.02em] md:text-[26px]";
+const CONNECTED_GREEN = "Not four separate suppliers.";
+const connectedInk = GROWTH_STACK_INTRO.slice(
+  0,
+  GROWTH_STACK_INTRO.indexOf(CONNECTED_GREEN),
+).trimEnd();
 
 export function ServiceDetail({ system }: { system: GrowthSystem }) {
   const { code, name } = splitGrowthSystemTitle(system.title);
@@ -28,7 +36,7 @@ export function ServiceDetail({ system }: { system: GrowthSystem }) {
           <h1 className="display max-w-[16ch] text-[clamp(40px,7vw,88px)]">
             {name}
           </h1>
-          <p className="mt-6 m-0 max-w-[36ch] text-[22px] font-bold tracking-[-0.02em] md:text-[26px]">
+          <p className={`mt-6 m-0 max-w-[36ch] ${SUBHEADLINE} text-green`}>
             {system.description}
           </p>
           <div className="mt-6 md:mt-10">
@@ -39,36 +47,20 @@ export function ServiceDetail({ system }: { system: GrowthSystem }) {
             ))}
           </div>
           {system.closing ? (
-            <p className="mt-8 m-0 max-w-[48ch] text-[17px] font-semibold leading-relaxed text-fg">
+            <p className={`mt-8 m-0 max-w-[48ch] ${SUBHEADLINE} text-fg`}>
               {system.closing}
             </p>
           ) : null}
         </Reveal>
 
         <Reveal>
-          <p className="mt-16 mb-3 text-[13px] font-semibold tracking-[0.04em] text-fg-faint">
-            WHAT WE DO
-          </p>
-          <ul className="m-0 grid list-none border-t border-line p-0">
-            {system.whatWeDo.map((item, index) => (
-              <li
-                key={item}
-                className="grid grid-cols-[auto_1fr] items-baseline gap-4 border-b border-line py-5"
-              >
-                <span className="font-mono text-[13px] font-semibold text-green-text">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span className="text-[16px] font-semibold tracking-[-0.01em] text-fg">
-                  {item}
-                </span>
-              </li>
-            ))}
-          </ul>
+          <WhatWeDo items={system.whatWeDo} />
         </Reveal>
 
         <Reveal>
           <p className="mt-16 m-0 max-w-[28ch] text-[clamp(22px,3.2vw,40px)] font-bold tracking-[-0.02em] leading-[1.15]">
-            {GROWTH_STACK_INTRO}
+            <span className="text-fg">{connectedInk}</span>{" "}
+            <span className="text-green">{CONNECTED_GREEN}</span>
           </p>
 
           <nav
@@ -95,8 +87,8 @@ export function ServiceDetail({ system }: { system: GrowthSystem }) {
           </nav>
         </Reveal>
 
-        <div className="mt-12">
-          <a href={FINAL_CTA.href} className="btn btn-solid">
+        <div className="service-cta">
+          <a href={FINAL_CTA.href} className="btn btn-green">
             {FINAL_CTA.cta}
           </a>
         </div>

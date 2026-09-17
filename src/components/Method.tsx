@@ -126,11 +126,7 @@ export function Method() {
   }, []);
 
   return (
-    <section
-      id="approach"
-      className="section-pad"
-      style={{ paddingTop: "min(7vw, 72px)" }}
-    >
+    <section id="approach" className="section-pad section-pad-cluster">
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
           <h2 className="display max-w-[16ch] text-[clamp(34px,5vw,58px)]">

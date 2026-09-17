@@ -6,7 +6,7 @@ const TEASER_COPY = ABOUT.copy.slice(0, 2);
 
 export function AboutTeaser() {
   return (
-    <section id="about" className="section-pad">
+    <section id="about" className="section-pad section-pad-cluster">
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
           <p className="kicker">{ABOUT.subheading}</p>

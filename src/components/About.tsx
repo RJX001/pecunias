@@ -4,7 +4,7 @@ import { Reveal } from "./Reveal";
 
 export function About() {
   return (
-    <section className="section-pad pt-32 md:pt-44">
+    <section className="section-pad section-page-top">
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
           <Link

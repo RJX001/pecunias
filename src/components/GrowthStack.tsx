@@ -4,7 +4,14 @@ import {
   GROWTH_STACK_INTRO,
   growthStack,
 } from "@/data/growth-stack";
+import { FINAL_CTA } from "@/data/homepage-copy";
 import { Reveal } from "./Reveal";
+
+const INTRO_GREEN = "Not four separate suppliers.";
+const introInk = GROWTH_STACK_INTRO.slice(
+  0,
+  GROWTH_STACK_INTRO.indexOf(INTRO_GREEN),
+).trimEnd();
 
 export function GrowthStack() {
   return (
@@ -26,7 +33,10 @@ export function GrowthStack() {
             </span>
             <span className="text-green">The Growth Stack</span>
           </h2>
-          <p className="support">{GROWTH_STACK_INTRO}</p>
+          <p className="support">
+            <span className="text-fg">{introInk}</span>{" "}
+            <span className="text-green">{INTRO_GREEN}</span>
+          </p>
         </Reveal>
 
         <nav aria-labelledby="growth-stack-heading">
@@ -59,6 +69,12 @@ export function GrowthStack() {
             ))}
           </ul>
         </nav>
+
+        <div className="service-cta">
+          <a href={FINAL_CTA.href} className="btn btn-green">
+            {FINAL_CTA.cta}
+          </a>
+        </div>
       </div>
     </section>
   );

@@ -8,6 +8,7 @@ import {
   HERO_RAIL,
   HERO_SUPPORT,
 } from "@/data/hero-headlines";
+import { FINAL_CTA } from "@/data/homepage-copy";
 import { Magnetic } from "./Magnetic";
 
 const HEADLINE_HOLD_MS = 4500;
@@ -179,7 +180,7 @@ export function Hero() {
           ))}
           <div className="mt-8 flex flex-wrap gap-3">
             <Magnetic>
-              <a href="/#contact" className="btn btn-green">
+              <a href={FINAL_CTA.href} className="btn btn-green">
                 {HERO_CTA}
               </a>
             </Magnetic>

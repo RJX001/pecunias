@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { FINAL_CTA, NAV_CTA } from "@/data/homepage-copy";
+import { FINAL_CTA } from "@/data/homepage-copy";
 import { SERVICE_OPTIONS } from "@/lib/contact-schema";
 import { Magnetic } from "./Magnetic";
 
@@ -93,8 +93,8 @@ export function Contact() {
           </h2>
           <p className="support">{FINAL_CTA.support}</p>
           <a
-            href={NAV_CTA.href}
-            className="mt-8 m-0 inline-block text-[18px] font-semibold text-green-text no-underline"
+            href={FINAL_CTA.href}
+            className="mt-8 m-0 inline-block text-[18px] font-semibold text-green no-underline"
           >
             {FINAL_CTA.cta}
           </a>

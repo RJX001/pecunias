@@ -36,8 +36,9 @@ export const growthStack: readonly GrowthSystem[] = [
     description: "Digital infrastructure built to convert.",
     body: [
       "Your website should do more than look good. It should communicate your value, remove friction and turn interest into action. We design and build digital experiences around how your customers actually discover, evaluate and buy.",
-      "From high-converting websites to scalable e-commerce platforms, we build digital infrastructure designed around performance.",
     ],
+    closing:
+      "From high-converting websites to scalable e-commerce platforms, we build digital infrastructure designed around performance.",
     whatWeDo: [
       "Web Design",
       "Custom Development",
@@ -68,8 +69,9 @@ export const growthStack: readonly GrowthSystem[] = [
     description: "Build demand that compounds.",
     body: [
       "The strongest brands don't rely on one channel. We create organic growth strategies that increase visibility, authority and demand while building assets that continue working long after they are published.",
-      "We don't create content to fill a calendar. We create content designed to capture attention, build trust and move customers closer to a decision.",
     ],
+    closing:
+      "We don't create content to fill a calendar. We create content designed to capture attention, build trust and move customers closer to a decision.",
     whatWeDo: [
       "SEO",
       "Content Strategy",

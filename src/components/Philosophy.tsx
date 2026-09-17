@@ -3,7 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { STANDARD } from "@/data/homepage-copy";
 
-const STATEMENT_GREEN = "we can't improve it.";
+const STATEMENT_GREEN = "improve it.";
 const CLOSING_GREEN = "It's a system of decisions.";
 const SUPPORT_GREEN = [false, true, false, true] as const;
 

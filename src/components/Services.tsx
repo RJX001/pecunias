@@ -8,6 +8,10 @@ import {
 import { FINAL_CTA } from "@/data/homepage-copy";
 import { Reveal } from "./Reveal";
 
+const CONNECTED_SPLIT = GROWTH_STACK_INTRO.indexOf(". ");
+const CONNECTED_INK = GROWTH_STACK_INTRO.slice(0, CONNECTED_SPLIT + 1);
+const CONNECTED_GREEN = GROWTH_STACK_INTRO.slice(CONNECTED_SPLIT + 2);
+
 export function Services() {
   return (
     <section className="section-pad pt-32 md:pt-44">
@@ -23,7 +27,10 @@ export function Services() {
           <h1 className="display mt-10 max-w-[16ch] text-[clamp(40px,7vw,88px)]">
             {GROWTH_STACK_HEADING}
           </h1>
-          <p className="support">{GROWTH_STACK_INTRO}</p>
+          <p className="support text-fg">
+            {CONNECTED_INK}{" "}
+            <span className="text-green">{CONNECTED_GREEN}</span>
+          </p>
         </Reveal>
 
         <nav aria-label={GROWTH_STACK_HEADING} className="mt-14 border-y border-line">
@@ -36,9 +43,7 @@ export function Services() {
                 className="group grid min-h-[72px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-line py-6 text-fg no-underline last:border-b-0 transition-colors hover:bg-bg-raised sm:min-h-[88px] sm:py-8"
               >
                 <span className="min-w-0">
-                  <span className="block font-mono text-[13px] font-semibold text-green-text">
-                    {code}
-                  </span>
+                  <span className="service-row-num block text-fg">{code}</span>
                   <span className="mt-1 block font-display text-[22px] font-bold tracking-[-0.02em] text-fg md:text-[28px]">
                     {name}
                   </span>
@@ -54,8 +59,8 @@ export function Services() {
           })}
         </nav>
 
-        <div className="mt-12">
-          <a href={FINAL_CTA.href} className="btn btn-solid">
+        <div className="service-cta">
+          <a href={FINAL_CTA.href} className="btn btn-green">
             {FINAL_CTA.cta}
           </a>
         </div>

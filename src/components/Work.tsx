@@ -1,3 +1,4 @@
+import { FINAL_CTA } from "@/data/homepage-copy";
 import { Reveal } from "./Reveal";
 import { Magnetic } from "./Magnetic";
 
@@ -44,7 +45,7 @@ export function Work() {
           <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-5">
             <p className="m-0 text-[13px] text-fg-faint">Results row · 0 / 0 / 0</p>
             <Magnetic>
-              <a href="#contact" className="btn btn-ghost">
+              <a href={FINAL_CTA.href} className="btn btn-ghost">
                 Request a scoped proposal
               </a>
             </Magnetic>
