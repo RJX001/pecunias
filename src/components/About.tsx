@@ -8,7 +8,7 @@ export function About() {
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
           <Link
-            href="/"
+            href="/#about"
             aria-label="Back to Home"
             className="inline-flex min-h-11 items-center text-[14px] font-medium text-fg-dim no-underline transition-colors hover:text-fg"
           >

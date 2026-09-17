@@ -73,7 +73,7 @@ export function Header() {
         <div className="hidden items-center gap-3 min-[960px]:flex">
           <ThemeToggle />
           <Magnetic>
-            <a href={NAV_CTA.href} className="btn btn-solid">
+            <a href={NAV_CTA.href} className="btn btn-green">
               {NAV_CTA.label}
             </a>
           </Magnetic>
@@ -127,7 +127,7 @@ export function Header() {
           ))}
         </ul>
         <div className="flex flex-col items-start gap-4 px-[var(--pad)] pb-12">
-          <a href={NAV_CTA.href} className="btn btn-solid" onClick={closeMenu}>
+          <a href={NAV_CTA.href} className="btn btn-green" onClick={closeMenu}>
             {NAV_CTA.label}
           </a>
         </div>

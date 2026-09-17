@@ -3,19 +3,28 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { STANDARD } from "@/data/homepage-copy";
 
-const BLOCKS = [
-  STANDARD.statement,
-  STANDARD.support,
-  STANDARD.closing,
-] as const;
+const STATEMENT_GREEN = "we can't improve it.";
+const CLOSING_GREEN = "It's a system of decisions.";
+const SUPPORT_GREEN = [false, true, false, true] as const;
+
+const SUPPORT_SENTENCES = STANDARD.support
+  .match(/[^.]+?\./g)
+  ?.map((sentence) => sentence.trim()) ?? [STANDARD.support];
+
+const statementInk = STANDARD.statement
+  .slice(0, STANDARD.statement.indexOf(STATEMENT_GREEN))
+  .trimEnd();
+const closingInk = STANDARD.closing
+  .slice(0, STANDARD.closing.indexOf(CLOSING_GREEN))
+  .trimEnd();
 
 export function Philosophy() {
   const refs = useRef<(HTMLParagraphElement | null)[]>([]);
-  const [seen, setSeen] = useState<boolean[]>(() => BLOCKS.map(() => false));
+  const [seen, setSeen] = useState<boolean[]>(() => [false, false, false]);
 
   useLayoutEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setSeen(BLOCKS.map(() => true));
+      setSeen([true, true, true]);
     }
   }, []);
 
@@ -50,6 +59,9 @@ export function Philosophy() {
     return () => observer.disconnect();
   }, []);
 
+  const tone = (active: boolean, green: boolean) =>
+    active ? (green ? "text-green" : "text-fg") : "text-fg-faint";
+
   return (
     <section className="section-pad">
       <div className="mx-auto max-w-[var(--maxw)]">
@@ -57,32 +69,62 @@ export function Philosophy() {
           {STANDARD.heading}
         </h2>
         <div className="grid gap-8">
-          {BLOCKS.map((block, index) => {
-            const active = seen[index];
-            const last = index === BLOCKS.length - 1;
-            const first = index === 0;
-            return (
-              <p
-                key={block}
-                ref={(node) => {
-                  refs.current[index] = node;
-                }}
-                className={`m-0 font-bold tracking-[-0.02em] leading-[1.15] transition-colors duration-500 ${
-                  first || last
-                    ? "max-w-[28ch] text-[clamp(22px,3.2vw,40px)]"
-                    : "max-w-[54ch] text-[clamp(18px,2.2vw,24px)] font-medium leading-relaxed"
-                } ${
-                  active
-                    ? last
-                      ? "text-green"
-                      : "text-fg"
-                    : "text-fg-faint"
-                }`}
-              >
-                {block}
-              </p>
-            );
-          })}
+          <p
+            ref={(node) => {
+              refs.current[0] = node;
+            }}
+            className="m-0 max-w-[28ch] text-[clamp(22px,3.2vw,40px)] font-bold tracking-[-0.02em] leading-[1.15]"
+          >
+            <span
+              className={`transition-colors duration-500 ease-[var(--ease)] ${tone(seen[0], false)}`}
+            >
+              {statementInk}
+            </span>{" "}
+            <span
+              className={`transition-colors duration-500 ease-[var(--ease)] ${tone(seen[0], true)}`}
+            >
+              {STATEMENT_GREEN}
+            </span>
+          </p>
+
+          <p
+            ref={(node) => {
+              refs.current[1] = node;
+            }}
+            className="m-0 max-w-[54ch] text-[clamp(18px,2.2vw,24px)] font-medium leading-relaxed tracking-[-0.02em]"
+          >
+            {SUPPORT_SENTENCES.map((sentence, index) => (
+              <span key={sentence}>
+                {index > 0 ? " " : null}
+                <span
+                  className={`transition-colors duration-500 ease-[var(--ease)] ${tone(
+                    seen[1],
+                    SUPPORT_GREEN[index] ?? false,
+                  )}`}
+                >
+                  {sentence}
+                </span>
+              </span>
+            ))}
+          </p>
+
+          <p
+            ref={(node) => {
+              refs.current[2] = node;
+            }}
+            className="m-0 max-w-[28ch] text-[clamp(22px,3.2vw,40px)] font-bold tracking-[-0.02em] leading-[1.15]"
+          >
+            <span
+              className={`transition-colors duration-500 ease-[var(--ease)] ${tone(seen[2], false)}`}
+            >
+              {closingInk}
+            </span>{" "}
+            <span
+              className={`transition-colors duration-500 ease-[var(--ease)] ${tone(seen[2], true)}`}
+            >
+              {CLOSING_GREEN}
+            </span>
+          </p>
         </div>
       </div>
     </section>

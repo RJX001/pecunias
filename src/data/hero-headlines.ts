@@ -8,12 +8,11 @@ export const HERO_IDENTITY = "Pecunia Studios";
 export const HERO_LEAD_IN = "You're one move away from...";
 
 export const HERO_HEADLINES = [
-  "Attracting Better Customers.",
-  "Building Predictable Demand.",
-  "Becoming The Obvious Choice.",
-  "Breaking Your Growth Ceiling.",
-  "Owning Your Market.",
-  "Leaving Average Behind.",
+  "Turning Your Ambition Into Income.",
+  "Being A Brand People Want To Buy From.",
+  "Creating Financial Freedom.",
+  "Building A 7-Figure Business.",
+  "Making Your Business Work For You.",
 ] as const;
 
 export const HERO_SUPPORT = [

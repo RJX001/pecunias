@@ -4,7 +4,6 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   HERO_CTA,
   HERO_HEADLINES,
-  HERO_IDENTITY,
   HERO_LEAD_IN,
   HERO_RAIL,
   HERO_SUPPORT,
@@ -140,12 +139,11 @@ export function Hero() {
 
       <div className="wrap relative grid w-full min-w-0 gap-12 pt-32">
         <div className="min-w-0">
-          <p className="kicker">{HERO_IDENTITY}</p>
           <p className="m-0 text-[18px] font-medium text-fg md:text-[20px]">
             {HERO_LEAD_IN}
           </p>
           <h1
-            className="display mt-3 grid min-w-0 text-[clamp(36px,8vw,92px)]"
+            className="display mt-4 grid min-w-0 text-[clamp(36px,8vw,92px)]"
             aria-live="polite"
           >
             {HERO_HEADLINES.map((headline, index) => {
@@ -181,10 +179,7 @@ export function Hero() {
           ))}
           <div className="mt-8 flex flex-wrap gap-3">
             <Magnetic>
-              <a
-                href="/#contact"
-                className="btn btn-green bg-green text-dark-text"
-              >
+              <a href="/#contact" className="btn btn-green">
                 {HERO_CTA}
               </a>
             </Magnetic>

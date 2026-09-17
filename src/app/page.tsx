@@ -3,6 +3,7 @@ import { Hero } from "@/components/Hero";
 import { System } from "@/components/System";
 import { GrowthStack } from "@/components/GrowthStack";
 import { Method } from "@/components/Method";
+import { AboutTeaser } from "@/components/AboutTeaser";
 import { Why } from "@/components/Why";
 import { Problem } from "@/components/Problem";
 import { BrandStatement } from "@/components/BrandStatement";
@@ -19,6 +20,7 @@ export default function Home() {
         <System />
         <GrowthStack />
         <Method />
+        <AboutTeaser />
         <Why />
         <Problem />
         <BrandStatement />

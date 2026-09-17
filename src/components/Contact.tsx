@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { FINAL_CTA } from "@/data/homepage-copy";
+import { FINAL_CTA, NAV_CTA } from "@/data/homepage-copy";
 import { SERVICE_OPTIONS } from "@/lib/contact-schema";
 import { Magnetic } from "./Magnetic";
 
@@ -92,9 +92,12 @@ export function Contact() {
             <span className="text-green">{FINAL_CTA_GREEN}</span>
           </h2>
           <p className="support">{FINAL_CTA.support}</p>
-          <p className="mt-8 m-0 text-[18px] font-semibold text-green-text">
+          <a
+            href={NAV_CTA.href}
+            className="mt-8 m-0 inline-block text-[18px] font-semibold text-green-text no-underline"
+          >
             {FINAL_CTA.cta}
-          </p>
+          </a>
         </header>
 
         {status === "success" ? (
@@ -225,7 +228,7 @@ export function Contact() {
 
             <div className="field">
               <label htmlFor="contact-social">
-                Social Media / Website Links
+                Social Media / Website Links (optional)
               </label>
               <textarea
                 id="contact-social"

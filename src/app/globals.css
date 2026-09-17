@@ -230,14 +230,14 @@ h2 {
 
 .btn-green {
   background: var(--green);
-  color: var(--dark-text);
+  color: #000000;
   border-color: var(--green);
 }
 
 .btn-green:hover {
   background: color-mix(in srgb, var(--green) 82%, black);
   border-color: color-mix(in srgb, var(--green) 82%, black);
-  color: var(--dark-text);
+  color: #000000;
 }
 
 .btn:focus-visible {

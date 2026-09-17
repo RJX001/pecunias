@@ -60,7 +60,9 @@ export const WHY_PECUNIA = {
 } as const;
 
 export const BUILT_FOR = {
-  heading: "Built For Businesses Serious About Growth",
+  headingInk: "Built For Businesses",
+  headingGreen: "Serious About Growth.",
+  heading: "Built For Businesses Serious About Growth.",
   copy: [
     "We work with ambitious businesses that understand growth requires more than simply turning up the marketing. They have something worth building. Something worth scaling. And the ambition to do it properly.",
     "We're not built around selling isolated services. We're built around solving growth problems.",

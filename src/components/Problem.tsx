@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { WHY_PECUNIA } from "@/data/homepage-copy";
 import { Reveal } from "./Reveal";
 
@@ -14,16 +11,6 @@ const CHIPS = [
   "Marketplace",
 ] as const;
 
-const CHIP_SLOTS = [
-  { left: "22%", top: "20%" },
-  { left: "78%", top: "18%" },
-  { left: "16%", top: "50%" },
-  { left: "84%", top: "48%" },
-  { left: "26%", top: "80%" },
-  { left: "74%", top: "82%" },
-  { left: "50%", top: "12%" },
-] as const;
-
 const CLUSTER_SLOTS = [
   { left: "30%", top: "28%" },
   { left: "70%", top: "28%" },
@@ -34,42 +21,15 @@ const CLUSTER_SLOTS = [
   { left: "50%", top: "20%" },
 ] as const;
 
+function PecuniaMark() {
+  return (
+    <span className="relative z-10 border border-green bg-green-soft px-6 py-3 text-[18px] font-bold tracking-[0.08em] text-green">
+      PECUNIA
+    </span>
+  );
+}
+
 export function Problem() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [merged, setMerged] = useState(false);
-  const [reduceMotion, setReduceMotion] = useState(false);
-
-  useLayoutEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setReduceMotion(true);
-      setMerged(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
-
-    const node = ref.current;
-    if (!node) return;
-    let timeoutId = 0;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          timeoutId = window.setTimeout(() => setMerged(true), 400);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.4 },
-    );
-    observer.observe(node);
-    return () => {
-      observer.disconnect();
-      window.clearTimeout(timeoutId);
-    };
-  }, []);
-
   return (
     <section id="why" className="section-pad">
       <div className="mx-auto max-w-[var(--maxw)]">
@@ -83,55 +43,47 @@ export function Problem() {
           <p className="support">{WHY_PECUNIA.copy[1]}</p>
         </Reveal>
 
-        <div
-          ref={ref}
-          className="relative mt-16 flex min-h-[240px] items-center justify-center overflow-hidden px-2 sm:min-h-[280px]"
-        >
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-2 sm:hidden">
+          {CHIPS.slice(0, 3).map((chip) => (
+            <span
+              key={chip}
+              aria-hidden="true"
+              className="whitespace-nowrap border border-green px-3 py-2 text-[13px] font-medium text-fg"
+            >
+              {chip}
+            </span>
+          ))}
+          <PecuniaMark />
+          {CHIPS.slice(3).map((chip) => (
+            <span
+              key={chip}
+              aria-hidden="true"
+              className="whitespace-nowrap border border-green px-3 py-2 text-[13px] font-medium text-fg"
+            >
+              {chip}
+            </span>
+          ))}
+        </div>
+
+        <div className="relative mt-16 hidden min-h-[240px] items-center justify-center px-2 sm:flex">
           {CHIPS.map((chip, index) => {
-            const slot = CHIP_SLOTS[index];
             const cluster = CLUSTER_SLOTS[index];
-            const stayVisible = reduceMotion && merged;
             return (
               <span
                 key={chip}
                 aria-hidden="true"
-                className={`pointer-events-none absolute whitespace-nowrap border px-3 py-2 text-[13px] font-medium sm:px-4 sm:text-[14px] transition-[left,top,opacity,transform] duration-700 ease-[var(--ease)] ${
-                  merged
-                    ? "border-green-deep text-green-text"
-                    : "border-line text-fg-dim"
-                }`}
+                className="pointer-events-none absolute whitespace-nowrap border border-green px-4 py-2 text-[14px] font-medium text-fg"
                 style={{
-                  left: merged
-                    ? stayVisible
-                      ? cluster.left
-                      : "50%"
-                    : slot.left,
-                  top: merged
-                    ? stayVisible
-                      ? cluster.top
-                      : "50%"
-                    : slot.top,
-                  opacity: merged && !stayVisible ? 0 : 1,
-                  transform: merged && !stayVisible
-                    ? "translate(-50%, -50%) scale(0.7)"
-                    : "translate(-50%, -50%)",
-                  transitionDelay: merged && !stayVisible ? `${index * 55}ms` : "0ms",
+                  left: cluster.left,
+                  top: cluster.top,
+                  transform: "translate(-50%, -50%)",
                 }}
               >
                 {chip}
               </span>
             );
           })}
-
-          <span
-            className={`relative z-10 border px-6 py-3 text-[18px] font-bold tracking-[0.08em] transition-[border-color,background-color,color] duration-700 ease-[var(--ease)] ${
-              merged
-                ? "border-green-deep bg-green-soft text-green-text"
-                : "border-line text-fg-faint"
-            }`}
-          >
-            PECUNIA
-          </span>
+          <PecuniaMark />
         </div>
 
         <div className="mt-12 max-w-[640px]">

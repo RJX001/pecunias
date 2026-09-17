@@ -9,7 +9,7 @@ import { Reveal } from "./Reveal";
 export function GrowthStack() {
   return (
     <section
-      id="stack"
+      id="services"
       className="px-[var(--pad)] pt-[min(6vw,64px)] pb-[min(10vw,110px)]"
     >
       <div className="mx-auto max-w-[var(--maxw)]">
