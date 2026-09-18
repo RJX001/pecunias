@@ -11,7 +11,7 @@ import {
 import { FINAL_CTA } from "@/data/homepage-copy";
 import { Magnetic } from "./Magnetic";
 
-const HEADLINE_TYPE_MS = 100;
+const HEADLINE_TYPE_MS = 50;
 const HEADLINE_HOLD_MS = 1400;
 const HEADLINE_EXIT_MS = 250;
 const RAIL_STEP_MS = 2800;

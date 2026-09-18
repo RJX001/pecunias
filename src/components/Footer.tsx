@@ -8,7 +8,9 @@ export function Footer() {
       <div className="mx-auto grid max-w-[var(--maxw)] gap-12 px-[var(--pad)] py-16 md:grid-cols-3">
         <div>
           <p className="m-0 text-[13px] font-semibold tracking-[0.14em]">
-            {FOOTER.brand}
+            <Link href="/" className="text-fg no-underline">
+              {FOOTER.brand}
+            </Link>
           </p>
           <p className="mt-4 m-0 max-w-[28ch] text-[14px] text-content-text">
             {FOOTER.descriptor}

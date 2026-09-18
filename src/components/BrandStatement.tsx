@@ -31,13 +31,13 @@ export function BrandStatement() {
             {paragraph}
           </p>
         ))}
-        <div className="mt-10 grid gap-4 md:mt-12">
+        <div className="mt-10 flex flex-col gap-3 text-left md:mt-12">
           {BUILT_FOR.statements.map((statement) => {
             const { ink, green } = splitAtComma(statement);
             return (
               <p
                 key={statement}
-                className="m-0 text-[clamp(22px,3.2vw,40px)] font-bold tracking-[-0.02em] leading-[1.15] text-fg"
+                className="m-0 text-[clamp(22px,3.2vw,40px)] font-bold leading-[1.15] tracking-[-0.02em] text-fg"
               >
                 <span>{ink}</span>
                 <span className="text-green">{green}</span>

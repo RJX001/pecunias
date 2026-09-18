@@ -63,70 +63,68 @@ export function Philosophy() {
     active ? (green ? "text-green" : "text-fg") : "text-fg-faint";
 
   return (
-    <section className="section-pad section-pad-cluster">
+    <section className="section-pad [--section-pad-bottom:var(--section-y-tight)]">
       <div className="mx-auto max-w-[var(--maxw)]">
         <p className="kicker">{STANDARD.heading}</p>
-        <h2 className="display mb-16 max-w-[12ch] text-[clamp(34px,5vw,58px)]">
+        <h2 className="display max-w-[12ch] text-[clamp(34px,5vw,58px)]">
           {STANDARD.heading}
         </h2>
-        <div className="grid gap-8">
-          <p
-            ref={(node) => {
-              refs.current[0] = node;
-            }}
-            className="m-0 max-w-[28ch] text-[clamp(22px,3.2vw,40px)] font-bold tracking-[-0.02em] leading-[1.15]"
+        <p
+          ref={(node) => {
+            refs.current[0] = node;
+          }}
+          className="m-0 mt-5 max-w-[28ch] text-[clamp(20px,2.4vw,28px)] font-bold leading-[1.25] tracking-[-0.02em]"
+        >
+          <span
+            className={`transition-colors duration-500 ease-[var(--ease)] ${tone(seen[0], false)}`}
           >
-            <span
-              className={`transition-colors duration-500 ease-[var(--ease)] ${tone(seen[0], false)}`}
-            >
-              {statementInk}
-            </span>{" "}
-            <span
-              className={`transition-colors duration-500 ease-[var(--ease)] ${tone(seen[0], true)}`}
-            >
-              {STATEMENT_GREEN}
-            </span>
-          </p>
+            {statementInk}
+          </span>{" "}
+          <span
+            className={`transition-colors duration-500 ease-[var(--ease)] ${tone(seen[0], true)}`}
+          >
+            {STATEMENT_GREEN}
+          </span>
+        </p>
 
-          <p
-            ref={(node) => {
-              refs.current[1] = node;
-            }}
-            className="m-0 max-w-[54ch] text-[clamp(18px,2.2vw,24px)] font-medium leading-relaxed tracking-[-0.02em]"
-          >
-            {SUPPORT_SENTENCES.map((sentence, index) => (
-              <span key={sentence}>
-                {index > 0 ? " " : null}
-                <span
-                  className={`transition-colors duration-500 ease-[var(--ease)] ${tone(
-                    seen[1],
-                    SUPPORT_GREEN[index] ?? false,
-                  )}`}
-                >
-                  {sentence}
-                </span>
+        <p
+          ref={(node) => {
+            refs.current[1] = node;
+          }}
+          className="m-0 mt-8 max-w-[54ch] text-[clamp(17px,1.6vw,20px)] font-medium leading-relaxed tracking-[-0.02em]"
+        >
+          {SUPPORT_SENTENCES.map((sentence, index) => (
+            <span key={sentence}>
+              {index > 0 ? " " : null}
+              <span
+                className={`transition-colors duration-500 ease-[var(--ease)] ${tone(
+                  seen[1],
+                  SUPPORT_GREEN[index] ?? false,
+                )}`}
+              >
+                {sentence}
               </span>
-            ))}
-          </p>
-
-          <p
-            ref={(node) => {
-              refs.current[2] = node;
-            }}
-            className="m-0 max-w-[28ch] text-[clamp(22px,3.2vw,40px)] font-bold tracking-[-0.02em] leading-[1.15]"
-          >
-            <span
-              className={`transition-colors duration-500 ease-[var(--ease)] ${tone(seen[2], false)}`}
-            >
-              {closingInk}
-            </span>{" "}
-            <span
-              className={`transition-colors duration-500 ease-[var(--ease)] ${tone(seen[2], true)}`}
-            >
-              {CLOSING_GREEN}
             </span>
-          </p>
-        </div>
+          ))}
+        </p>
+
+        <p
+          ref={(node) => {
+            refs.current[2] = node;
+          }}
+          className="m-0 mt-10 max-w-[28ch] text-[clamp(18px,2.1vw,24px)] font-bold leading-[1.3] tracking-[-0.02em]"
+        >
+          <span
+            className={`transition-colors duration-500 ease-[var(--ease)] ${tone(seen[2], false)}`}
+          >
+            {closingInk}
+          </span>{" "}
+          <span
+            className={`transition-colors duration-500 ease-[var(--ease)] ${tone(seen[2], true)}`}
+          >
+            {CLOSING_GREEN}
+          </span>
+        </p>
       </div>
     </section>
   );

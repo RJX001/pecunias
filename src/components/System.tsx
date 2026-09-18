@@ -10,7 +10,7 @@ export function System() {
   return (
     <section
       id="system"
-      className="px-[var(--pad)] pt-[min(14vw,150px)] pb-[min(6vw,64px)]"
+      className="px-[var(--pad)] pt-[min(6vw,64px)] pb-[min(6vw,64px)]"
     >
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>

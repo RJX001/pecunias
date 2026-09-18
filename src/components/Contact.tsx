@@ -19,7 +19,7 @@ const EMPTY_FORM = {
 const FINAL_CTA_SPLIT = FINAL_CTA.headline.indexOf(". ");
 const FINAL_CTA_INK = FINAL_CTA.headline.slice(0, FINAL_CTA_SPLIT + 1);
 const FINAL_CTA_GREEN = FINAL_CTA.headline.slice(FINAL_CTA_SPLIT + 2);
-const FORM_PROMPT = "Start A Growth Project ↓";
+const FORM_PROMPT = "Start A Growth Project";
 
 export function Contact() {
   const [form, setForm] = useState(EMPTY_FORM);
@@ -85,9 +85,17 @@ export function Contact() {
         </header>
 
         <div className="grid min-w-0 gap-5">
-          <p className="m-0 text-center text-[20px] font-extrabold tracking-[-0.02em] text-green md:text-[22px]">
-            {FORM_PROMPT}
-          </p>
+          <div className="flex flex-col items-center gap-1 text-center">
+            <p className="m-0 text-[20px] font-extrabold tracking-[-0.02em] text-green md:text-[22px]">
+              {FORM_PROMPT}
+            </p>
+            <span
+              className="text-[20px] font-extrabold leading-none text-green md:text-[22px]"
+              aria-hidden="true"
+            >
+              ↓
+            </span>
+          </div>
           {status === "success" ? (
           <div className="border border-line bg-bg-raised p-8" role="status">
             <p className="m-0 text-[13px] text-green-text">Received</p>
