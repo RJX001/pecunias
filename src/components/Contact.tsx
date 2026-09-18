@@ -92,10 +92,7 @@ export function Contact() {
             <span className="text-green">{FINAL_CTA_GREEN}</span>
           </h2>
           <p className="support">{FINAL_CTA.support}</p>
-          <a
-            href={FINAL_CTA.href}
-            className="mt-8 m-0 inline-block text-[18px] font-semibold text-green no-underline"
-          >
+          <a href={FINAL_CTA.href} className="btn btn-green mt-8">
             {FINAL_CTA.cta}
           </a>
         </header>

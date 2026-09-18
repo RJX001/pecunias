@@ -4,8 +4,7 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
-  useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 
@@ -21,6 +20,8 @@ type ThemeContextValue = {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
+const listeners = new Set<() => void>();
+
 function isTheme(value: string | null): value is Theme {
   return value === "dark" || value === "light";
 }
@@ -29,6 +30,60 @@ function applyTheme(theme: Theme) {
   const root = document.documentElement;
   root.setAttribute("data-theme", theme);
   root.style.colorScheme = theme;
+}
+
+function readDomTheme(): Theme {
+  const attr = document.documentElement.getAttribute("data-theme");
+  if (isTheme(attr)) return attr;
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (isTheme(stored)) return stored;
+  } catch {
+    // localStorage unavailable
+  }
+  return "light";
+}
+
+function emitTheme() {
+  listeners.forEach((listener) => listener());
+}
+
+function persistTheme(theme: Theme) {
+  applyTheme(theme);
+  try {
+    localStorage.setItem(STORAGE_KEY, theme);
+  } catch {
+    // ignore quota / private mode
+  }
+  emitTheme();
+}
+
+function subscribeTheme(onStoreChange: () => void) {
+  listeners.add(onStoreChange);
+
+  const onStorage = (event: StorageEvent) => {
+    if (event.key !== STORAGE_KEY && event.key !== null) return;
+    if (isTheme(event.newValue)) {
+      applyTheme(event.newValue);
+    } else if (event.key === STORAGE_KEY) {
+      applyTheme("light");
+    }
+    emitTheme();
+  };
+
+  window.addEventListener("storage", onStorage);
+  return () => {
+    listeners.delete(onStoreChange);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+
+function getThemeSnapshot(): Theme {
+  return readDomTheme();
+}
+
+function getThemeServerSnapshot(): Theme {
+  return "light";
 }
 
 /**
@@ -44,43 +99,18 @@ function applyTheme(theme: Theme) {
 export const themeInitScript = `(function(){try{var t=localStorage.getItem("${STORAGE_KEY}");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();`;
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("light");
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (isTheme(stored)) {
-        setThemeState(stored);
-        applyTheme(stored);
-        return;
-      }
-    } catch {
-      // localStorage unavailable — keep default
-    }
-    applyTheme("light");
-  }, []);
+  const theme = useSyncExternalStore(
+    subscribeTheme,
+    getThemeSnapshot,
+    getThemeServerSnapshot,
+  );
 
   const setTheme = useCallback((next: Theme) => {
-    setThemeState(next);
-    applyTheme(next);
-    try {
-      localStorage.setItem(STORAGE_KEY, next);
-    } catch {
-      // ignore quota / private mode
-    }
+    persistTheme(next);
   }, []);
 
   const toggleTheme = useCallback(() => {
-    setThemeState((prev) => {
-      const next: Theme = prev === "dark" ? "light" : "dark";
-      applyTheme(next);
-      try {
-        localStorage.setItem(STORAGE_KEY, next);
-      } catch {
-        // ignore
-      }
-      return next;
-    });
+    persistTheme(readDomTheme() === "dark" ? "light" : "dark");
   }, []);
 
   return (

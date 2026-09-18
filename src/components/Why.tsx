@@ -1,95 +1,67 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { COMMITMENT } from "@/data/homepage-copy";
 import { Reveal } from "./Reveal";
 
 const CLOSING_GREEN = "We find out why. Then we fix it.";
-const RAIL_STEP_MS = 2800;
-const RAIL_HOLD_MS = 4200;
 const ITEM_COUNT = COMMITMENT.items.length;
-const REDUCE_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
-function subscribeReducedMotion(onChange: () => void) {
-  const mq = window.matchMedia(REDUCE_MOTION_QUERY);
-  mq.addEventListener("change", onChange);
-  return () => mq.removeEventListener("change", onChange);
-}
-
-function getReducedMotion() {
-  return window.matchMedia(REDUCE_MOTION_QUERY).matches;
-}
-
-function getReducedMotionServer() {
-  return false;
+function activeIndexFromList(list: HTMLElement, count: number): number {
+  const rect = list.getBoundingClientRect();
+  const vh = window.innerHeight;
+  // Map the list box through the viewport onto 0–9. Do not observe cells:
+  // a 2-column grid would otherwise stall on the first row.
+  const start = vh * 0.72;
+  const end = vh * 0.28;
+  const travel = rect.height + (start - end);
+  if (travel <= 1) return 0;
+  const t = (start - rect.top) / travel;
+  const clamped = Math.min(1, Math.max(0, t));
+  return Math.min(count - 1, Math.floor(clamped * count));
 }
 
 export function Why() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const listRef = useRef<HTMLOListElement>(null);
   const [active, setActive] = useState(0);
-  const reduceMotion = useSyncExternalStore(
-    subscribeReducedMotion,
-    getReducedMotion,
-    getReducedMotionServer,
-  );
   const closingInk = COMMITMENT.closing
     .slice(0, COMMITMENT.closing.indexOf(CLOSING_GREEN))
     .trim();
 
-  useEffect(() => {
-    if (reduceMotion) return;
+  useLayoutEffect(() => {
+    const list = listRef.current;
+    if (!list) return;
 
-    const section = sectionRef.current;
-    if (!section) return;
+    let frame = 0;
 
-    let cancelled = false;
-    let running = false;
-    let railId = 0;
-    let railIndex = 0;
-
-    const clearTimers = () => {
-      window.clearTimeout(railId);
+    const update = () => {
+      frame = 0;
+      const next = activeIndexFromList(list, ITEM_COUNT);
+      setActive((prev) => (prev === next ? prev : next));
     };
 
-    const scheduleRail = () => {
-      const delay = railIndex >= ITEM_COUNT - 1 ? RAIL_HOLD_MS : RAIL_STEP_MS;
-      railId = window.setTimeout(() => {
-        if (cancelled) return;
-        railIndex = (railIndex + 1) % ITEM_COUNT;
-        setActive(railIndex);
-        scheduleRail();
-      }, delay);
+    const onScrollOrResize = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(update);
     };
 
-    const start = () => {
-      if (running || cancelled) return;
-      running = true;
-      scheduleRail();
-    };
+    update();
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
 
-    const stop = () => {
-      running = false;
-      clearTimers();
-    };
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) start();
-        else stop();
-      },
-      { threshold: 0.2 },
-    );
-    observer.observe(section);
+    const resizeObserver = new ResizeObserver(onScrollOrResize);
+    resizeObserver.observe(list);
 
     return () => {
-      cancelled = true;
-      stop();
-      observer.disconnect();
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
+      resizeObserver.disconnect();
+      if (frame) window.cancelAnimationFrame(frame);
     };
-  }, [reduceMotion]);
+  }, []);
 
   return (
-    <section id="commitment" ref={sectionRef} className="section-pad">
+    <section id="commitment" className="section-pad">
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
           <h2 className="display max-w-[14ch] text-[clamp(34px,5vw,58px)]">
@@ -102,10 +74,13 @@ export function Why() {
         </Reveal>
 
         <Reveal>
-          <ol className="mt-14 m-0 grid list-none gap-0 border-t border-line p-0 sm:grid-cols-2">
+          <ol
+            ref={listRef}
+            className="mt-14 m-0 grid list-none gap-0 border-t border-line p-0 sm:grid-cols-2"
+          >
             {COMMITMENT.items.map((item, index) => {
-              const current = !reduceMotion && index === active;
-              const done = reduceMotion || index < active;
+              const current = index === active;
+              const done = index < active;
               const reached = done || current;
               return (
                 <li

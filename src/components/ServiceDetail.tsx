@@ -32,7 +32,7 @@ export function ServiceDetail({ system }: { system: GrowthSystem }) {
             ← Home
           </Link>
 
-          <p className="kicker mt-10 font-mono text-green-text">{code}</p>
+          <p className="kicker mt-10 font-mono service-row-num text-fg">{code}</p>
           <h1 className="display max-w-[16ch] text-[clamp(40px,7vw,88px)]">
             {name}
           </h1>

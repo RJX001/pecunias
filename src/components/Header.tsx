@@ -1,15 +1,18 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useState, type MouseEvent } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { NAV_CTA, NAV_LINKS } from "@/data/homepage-copy";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { jumpHomeToTop, markPendingHomeTop } from "./scroll-home";
 import { Magnetic } from "./Magnetic";
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuId = useId();
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -33,6 +36,27 @@ export function Header() {
 
   const closeMenu = () => setOpen(false);
 
+  const onLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    closeMenu();
+    if (
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    if (pathname === "/") {
+      jumpHomeToTop();
+      requestAnimationFrame(() => jumpHomeToTop());
+      return;
+    }
+
+    markPendingHomeTop();
+  };
+
   return (
     <header
       className={`fixed top-0 right-0 left-0 z-50 transition-[background-color,backdrop-filter,padding] duration-300 ${
@@ -44,8 +68,9 @@ export function Header() {
       <div className="wrap grid grid-cols-[1fr_auto] items-center gap-6 min-[960px]:grid-cols-[auto_1fr_auto]">
         <Link
           href="/"
+          scroll={false}
           className="text-[13px] font-semibold tracking-[0.14em] text-fg no-underline"
-          onClick={closeMenu}
+          onClick={onLogoClick}
         >
           PECUNIA
           <span aria-hidden="true">·</span>
