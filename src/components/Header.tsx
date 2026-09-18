@@ -71,7 +71,7 @@ export function Header() {
           href="/"
           scroll={false}
           aria-label="Pecunia Studios"
-          className="min-w-0 justify-self-start text-[13px] font-semibold tracking-[0.14em] text-fg no-underline"
+          className="min-w-0 justify-self-start text-[15px] font-semibold tracking-[0.14em] text-fg no-underline min-[480px]:text-[16px] min-[768px]:text-[17px] min-[960px]:text-[18px]"
           onClick={onLogoClick}
         >
           <BrandMark />
