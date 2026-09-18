@@ -73,19 +73,8 @@ export function Contact() {
   const submitting = status === "submitting";
 
   return (
-    <section
-      id="contact"
-      className="section-pad relative overflow-hidden"
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 50% 40% at 50% 0%, var(--green-soft), transparent 70%)",
-        }}
-      />
-      <div className="relative mx-auto grid max-w-[var(--maxw)] gap-14 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+    <section id="contact" className="section-pad">
+      <div className="mx-auto grid max-w-[var(--maxw)] gap-14 lg:grid-cols-[1fr_0.9fr] lg:items-start">
         <header>
           <h2 className="display max-w-[16ch] text-[clamp(34px,5vw,58px)]">
             {FINAL_CTA_INK}{" "}

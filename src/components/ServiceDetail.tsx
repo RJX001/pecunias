@@ -47,7 +47,11 @@ export function ServiceDetail({ system }: { system: GrowthSystem }) {
             ))}
           </div>
           {system.closing ? (
-            <p className={`mt-8 m-0 max-w-[48ch] ${SUBHEADLINE} text-fg`}>
+            <p
+              className={`mt-8 m-0 max-w-[48ch] ${SUBHEADLINE} ${
+                system.slug === "ai-automation-crm" ? "text-green" : "text-fg"
+              }`}
+            >
               {system.closing}
             </p>
           ) : null}

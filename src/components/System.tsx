@@ -1,6 +1,11 @@
 import { GROWTH_PHILOSOPHY } from "@/data/homepage-copy";
 import { Reveal } from "./Reveal";
 
+const STATEMENT_GREEN = "We build the system behind growth.";
+const statementInk = GROWTH_PHILOSOPHY.statement
+  .slice(0, GROWTH_PHILOSOPHY.statement.indexOf(STATEMENT_GREEN))
+  .trimEnd();
+
 export function System() {
   return (
     <section
@@ -11,7 +16,8 @@ export function System() {
         <Reveal>
           <p className="kicker">{GROWTH_PHILOSOPHY.heading}</p>
           <h2 className="display max-w-[18ch] text-[clamp(34px,5vw,58px)]">
-            {GROWTH_PHILOSOPHY.statement}
+            <span className="text-fg">{statementInk}</span>{" "}
+            <span className="text-green">{STATEMENT_GREEN}</span>
           </h2>
           {GROWTH_PHILOSOPHY.copy.map((paragraph) => (
             <p key={paragraph} className="support">

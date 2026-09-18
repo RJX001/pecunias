@@ -129,6 +129,7 @@ export function Method() {
     <section id="approach" className="section-pad section-pad-cluster">
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
+          <p className="kicker">{APPROACH_HEADING}</p>
           <h2 className="display max-w-[16ch] text-[clamp(34px,5vw,58px)]">
             {APPROACH_HEADING}
           </h2>

@@ -65,6 +65,7 @@ export function Philosophy() {
   return (
     <section className="section-pad section-pad-cluster">
       <div className="mx-auto max-w-[var(--maxw)]">
+        <p className="kicker">{STANDARD.heading}</p>
         <h2 className="display mb-16 max-w-[12ch] text-[clamp(34px,5vw,58px)]">
           {STANDARD.heading}
         </h2>

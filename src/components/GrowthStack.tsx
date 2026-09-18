@@ -8,6 +8,10 @@ import { FINAL_CTA } from "@/data/homepage-copy";
 import { Reveal } from "./Reveal";
 
 const INTRO_GREEN = "Not four separate suppliers.";
+const STACK_KICKER = GROWTH_STACK_HEADING.slice(
+  0,
+  GROWTH_STACK_HEADING.indexOf(" — "),
+);
 const introInk = GROWTH_STACK_INTRO.slice(
   0,
   GROWTH_STACK_INTRO.indexOf(INTRO_GREEN),
@@ -21,6 +25,7 @@ export function GrowthStack() {
     >
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
+          <p className="kicker">{STACK_KICKER}</p>
           <h2
             id="growth-stack-heading"
             className="display max-w-[18ch] text-[clamp(34px,5vw,58px)]"

@@ -2,9 +2,6 @@
 
 import { useScrollActive } from "./useScrollActive";
 
-const COLOR_T =
-  "transition-[color] duration-700 ease-[var(--ease)] motion-reduce:duration-0";
-
 export function WhatWeDo({ items }: { items: readonly string[] }) {
   const { listRef, active } = useScrollActive<HTMLUListElement>(items.length);
 
@@ -14,8 +11,7 @@ export function WhatWeDo({ items }: { items: readonly string[] }) {
       <ul ref={listRef} className="what-we-do-list">
         {items.map((item, index) => {
           const current = index === active;
-          const done = index < active;
-          const reached = done || current;
+          const reached = index <= active;
           return (
             <li key={item} className="what-we-do-row relative">
               <span
@@ -27,9 +23,7 @@ export function WhatWeDo({ items }: { items: readonly string[] }) {
                 {String(index + 1).padStart(2, "0")}
               </span>
               <span
-                className={`what-we-do-name ${COLOR_T} ${
-                  current ? "text-green" : done ? "text-fg" : "text-fg-faint"
-                }`}
+                className="what-we-do-name text-green"
                 aria-current={current ? "step" : undefined}
               >
                 {item}

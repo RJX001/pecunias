@@ -11,19 +11,19 @@ import {
 import { FINAL_CTA } from "@/data/homepage-copy";
 import { Magnetic } from "./Magnetic";
 
-const HEADLINE_HOLD_MS = 4500;
-const HEADLINE_EXIT_MS = 400;
-const HEADLINE_GAP_MS = 150;
-const HEADLINE_ENTER_MS = 500;
+const HEADLINE_TYPE_MS = 50;
+const HEADLINE_HOLD_MS = 1400;
+const HEADLINE_EXIT_MS = 250;
 const RAIL_STEP_MS = 2800;
 const RAIL_HOLD_MS = 4200;
 
-type HeadlinePhase = "hold" | "exiting" | "entering";
+type HeadlinePhase = "typing" | "hold" | "exiting";
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const [headlineIndex, setHeadlineIndex] = useState(0);
-  const [headlinePhase, setHeadlinePhase] = useState<HeadlinePhase>("hold");
+  const [typedCount, setTypedCount] = useState(0);
+  const [headlinePhase, setHeadlinePhase] = useState<HeadlinePhase>("typing");
   const [active, setActive] = useState(0);
 
   useLayoutEffect(() => {
@@ -31,6 +31,7 @@ export function Hero() {
       setActive(HERO_RAIL.length - 1);
       setHeadlinePhase("hold");
       setHeadlineIndex(0);
+      setTypedCount(HERO_HEADLINES[0].length);
     }
   }, []);
 
@@ -44,39 +45,46 @@ export function Hero() {
 
     let cancelled = false;
     let running = false;
+    let typeId = 0;
     let headlineHoldId = 0;
     let headlineExitId = 0;
-    let headlineGapId = 0;
-    let headlineEnterId = 0;
     let railId = 0;
     let railIndex = 0;
+    let index = 0;
+    let char = 0;
 
     const clearTimers = () => {
+      window.clearTimeout(typeId);
       window.clearTimeout(headlineHoldId);
       window.clearTimeout(headlineExitId);
-      window.clearTimeout(headlineGapId);
-      window.clearTimeout(headlineEnterId);
       window.clearTimeout(railId);
     };
 
-    const scheduleHeadline = () => {
-      headlineHoldId = window.setTimeout(() => {
+    const typeNext = () => {
+      const phrase = HERO_HEADLINES[index];
+      typeId = window.setTimeout(() => {
         if (cancelled) return;
-        setHeadlinePhase("exiting");
-        headlineExitId = window.setTimeout(() => {
-          if (cancelled) return;
-          headlineGapId = window.setTimeout(() => {
+        char += 1;
+        setTypedCount(char);
+        if (char >= phrase.length) {
+          setHeadlinePhase("hold");
+          headlineHoldId = window.setTimeout(() => {
             if (cancelled) return;
-            setHeadlineIndex((current) => (current + 1) % HERO_HEADLINES.length);
-            setHeadlinePhase("entering");
-            headlineEnterId = window.setTimeout(() => {
+            setHeadlinePhase("exiting");
+            headlineExitId = window.setTimeout(() => {
               if (cancelled) return;
-              setHeadlinePhase("hold");
-              scheduleHeadline();
-            }, HEADLINE_ENTER_MS);
-          }, HEADLINE_GAP_MS);
-        }, HEADLINE_EXIT_MS);
-      }, HEADLINE_HOLD_MS);
+              index = (index + 1) % HERO_HEADLINES.length;
+              char = 0;
+              setHeadlineIndex(index);
+              setTypedCount(0);
+              setHeadlinePhase("typing");
+              typeNext();
+            }, HEADLINE_EXIT_MS);
+          }, HEADLINE_HOLD_MS);
+          return;
+        }
+        typeNext();
+      }, HEADLINE_TYPE_MS);
     };
 
     const scheduleRail = () => {
@@ -93,8 +101,11 @@ export function Hero() {
     const start = () => {
       if (running || cancelled) return;
       running = true;
-      setHeadlinePhase("hold");
-      scheduleHeadline();
+      char = 0;
+      setTypedCount(0);
+      setHeadlineIndex(index);
+      setHeadlinePhase("typing");
+      typeNext();
       scheduleRail();
     };
 
@@ -118,6 +129,9 @@ export function Hero() {
       observer.disconnect();
     };
   }, []);
+
+  const currentHeadline = HERO_HEADLINES[headlineIndex];
+  const typedHeadline = currentHeadline.slice(0, typedCount);
 
   return (
     <section
@@ -147,31 +161,26 @@ export function Hero() {
             className="display mt-4 grid min-w-0 text-[clamp(36px,8vw,92px)]"
             aria-live="polite"
           >
-            {HERO_HEADLINES.map((headline, index) => {
-              const isCurrent = index === headlineIndex;
-              const isShown =
-                isCurrent &&
-                (headlinePhase === "hold" || headlinePhase === "entering");
-              const isExiting = isCurrent && headlinePhase === "exiting";
-              const duration =
-                headlinePhase === "entering" ? "duration-[500ms]" : "duration-[400ms]";
-
-              return (
-                <span
-                  key={headline}
-                  className={`col-start-1 row-start-1 min-w-0 wrap-break-word text-green transition-[opacity,transform] ${duration} ease-[var(--ease)] motion-reduce:translate-y-0 motion-reduce:transition-opacity ${
-                    isShown
-                      ? "translate-y-0 opacity-100"
-                      : isExiting
-                        ? "pointer-events-none -translate-y-[10px] opacity-0"
-                        : "pointer-events-none translate-y-[10px] opacity-0"
-                  }`}
-                  aria-hidden={index !== headlineIndex}
-                >
-                  {headline}
-                </span>
-              );
-            })}
+            {HERO_HEADLINES.map((headline) => (
+              <span
+                key={headline}
+                className="invisible col-start-1 row-start-1 min-w-0 wrap-break-word"
+                aria-hidden="true"
+              >
+                {headline}
+              </span>
+            ))}
+            <span
+              className={`col-start-1 row-start-1 min-w-0 wrap-break-word text-green ${
+                headlinePhase === "exiting"
+                  ? "opacity-0 transition-opacity duration-[250ms] ease-[var(--ease)]"
+                  : "opacity-100"
+              }`}
+              aria-hidden="true"
+            >
+              {typedHeadline}
+            </span>
+            <span className="sr-only">{currentHeadline}</span>
           </h1>
           {HERO_SUPPORT.map((paragraph) => (
             <p key={paragraph} className="support">

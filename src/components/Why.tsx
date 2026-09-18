@@ -64,6 +64,7 @@ export function Why() {
     <section id="commitment" className="section-pad">
       <div className="mx-auto max-w-[var(--maxw)]">
         <Reveal>
+          <p className="kicker">{COMMITMENT.heading}</p>
           <h2 className="display max-w-[14ch] text-[clamp(34px,5vw,58px)]">
             {COMMITMENT.heading}
           </h2>

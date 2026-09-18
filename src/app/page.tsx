@@ -1,6 +1,7 @@
 import { Header } from "@/components/Header";
 import { HashScroll } from "@/components/HashScroll";
 import { Hero } from "@/components/Hero";
+import { HomeDots } from "@/components/HomeDots";
 import { System } from "@/components/System";
 import { GrowthStack } from "@/components/GrowthStack";
 import { Method } from "@/components/Method";
@@ -17,7 +18,8 @@ export default function Home() {
     <>
       <HashScroll />
       <Header />
-      <main>
+      <main className="relative isolate">
+        <HomeDots />
         <Hero />
         <System />
         <GrowthStack />
