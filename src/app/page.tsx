@@ -10,6 +10,7 @@ import { Why } from "@/components/Why";
 import { Problem } from "@/components/Problem";
 import { BrandStatement } from "@/components/BrandStatement";
 import { Philosophy } from "@/components/Philosophy";
+import { CaseStudies } from "@/components/CaseStudies";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 
@@ -29,6 +30,7 @@ export default function Home() {
         <Problem />
         <BrandStatement />
         <Philosophy />
+        <CaseStudies />
         <Contact />
       </main>
       <Footer />

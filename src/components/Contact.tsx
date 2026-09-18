@@ -89,12 +89,22 @@ export function Contact() {
             <p className="m-0 text-[20px] font-extrabold tracking-[-0.02em] text-green md:text-[22px]">
               {FORM_PROMPT}
             </p>
-            <span
-              className="text-[20px] font-extrabold leading-none text-green md:text-[22px]"
+            <svg
+              className="block shrink-0 text-green"
+              width="12"
+              height="48"
+              viewBox="0 0 12 48"
+              fill="none"
               aria-hidden="true"
             >
-              ↓
-            </span>
+              <path
+                d="M6 1.5V38.5M1.75 34 6 46.5 10.25 34"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </div>
           {status === "success" ? (
           <div className="border border-line bg-bg-raised p-8" role="status">
