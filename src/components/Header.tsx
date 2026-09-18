@@ -4,6 +4,7 @@ import { useEffect, useId, useState, type MouseEvent } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_CTA, NAV_LINKS } from "@/data/homepage-copy";
+import { BrandMark } from "@/components/BrandMark";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { jumpHomeToTop, markPendingHomeTop } from "./scroll-home";
 import { Magnetic } from "./Magnetic";
@@ -69,12 +70,11 @@ export function Header() {
         <Link
           href="/"
           scroll={false}
-          className="text-[13px] font-semibold tracking-[0.14em] text-fg no-underline"
+          aria-label="Pecunia Studios"
+          className="min-w-0 justify-self-start text-[13px] font-semibold tracking-[0.14em] text-fg no-underline"
           onClick={onLogoClick}
         >
-          PECUNIA
-          <span aria-hidden="true">·</span>
-          STUDIOS
+          <BrandMark />
         </Link>
 
         <nav

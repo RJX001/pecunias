@@ -1,6 +1,23 @@
 import Link from "next/link";
+import { BrandMark } from "@/components/BrandMark";
 import { FOOTER, NAV_CTA, NAV_LINKS } from "@/data/homepage-copy";
 import { Magnetic } from "./Magnetic";
+
+const SERVICE_HREFS = {
+  Websites: "/services/digital-ecommerce",
+  "E-commerce": "/services/digital-ecommerce",
+  "Paid Media": "/services/paid-growth",
+  SEO: "/services/organic-growth-content",
+  Automation: "/services/ai-automation-crm",
+  CRM: "/services/ai-automation-crm",
+  AI: "/services/ai-automation-crm",
+  Creative: "/services/organic-growth-content",
+  "Growth Strategy": "/services",
+} as const;
+
+type ServiceLabel = keyof typeof SERVICE_HREFS;
+
+const SERVICE_ITEMS = FOOTER.servicesLine.split(" | ") as ServiceLabel[];
 
 export function Footer() {
   return (
@@ -8,8 +25,12 @@ export function Footer() {
       <div className="mx-auto grid max-w-[var(--maxw)] gap-12 px-[var(--pad)] py-16 md:grid-cols-3">
         <div>
           <p className="m-0 text-[13px] font-semibold tracking-[0.14em]">
-            <Link href="/" className="text-fg no-underline">
-              {FOOTER.brand}
+            <Link
+              href="/"
+              aria-label="Pecunia Studios"
+              className="text-fg no-underline"
+            >
+              <BrandMark />
             </Link>
           </p>
           <p className="mt-4 m-0 max-w-[28ch] text-[14px] text-content-text">
@@ -20,7 +41,17 @@ export function Footer() {
         <div>
           <p className="m-0 text-[13px] text-fg-faint">Services</p>
           <p className="mt-4 m-0 max-w-[36ch] text-[14px] leading-relaxed text-content-text">
-            {FOOTER.servicesLine}
+            {SERVICE_ITEMS.map((label, index) => (
+              <span key={label}>
+                {index > 0 ? " | " : null}
+                <Link
+                  href={SERVICE_HREFS[label]}
+                  className="text-content-text no-underline hover:text-fg"
+                >
+                  {label}
+                </Link>
+              </span>
+            ))}
           </p>
         </div>
 
