@@ -63,7 +63,7 @@ export function Philosophy() {
     active ? (green ? "text-green" : "text-fg") : "text-fg-faint";
 
   return (
-    <section className="section-pad">
+    <section className="section-pad section-pad-cluster">
       <div className="mx-auto max-w-[var(--maxw)]">
         <h2 className="display mb-16 max-w-[12ch] text-[clamp(34px,5vw,58px)]">
           {STANDARD.heading}

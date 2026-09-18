@@ -20,10 +20,7 @@ export function AboutTeaser() {
               </p>
             ))}
           </div>
-          <Link
-            href="/about"
-            className="mt-8 inline-flex min-h-11 items-center text-[18px] font-semibold text-green-text no-underline transition-colors hover:text-fg"
-          >
+          <Link href="/about" className="btn btn-green mt-8">
             About Us →
           </Link>
         </Reveal>

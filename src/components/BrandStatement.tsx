@@ -13,7 +13,7 @@ function splitAtComma(statement: string) {
 
 export function BrandStatement() {
   return (
-    <section className="section-pad section-pad-tight-top border-t border-line">
+    <section className="section-pad section-pad-cluster">
       <div className="mx-auto max-w-[var(--maxw)]">
         <h2 className="display max-w-[24ch] text-[clamp(34px,5vw,72px)]">
           <span className="block">{BUILT_FOR.headingInk}</span>
@@ -22,14 +22,16 @@ export function BrandStatement() {
         {BUILT_FOR.copy.map((paragraph, index) => (
           <p
             key={paragraph}
-            className={`m-0 max-w-[54ch] text-[17px] leading-relaxed text-content-text ${
-              index === 0 ? "mt-10" : "mt-6"
-            }`}
+            className={
+              index === 0
+                ? "m-0 mt-10 max-w-[54ch] text-[17px] leading-relaxed text-content-text"
+                : "m-0 mt-6 max-w-[54ch] text-[clamp(18px,2.1vw,22px)] font-extrabold leading-relaxed tracking-[-0.02em] text-green"
+            }
           >
             {paragraph}
           </p>
         ))}
-        <div className="mt-12 grid gap-4 border-t border-line pt-10">
+        <div className="mt-10 grid gap-4 md:mt-12">
           {BUILT_FOR.statements.map((statement) => {
             const { ink, green } = splitAtComma(statement);
             return (

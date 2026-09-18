@@ -21,6 +21,13 @@ const CLUSTER_SLOTS = [
   { left: "50%", top: "20%" },
 ] as const;
 
+const INTRO_ABOVE_DIAGRAM =
+  "Too many businesses split their website, advertising, content and automation across different suppliers who don't understand the full customer journey.";
+
+const RESULT_LABEL = "The result?";
+
+const EMPHASIS_LINES = WHY_PECUNIA.emphasis.split(/(?<=\.)\s+/);
+
 function PecuniaMark() {
   return (
     <span className="relative z-10 border border-green bg-green-soft px-6 py-3 text-[18px] font-bold tracking-[0.08em] text-green">
@@ -41,6 +48,7 @@ export function Problem() {
             {WHY_PECUNIA.copy[0]}
           </p>
           <p className="support">{WHY_PECUNIA.copy[1]}</p>
+          <p className="support">{INTRO_ABOVE_DIAGRAM}</p>
         </Reveal>
 
         <div className="mt-12 flex flex-wrap items-center justify-center gap-2 sm:hidden">
@@ -86,14 +94,21 @@ export function Problem() {
           <PecuniaMark />
         </div>
 
-        <div className="mt-12 max-w-[640px]">
-          <p className="m-0 text-[17px] leading-relaxed text-content-text">
-            {WHY_PECUNIA.copy[2]}
+        <div className="mt-12">
+          <p className="m-0 text-[17px] font-bold tracking-[-0.02em] text-fg">
+            {RESULT_LABEL}
           </p>
-          <p className="display mt-6 max-w-[18ch] text-[clamp(24px,3.4vw,40px)] text-green">
-            {WHY_PECUNIA.emphasis}
-          </p>
-          <p className="mt-6 m-0 text-[17px] leading-relaxed text-content-text">
+          <div className="mt-4">
+            {EMPHASIS_LINES.map((line) => (
+              <p
+                key={line}
+                className="display m-0 text-[clamp(24px,3.4vw,40px)] text-green md:whitespace-nowrap"
+              >
+                {line}
+              </p>
+            ))}
+          </div>
+          <p className="mt-8 m-0 max-w-[640px] text-[20px] font-bold tracking-[-0.02em] text-fg">
             {WHY_PECUNIA.then}
           </p>
           <p className="mt-6 m-0 text-[20px] font-bold tracking-[-0.02em] text-green">

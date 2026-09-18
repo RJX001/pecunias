@@ -78,7 +78,7 @@ export const ABOUT = {
   heading: "About Pecunia Studios",
   subheading: "Built in 2026. Built for what's next.",
   copy: [
-    "Pecunia Studios was founded in 2026 by a marketing specialist and an AI specialist with a shared belief: modern businesses shouldn't have to choose between great marketing and great technology.",
+    "Pecunia Studios was founded in 2026 by a marketing specialist and an AI specialist with a shared belief: Modern businesses shouldn't have to choose between great marketing and great technology.",
     "The agency was built to bring both together.",
     "Marketing creates demand. Technology creates leverage. Data creates clarity. Automation creates capacity. Our job is to connect them.",
     "Today, Pecunia Studios works with ambitious businesses to build stronger digital ecosystems, acquire better customers and create systems capable of scaling with them.",
