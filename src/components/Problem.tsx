@@ -23,9 +23,8 @@ const EMPHASIS_LINES = WHY_PECUNIA.emphasis.split(/(?<=\.)\s+/);
 const ARROW_COUNT = 3;
 const ARROW_WIDTH = 8;
 const ARROW_HEIGHT = 9;
-const DRAW_MS = 720;
-const COLOR_DELAY_MS = 280;
-const COLOR_MS = 400;
+const FLOW_HOLD_MS = 180;
+const FLOW_MS = 980;
 
 type Connector = {
   id: string;
@@ -313,14 +312,12 @@ function ConvergenceDiagram() {
     }
 
     let cancelled = false;
-    const frame = window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => {
-        if (!cancelled) setConnected(true);
-      });
-    });
+    const hold = window.setTimeout(() => {
+      if (!cancelled) setConnected(true);
+    }, FLOW_HOLD_MS);
     return () => {
       cancelled = true;
-      window.cancelAnimationFrame(frame);
+      window.clearTimeout(hold);
     };
   }, [inView, connectors.length, connected]);
 
@@ -331,44 +328,44 @@ function ConvergenceDiagram() {
       className="relative mt-16 w-full min-w-0 overflow-x-clip isolate md:mt-20"
     >
       <style>{`
-        .why-connector {
+        .why-connector,
+        .why-connector-flow {
           fill: none;
-          stroke: var(--fg);
           stroke-width: 1.5;
           stroke-linecap: butt;
           stroke-linejoin: miter;
           stroke-miterlimit: 4;
-          stroke-dashoffset: var(--why-len);
-          transition:
-            stroke-dashoffset ${DRAW_MS}ms var(--ease),
-            stroke ${COLOR_MS}ms var(--ease) ${COLOR_DELAY_MS}ms;
         }
-        .why-connector.is-connected {
+        .why-connector {
+          stroke: var(--fg);
+        }
+        .why-connector-flow {
           stroke: var(--green);
+          stroke-dashoffset: var(--why-len);
+          transition: stroke-dashoffset ${FLOW_MS}ms var(--ease);
+        }
+        .why-connector-flow.is-connected {
           stroke-dashoffset: 0;
         }
         .why-arrowhead {
           fill: var(--fg);
-          opacity: 0;
-          transition:
-            opacity 160ms var(--ease) ${DRAW_MS - 140}ms,
-            fill ${COLOR_MS}ms var(--ease) ${COLOR_DELAY_MS}ms;
+          transition: fill 220ms var(--ease) ${FLOW_MS - 220}ms;
         }
         .why-arrowhead.is-connected {
           fill: var(--green);
-          opacity: 1;
         }
         @media (prefers-reduced-motion: reduce) {
-          .why-connector,
-          .why-connector.is-connected {
+          .why-connector {
             stroke: var(--green);
+          }
+          .why-connector-flow,
+          .why-connector-flow.is-connected {
             stroke-dashoffset: 0;
             transition: none;
           }
           .why-arrowhead,
           .why-arrowhead.is-connected {
             fill: var(--green);
-            opacity: 1;
             transition: none;
           }
         }
@@ -383,7 +380,12 @@ function ConvergenceDiagram() {
           {connectors.map((line) => (
             <g key={line.id}>
               <path
-                className={`why-connector${connected ? " is-connected" : ""}`}
+                className="why-connector"
+                d={line.d}
+                vectorEffect="non-scaling-stroke"
+              />
+              <path
+                className={`why-connector-flow${connected ? " is-connected" : ""}`}
                 d={line.d}
                 vectorEffect="non-scaling-stroke"
                 strokeDasharray={line.length}
