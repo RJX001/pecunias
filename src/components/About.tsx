@@ -10,6 +10,9 @@ const foundingRest = ABOUT.copy[0].slice(
   foundingGreenIndex + FOUNDING_GREEN.length,
 );
 
+const ABOUT_BODY =
+  "m-0 max-w-[60ch] text-[19px] font-bold leading-[1.55] tracking-[-0.02em] text-content-text md:text-[20px]";
+
 export function About() {
   return (
     <section className="section-pad section-page-top">
@@ -27,12 +30,13 @@ export function About() {
             {ABOUT.heading}
           </h1>
           <div className="mt-6 md:mt-10">
-            <p className="m-0 max-w-[60ch] text-[22px] font-bold tracking-[-0.02em] md:text-[26px]">
+            <p className={`${ABOUT_BODY} mt-[18px]`}>
               {foundingInk}
               <span className="text-green">{FOUNDING_GREEN}</span>
               {foundingRest}
             </p>
-            {ABOUT.copy.slice(1).map((paragraph) => (
+            <p className={`${ABOUT_BODY} mt-[18px]`}>{ABOUT.copy[1]}</p>
+            {ABOUT.copy.slice(2).map((paragraph) => (
               <p key={paragraph} className="support max-w-[60ch]">
                 {paragraph}
               </p>

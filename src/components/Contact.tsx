@@ -19,6 +19,7 @@ const EMPTY_FORM = {
 const FINAL_CTA_SPLIT = FINAL_CTA.headline.indexOf(". ");
 const FINAL_CTA_INK = FINAL_CTA.headline.slice(0, FINAL_CTA_SPLIT + 1);
 const FINAL_CTA_GREEN = FINAL_CTA.headline.slice(FINAL_CTA_SPLIT + 2);
+const FORM_PROMPT = "Start A Growth Project ↓";
 
 export function Contact() {
   const [form, setForm] = useState(EMPTY_FORM);
@@ -81,12 +82,13 @@ export function Contact() {
             <span className="text-green">{FINAL_CTA_GREEN}</span>
           </h2>
           <p className="support">{FINAL_CTA.support}</p>
-          <a href={FINAL_CTA.href} className="btn btn-green mt-8">
-            {FINAL_CTA.cta}
-          </a>
         </header>
 
-        {status === "success" ? (
+        <div className="grid min-w-0 gap-5">
+          <p className="m-0 text-center text-[20px] font-extrabold tracking-[-0.02em] text-green md:text-[22px]">
+            {FORM_PROMPT}
+          </p>
+          {status === "success" ? (
           <div className="border border-line bg-bg-raised p-8" role="status">
             <p className="m-0 text-[13px] text-green-text">Received</p>
             <p className="mt-3 m-0 text-[28px] font-bold tracking-[-0.02em]">
@@ -246,9 +248,10 @@ export function Contact() {
               <p className="m-0 text-[13px] text-fg" role="alert">
                 {message}
               </p>
-            ) : null}
+          ) : null}
           </form>
-        )}
+          )}
+        </div>
       </div>
     </section>
   );
