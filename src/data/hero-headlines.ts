@@ -31,5 +31,10 @@ export const HERO_RAIL = [
   "Scale",
 ] as const;
 
+export const HERO_JOURNEY_STATUS =
+  "Content. Discovery. Website. Enquiry. One connected growth system.";
+
+export const HERO_JOURNEY_LABEL = `Search to enquiry. ${HERO_JOURNEY_STATUS}`;
+
 export type HeroHeadline = (typeof HERO_HEADLINES)[number];
 export type HeroRailNode = (typeof HERO_RAIL)[number];

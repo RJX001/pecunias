@@ -1,197 +1,181 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import {
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type PointerEvent,
+} from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   GROWTH_STACK_HEADING,
   GROWTH_STACK_INTRO,
+  GROWTH_STACK_KICKER,
   growthStack,
-  splitGrowthSystemTitle,
+  servicePath,
+  type GrowthImageKey,
 } from "@/data/growth-stack";
 import { FINAL_CTA } from "@/data/homepage-copy";
-import { Reveal } from "./Reveal";
+import styles from "./GrowthStack.module.css";
 
-const INTRO_GREEN = "Not four separate suppliers.";
-const STACK_KICKER = GROWTH_STACK_HEADING.slice(
-  0,
-  GROWTH_STACK_HEADING.indexOf(" — "),
-);
-const introInk = GROWTH_STACK_INTRO.slice(
-  0,
-  GROWTH_STACK_INTRO.indexOf(INTRO_GREEN),
-).trimEnd();
+const IMAGES: Record<GrowthImageKey, string> = {
+  studio: "/images/premium-studio.png",
+  city: "/images/city.jpg",
+  sunset: "/images/sunset.jpg",
+};
 
-const COLOR_T =
-  "transition-[color] duration-700 ease-[var(--ease)] motion-reduce:duration-0";
+/** Matches the horizontal accordion layout in GrowthStack.module.css. */
+const HOVER_ACTIVATE_QUERY = "(min-width: 601px)";
 
-function isMobileViewport() {
-  return window.matchMedia("(max-width: 767px)").matches;
-}
+const HEADING_SPLIT = GROWTH_STACK_HEADING.indexOf(" — ");
+const HEADING_LEAD = GROWTH_STACK_HEADING.slice(0, HEADING_SPLIT);
+const HEADING_TAIL = GROWTH_STACK_HEADING.slice(HEADING_SPLIT + 3);
 
-function activeZoneMargin() {
-  return isMobileViewport() ? "-28% 0px -52% 0px" : "-38% 0px -42% 0px";
-}
-
-function activeZoneY() {
-  return window.innerHeight * (isMobileViewport() ? 0.38 : 0.48);
-}
-
-function useServiceScrollGreen(count: number) {
-  const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
-  const [active, setActive] = useState(-1);
-
-  useEffect(() => {
-    if (count < 1) return;
-
-    const ratios = new Map<Element, number>();
-    let observer: IntersectionObserver | null = null;
-    let frame = 0;
-
-    const pickActive = () => {
-      frame = 0;
-      const zoneY = activeZoneY();
-      let bestIndex = -1;
-      let bestScore = Number.NEGATIVE_INFINITY;
-      itemRefs.current.forEach((node, index) => {
-        if (!node) return;
-        const rect = node.getBoundingClientRect();
-        if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
-        const mid = (rect.top + rect.bottom) / 2;
-        const ratio = ratios.get(node) ?? 0;
-        const score = ratio * 10000 - Math.abs(mid - zoneY);
-        if (score > bestScore) {
-          bestScore = score;
-          bestIndex = index;
-        }
-      });
-      setActive((current) => (current === bestIndex ? current : bestIndex));
-    };
-
-    const onScroll = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(pickActive);
-    };
-
-    const connect = () => {
-      observer?.disconnect();
-      observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            ratios.set(
-              entry.target,
-              entry.isIntersecting ? entry.intersectionRatio : 0,
-            );
-          }
-          if (frame) return;
-          frame = window.requestAnimationFrame(pickActive);
-        },
-        {
-          root: null,
-          rootMargin: activeZoneMargin(),
-          threshold: [0, 0.15, 0.35, 0.5, 0.75, 1],
-        },
-      );
-      itemRefs.current.forEach((node) => {
-        if (node) observer?.observe(node);
-      });
-    };
-
-    connect();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", connect);
-    const mq = window.matchMedia("(max-width: 767px)");
-    mq.addEventListener("change", connect);
-
-    return () => {
-      mq.removeEventListener("change", connect);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", connect);
-      observer?.disconnect();
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, [count]);
-
-  return { itemRefs, active };
-}
+const ART_SIZES = "(max-width: 600px) 88vw, (max-width: 999px) 80vw, 620px";
 
 export function GrowthStack() {
-  const { itemRefs, active } = useServiceScrollGreen(growthStack.length);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const triggerRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const onPanelPointerEnter = (
+    event: PointerEvent<HTMLElement>,
+    index: number,
+  ) => {
+    if (event.pointerType !== "mouse") return;
+    if (!window.matchMedia(HOVER_ACTIVATE_QUERY).matches) return;
+    setActiveIndex(index);
+  };
+
+  const onTriggerKeyDown = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    index: number,
+  ) => {
+    const count = growthStack.length;
+    let target: number;
+    switch (event.key) {
+      case "ArrowRight":
+      case "ArrowDown":
+        target = (index + 1) % count;
+        break;
+      case "ArrowLeft":
+      case "ArrowUp":
+        target = (index - 1 + count) % count;
+        break;
+      case "Home":
+        target = 0;
+        break;
+      case "End":
+        target = count - 1;
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+    triggerRefs.current[target]?.focus();
+  };
 
   return (
     <section
       id="services"
-      className="px-[var(--pad)] pt-[min(6vw,64px)] pb-[min(10vw,110px)]"
+      className={styles.section}
+      aria-labelledby="growth-stack-heading"
     >
-      <div className="mx-auto max-w-[var(--maxw)]">
-        <Reveal>
-          <p className="kicker">{STACK_KICKER}</p>
-          <h2
-            id="growth-stack-heading"
-            className="display max-w-[18ch] text-[clamp(34px,5vw,58px)]"
-          >
-            <span className="text-fg">
-              {GROWTH_STACK_HEADING.slice(
-                0,
-                GROWTH_STACK_HEADING.indexOf("The Growth Stack"),
-              )}
-            </span>
-            <span className="text-green">The Growth Stack</span>
+      <div className={`ps-inner ${styles.grid}`}>
+        <div className={styles.intro}>
+          <p className="ps-kicker">{GROWTH_STACK_KICKER}</p>
+          <h2 id="growth-stack-heading" className={`ps-h2 ${styles.heading}`}>
+            {HEADING_LEAD} —<br />
+            {HEADING_TAIL}
           </h2>
-          <p className="support">
-            <span className="text-fg">{introInk}</span>{" "}
-            <span className="text-green">{INTRO_GREEN}</span>
-          </p>
-        </Reveal>
-
-        <nav aria-labelledby="growth-stack-heading">
-          <ul className="mt-14 m-0 list-none border-y border-line p-0">
-            {growthStack.map((row, index) => {
-              const { code, name } = splitGrowthSystemTitle(row.title);
-              const current = index === active;
-              return (
-                <li
-                  key={row.title}
-                  className="border-b border-line last:border-b-0"
-                >
-                  <Link
-                    href={`/services/${row.slug}`}
-                    ref={(node) => {
-                      itemRefs.current[index] = node;
-                    }}
-                    className="group grid w-full grid-cols-[minmax(0,1fr)_auto] items-baseline gap-4 py-7 text-left no-underline transition-colors hover:bg-bg-raised sm:gap-6 sm:py-8"
-                  >
-                    <span className="min-w-0">
-                      <span className="block text-[22px] font-bold tracking-[-0.02em] md:text-[28px]">
-                        <span className="text-fg">{code} — </span>
-                        <span
-                          className={`${COLOR_T} ${
-                            current ? "text-green" : "text-fg"
-                          }`}
-                        >
-                          {name}
-                        </span>
-                      </span>
-                      <span className="mt-1 block text-[15px] text-content-text">
-                        {row.description}
-                      </span>
-                    </span>
-                    <span
-                      className="inline-block text-green-text transition-transform duration-300 ease-[var(--ease)] motion-safe:group-hover:translate-x-0.5"
-                      aria-hidden="true"
-                    >
-                      →
-                    </span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-
-        <div className="service-cta">
-          <a href={FINAL_CTA.href} className="btn btn-green">
+          <p className={`ps-support ${styles.support}`}>{GROWTH_STACK_INTRO}</p>
+          <a href={FINAL_CTA.href} className="ps-button">
             {FINAL_CTA.cta}
           </a>
+        </div>
+
+        <div className={styles.panels}>
+          {growthStack.map((service, index) => {
+            const active = index === activeIndex;
+            const bodyId = `growth-panel-${service.slug}`;
+            const hasHighlights = Boolean(service.highlights?.length);
+            return (
+              <article
+                key={service.slug}
+                className={styles.panel}
+                data-active={active ? "true" : undefined}
+                onPointerEnter={(event) => onPanelPointerEnter(event, index)}
+              >
+                <h3 className={styles.panelHeading}>
+                  <button
+                    ref={(node) => {
+                      triggerRefs.current[index] = node;
+                    }}
+                    type="button"
+                    className={styles.trigger}
+                    aria-expanded={active}
+                    aria-controls={bodyId}
+                    onClick={() => setActiveIndex(index)}
+                    onKeyDown={(event) => onTriggerKeyDown(event, index)}
+                  >
+                    <span className={styles.number} aria-hidden="true">
+                      {service.number}
+                    </span>
+                    <span className={styles.title}>{service.name}</span>
+                    <span className={styles.indicator} aria-hidden="true">
+                      {active ? "−" : "+"}
+                    </span>
+                  </button>
+                </h3>
+                <div
+                  id={bodyId}
+                  className={styles.bodyWrap}
+                  inert={!active}
+                  aria-hidden={active ? undefined : true}
+                >
+                  <div className={styles.body}>
+                    <div className={styles.art}>
+                      <Image
+                        src={IMAGES[service.image]}
+                        alt={service.artLabel}
+                        fill
+                        sizes={ART_SIZES}
+                        className={styles.artImage}
+                        style={{ objectPosition: service.imagePosition }}
+                      />
+                    </div>
+                    <p
+                      className={`${styles.lead} ${
+                        hasHighlights ? styles.leadCompact : ""
+                      }`}
+                    >
+                      {service.description}
+                    </p>
+                    {hasHighlights ? (
+                      <ul className={styles.highlights}>
+                        {service.highlights?.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    ) : null}
+                    <Link
+                      href={servicePath(service.slug)}
+                      className={`${styles.readMore} ${
+                        hasHighlights ? styles.readMoreCompact : ""
+                      }`}
+                    >
+                      <span className={styles.readMoreText}>
+                        {service.readMore}
+                      </span>
+                      <span className={styles.arrow} aria-hidden="true">
+                        →
+                      </span>
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

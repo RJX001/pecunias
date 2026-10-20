@@ -1,0 +1,116 @@
+/*
+ * About teaser — approved-design.html `#v2-about` / `.pg-media-*` (final cascade).
+ * Text on green stays #181410 in both themes.
+ */
+
+.section {
+  background: #00c978;
+  color: #181410;
+}
+
+.section :focus-visible {
+  outline-color: #181410;
+}
+
+.kicker.kicker {
+  color: #181410;
+}
+
+.scene {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 360px;
+  margin-bottom: 40px;
+  overflow: hidden;
+  background: radial-gradient(ellipse, #00c97825, transparent 65%);
+}
+
+.window {
+  position: relative;
+  width: 64%;
+  height: 320px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #00c978;
+  box-shadow: 0 25px 60px #25422f25;
+  transition:
+    width 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    border-radius 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scene[data-expanded="true"] .window {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.window::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: #18141033;
+  pointer-events: none;
+}
+
+.photo {
+  object-fit: cover;
+  object-position: center 40%;
+  filter: grayscale(0.2);
+  opacity: 0.8;
+}
+
+.title {
+  position: absolute;
+  z-index: 2;
+  top: 36%;
+  right: 7%;
+  left: 7%;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(28px, 4.5vw, 46px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -2px;
+  text-shadow: 0 2px 20px #0009;
+}
+
+.body p {
+  margin: 0 0 20px;
+  color: #181410;
+}
+
+.button.button {
+  border-color: #181410;
+  background: transparent;
+  color: #181410;
+}
+
+.button.button:hover {
+  border-color: #181410;
+  background: rgba(24, 20, 16, 0.08);
+}
+
+@media (max-width: 650px) {
+  .scene {
+    min-height: 290px;
+  }
+
+  .window {
+    width: 90%;
+    height: 270px;
+  }
+
+  .title {
+    letter-spacing: -1.3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .window,
+  .scene[data-expanded="true"] .window {
+    width: 100%;
+    border-radius: 4px;
+    transition: none;
+  }
+}

@@ -1,34 +1,34 @@
 import { GROWTH_PHILOSOPHY } from "@/data/homepage-copy";
 import { Reveal } from "./Reveal";
+import styles from "./System.module.css";
 
-const STATEMENT_GREEN = "We build the system behind growth.";
-const statementInk = GROWTH_PHILOSOPHY.statement
-  .slice(0, GROWTH_PHILOSOPHY.statement.indexOf(STATEMENT_GREEN))
+const STATEMENT_SECOND = "We build the system behind growth.";
+const statementFirst = GROWTH_PHILOSOPHY.statement
+  .slice(0, GROWTH_PHILOSOPHY.statement.indexOf(STATEMENT_SECOND))
   .trimEnd();
 
 export function System() {
   return (
     <section
       id="system"
-      className="px-[var(--pad)] pt-[min(6vw,64px)] pb-[min(6vw,64px)]"
+      aria-labelledby="system-heading"
+      className="ps-section ps-section-raised"
     >
-      <div className="mx-auto max-w-[var(--maxw)]">
-        <Reveal>
-          <p className="kicker">{GROWTH_PHILOSOPHY.heading}</p>
-          <h2 className="display max-w-[18ch] text-[clamp(34px,5vw,58px)]">
-            <span className="text-fg">{statementInk}</span>{" "}
-            <span className="text-green">{STATEMENT_GREEN}</span>
-          </h2>
-          {GROWTH_PHILOSOPHY.copy.map((paragraph) => (
-            <p key={paragraph} className="support">
-              {paragraph}
-            </p>
-          ))}
-          <p className="display mt-10 max-w-[16ch] text-[clamp(32px,4.4vw,52px)] text-green">
-            {GROWTH_PHILOSOPHY.emphasis}
+      <Reveal className={`ps-inner ${styles.grid}`}>
+        <p className={`ps-kicker ${styles.full}`}>
+          {GROWTH_PHILOSOPHY.heading}
+        </p>
+        <h2 id="system-heading" className={`ps-h2 ${styles.full}`}>
+          <span className={styles.line}>{statementFirst}</span>{" "}
+          <span className={styles.line}>{STATEMENT_SECOND}</span>
+        </h2>
+        {GROWTH_PHILOSOPHY.copy.map((paragraph) => (
+          <p key={paragraph} className="ps-support">
+            {paragraph}
           </p>
-        </Reveal>
-      </div>
+        ))}
+        <p className={styles.emphasis}>{GROWTH_PHILOSOPHY.emphasis}</p>
+      </Reveal>
     </section>
   );
 }

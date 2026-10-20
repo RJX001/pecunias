@@ -1,0 +1,76 @@
+.wordmark {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  padding: 34px 5% 0;
+}
+
+.letters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+}
+
+.letter {
+  display: block;
+  min-width: 0;
+  margin: 0;
+  padding: 0 2px 8px;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  background-size: cover;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: var(--fg);
+  font-family: inherit;
+  font-size: clamp(45px, 13.6vw, 158px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.07em;
+  cursor: pointer;
+  transition:
+    transform 0.5s,
+    color 0.3s;
+}
+
+.letter:hover,
+.letter:focus-visible,
+.letter[data-pinned] {
+  color: transparent;
+  transform: translateY(-4px);
+}
+
+.studios {
+  display: block;
+  margin-right: 3px;
+  color: var(--fg-dim);
+  font-size: 11px;
+  letter-spacing: 8px;
+  text-align: right;
+}
+
+@media (max-width: 750px) {
+  .letter {
+    font-size: clamp(43px, 12.8vw, 95px);
+  }
+}
+
+@media (max-width: 480px) {
+  .wordmark {
+    padding-top: 25px;
+  }
+
+  .studios {
+    font-size: 9px;
+    letter-spacing: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter {
+    transition: none;
+  }
+}

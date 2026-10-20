@@ -1,0 +1,376 @@
+/* Homepage services — green accordion panels (approved-design.html .pg-services). */
+
+.section {
+  --panel-green: #00c978;
+  --panel-ink: #181410;
+  --panel-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  position: relative;
+  padding: 65px 6%;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: 35px;
+  align-items: center;
+}
+
+/* ---------- Intro column ---------- */
+
+.intro {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.intro .heading {
+  font-size: 31px;
+  letter-spacing: -1.2px;
+}
+
+.intro .support {
+  margin-bottom: 22px;
+  font-size: 14px;
+}
+
+/* ---------- Panels: horizontal accordion ---------- */
+
+.panels {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  gap: 9px;
+  min-width: 0;
+  height: 490px;
+}
+
+.panel {
+  position: relative;
+  flex: 0 0 42px;
+  min-width: 0;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 14px;
+  background: var(--panel-green);
+  color: var(--panel-ink);
+  transition:
+    flex-basis 0.7s var(--panel-ease),
+    flex-grow 0.7s var(--panel-ease);
+}
+
+.panel[data-active] {
+  flex: 1 1 0;
+}
+
+.panelHeading {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  margin: 0;
+  font: inherit;
+  letter-spacing: normal;
+}
+
+.panel[data-active] .panelHeading {
+  height: 95px;
+}
+
+.trigger {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.panel[data-active] .trigger {
+  cursor: default;
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--panel-ink);
+  outline-offset: -5px;
+}
+
+.number {
+  position: absolute;
+  left: 15px;
+  top: 19px;
+  font-size: 10px;
+  color: var(--panel-ink);
+}
+
+.title {
+  position: absolute;
+  left: 14px;
+  bottom: 24px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.indicator {
+  display: none;
+}
+
+.panel[data-active] .number {
+  left: 22px;
+  top: 21px;
+}
+
+.panel[data-active] .title {
+  left: 22px;
+  right: 16px;
+  bottom: 15px;
+  font-size: 20px;
+  line-height: 1.25;
+  letter-spacing: -0.7px;
+  white-space: normal;
+  writing-mode: horizontal-tb;
+  transform: none;
+}
+
+/* ---------- Panel body ---------- */
+
+.bodyWrap {
+  position: absolute;
+  top: 95px;
+  left: 0;
+  width: 100%;
+  /* Keeps the copy from reflowing word-by-word while the panel widens. */
+  min-width: 300px;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.25s,
+    visibility 0.25s;
+}
+
+.panel[data-active] .bodyWrap {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.35s 0.25s,
+    visibility 0.35s 0.25s;
+}
+
+.body {
+  display: flow-root;
+}
+
+.art {
+  position: relative;
+  height: 205px;
+  margin: 0 12px 17px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--panel-ink) 14%, var(--panel-green));
+}
+
+.panel[data-active] .art {
+  animation: art-enter 0.9s both;
+}
+
+.artImage {
+  object-fit: cover;
+}
+
+@keyframes art-enter {
+  from {
+    opacity: 0;
+    translate: 0 22px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+.lead {
+  min-height: 48px;
+  margin: 0;
+  padding: 0 22px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.leadCompact {
+  min-height: 0;
+  margin-bottom: 12px;
+}
+
+.highlights {
+  margin: 0;
+  padding: 0 22px;
+  list-style: none;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.readMore {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  max-width: calc(100% - 44px);
+  margin: 15px 22px;
+  color: var(--panel-ink);
+  font-size: 13px;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.readMoreCompact {
+  margin: 4px 22px;
+}
+
+.arrow {
+  flex-shrink: 0;
+  color: #005b37;
+  font-size: 22px;
+  transition: transform 0.3s var(--panel-ease);
+}
+
+.readMore:hover .readMoreText {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.readMore:hover .arrow {
+  transform: translateX(3px);
+}
+
+.readMore:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid var(--panel-ink);
+  outline-offset: 3px;
+}
+
+/* ---------- Tablet: intro above the horizontal accordion ---------- */
+
+@media (max-width: 999px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+  }
+
+  .intro {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .panels {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+
+/* ---------- Mobile: stacked accordion ---------- */
+
+@media (max-width: 600px) {
+  .section {
+    padding: 45px 6%;
+  }
+
+  .panels {
+    flex-direction: column;
+    gap: 8px;
+    height: auto;
+  }
+
+  .panel,
+  .panel[data-active] {
+    flex: 0 0 auto;
+  }
+
+  .panel {
+    display: grid;
+    grid-template-rows: 64px 0fr;
+    transition: grid-template-rows 0.7s var(--panel-ease);
+  }
+
+  .panel[data-active] {
+    grid-template-rows: 95px 1fr;
+  }
+
+  .panelHeading,
+  .panel[data-active] .panelHeading {
+    height: auto;
+  }
+
+  .number {
+    left: 16px;
+    top: 23px;
+  }
+
+  .title {
+    left: 45px;
+    right: 30px;
+    top: 20px;
+    bottom: auto;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: normal;
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+
+  .panel[data-active] .title {
+    left: 22px;
+    right: 35px;
+    top: 39px;
+    bottom: auto;
+    font-size: 19px;
+  }
+
+  .indicator {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    display: block;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .bodyWrap {
+    position: static;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .body {
+    padding-bottom: 20px;
+  }
+
+  .art {
+    height: 190px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .bodyWrap,
+  .panel[data-active] .bodyWrap,
+  .arrow {
+    transition: none;
+  }
+
+  .panel[data-active] .art {
+    animation: none;
+  }
+}

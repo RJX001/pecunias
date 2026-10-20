@@ -325,7 +325,7 @@ function ConvergenceDiagram() {
     <div
       ref={rootRef}
       aria-hidden="true"
-      className="relative mt-16 w-full min-w-0 overflow-x-clip isolate md:mt-20"
+      className="relative mt-10 w-full min-w-0 overflow-x-clip isolate md:mt-14"
     >
       <style>{`
         .why-connector,
@@ -425,42 +425,42 @@ function ConvergenceDiagram() {
 
 export function Problem() {
   return (
-    <section id="why" className="section-pad">
-      <div className="mx-auto max-w-[var(--maxw)]">
+    <section
+      id="why"
+      aria-labelledby="why-heading"
+      className="ps-section ps-section-raised"
+    >
+      <div className="ps-inner">
         <Reveal>
-          <p className="kicker" aria-hidden="true">
+          <p className="ps-kicker" aria-hidden="true">
             {WHY_PECUNIA.heading}
           </p>
-          <h2 className="display max-w-[16ch] text-[clamp(34px,5vw,58px)]">
+          <h2 id="why-heading" className="ps-h2">
             {WHY_PECUNIA.heading}
           </h2>
-          <p className="mt-6 m-0 max-w-[36ch] text-[22px] font-bold tracking-[-0.02em] text-green md:text-[26px]">
-            {WHY_PECUNIA.copy[0]}
-          </p>
-          <p className="support">{WHY_PECUNIA.copy[1]}</p>
-          <p className="support">{INTRO_ABOVE_DIAGRAM}</p>
+          <p className="ps-lead">{WHY_PECUNIA.copy[0]}</p>
+          <p className="ps-support">{WHY_PECUNIA.copy[1]}</p>
+          <p className="ps-support">{INTRO_ABOVE_DIAGRAM}</p>
         </Reveal>
 
         <ConvergenceDiagram />
 
-        <div className="mt-12">
-          <p className="m-0 text-[17px] font-bold tracking-[-0.02em] text-fg">
-            {RESULT_LABEL}
-          </p>
-          <div className="mt-4">
+        <div className="mt-12 md:mt-14">
+          <p className="m-0 text-[15px] font-medium text-fg">{RESULT_LABEL}</p>
+          <div className="mt-3">
             {EMPHASIS_LINES.map((line) => (
               <p
                 key={line}
-                className="display m-0 text-[clamp(24px,3.4vw,40px)] text-green md:whitespace-nowrap"
+                className="m-0 text-[clamp(24px,3.4vw,40px)] font-extrabold leading-[1.12] tracking-[-0.03em] text-fg md:whitespace-nowrap"
               >
                 {line}
               </p>
             ))}
           </div>
-          <p className="mt-8 m-0 max-w-[640px] text-[20px] font-bold tracking-[-0.02em] text-fg">
+          <p className="mt-8 mb-5 max-w-[680px] text-[15px] font-medium text-fg">
             {WHY_PECUNIA.then}
           </p>
-          <p className="mt-6 m-0 text-[20px] font-bold tracking-[-0.02em] text-green">
+          <p className="m-0 text-[15px] font-semibold text-fg">
             {WHY_PECUNIA.closing}
           </p>
         </div>
