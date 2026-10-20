@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { STANDARD } from "@/data/homepage-copy";
 
 const STATEMENT_GREEN = "improve it.";
@@ -20,13 +20,12 @@ const closingInk = STANDARD.closing
 
 export function Philosophy() {
   const refs = useRef<(HTMLParagraphElement | null)[]>([]);
-  const [seen, setSeen] = useState<boolean[]>(() => [false, false, false]);
-
-  useLayoutEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setSeen([true, true, true]);
-    }
-  }, []);
+  const [seen, setSeen] = useState<boolean[]>(() =>
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ? [true, true, true]
+      : [false, false, false],
+  );
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {

@@ -126,7 +126,12 @@ export function CaseStudies() {
           </div>
         </div>
         <p className={styles.position} aria-live="polite">
-          {index + 1} / {caseStudies.length}
+          <span aria-hidden="true">
+            {index + 1} / {caseStudies.length}
+          </span>
+          <span className={styles.srOnly}>
+            {caseStudies[index].name}, {index + 1} of {caseStudies.length}
+          </span>
         </p>
         <p className={styles.note}>Illustrative concept covers.</p>
       </div>

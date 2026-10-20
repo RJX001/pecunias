@@ -27,14 +27,12 @@ export function activeIndexFromList(list: HTMLElement, count: number): number {
 export function useScrollActive<T extends HTMLElement = HTMLElement>(count: number) {
   const listRef = useRef<T | null>(null);
   const [active, setActive] = useState(0);
+  const reduced =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   useLayoutEffect(() => {
-    if (count < 1) return;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setActive(count - 1);
-      return;
-    }
+    if (count < 1 || reduced) return;
 
     const list = listRef.current;
     if (!list) return;
@@ -65,7 +63,7 @@ export function useScrollActive<T extends HTMLElement = HTMLElement>(count: numb
       resizeObserver.disconnect();
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, [count]);
+  }, [count, reduced]);
 
-  return { listRef, active };
+  return { listRef, active: reduced ? Math.max(0, count - 1) : active };
 }

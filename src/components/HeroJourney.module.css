@@ -33,7 +33,8 @@
   transition: color 180ms var(--ease);
 }
 
-.action:hover {
+.action:hover,
+.action:focus-visible {
   color: var(--fg);
 }
 
