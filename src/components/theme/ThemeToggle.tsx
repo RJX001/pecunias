@@ -1,6 +1,5 @@
 "use client";
 
-import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/components/theme/ThemeProvider";
 
 export function ThemeToggle() {
@@ -13,13 +12,8 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
       suppressHydrationWarning
-      className="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-[2px] border border-fg bg-bg px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:opacity-80"
+      className="inline-flex min-h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center rounded-[3px] border-0 bg-transparent px-2 text-[11px] font-semibold leading-none text-fg-dim transition-colors hover:text-fg min-[960px]:text-[12px]"
     >
-      {isDark ? (
-        <Sun className="size-3.5 shrink-0" aria-hidden="true" strokeWidth={1.75} />
-      ) : (
-        <Moon className="size-3.5 shrink-0" aria-hidden="true" strokeWidth={1.75} />
-      )}
       <span suppressHydrationWarning>{isDark ? "Light" : "Dark"}</span>
     </button>
   );

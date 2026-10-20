@@ -1,88 +1,81 @@
 import Link from "next/link";
 import { BrandMark } from "@/components/BrandMark";
 import { FOOTER, NAV_CTA, NAV_LINKS } from "@/data/homepage-copy";
-import { Magnetic } from "./Magnetic";
+import { servicePath, type GrowthSystemSlug } from "@/data/growth-stack";
 
-const SERVICE_HREFS = {
-  Websites: "/services/digital-ecommerce",
-  "E-commerce": "/services/digital-ecommerce",
-  "Paid Media": "/services/paid-growth",
-  SEO: "/services/organic-growth-content",
-  Automation: "/services/ai-automation-crm",
-  CRM: "/services/ai-automation-crm",
-  AI: "/services/ai-automation-crm",
-  Creative: "/services/organic-growth-content",
-  "Growth Strategy": "/services",
-} as const;
+const SERVICE_SLUGS = {
+  Websites: "digital-ecommerce",
+  "E-commerce": "digital-ecommerce",
+  "Paid Media": "paid-growth",
+  SEO: "organic-growth-content",
+  Automation: "ai-automation-crm",
+  CRM: "ai-automation-crm",
+  AI: "ai-automation-crm",
+  Creative: "organic-growth-content",
+  "Growth Strategy": null,
+} as const satisfies Record<string, GrowthSystemSlug | null>;
 
-type ServiceLabel = keyof typeof SERVICE_HREFS;
+type ServiceLabel = keyof typeof SERVICE_SLUGS;
 
-const SERVICE_ITEMS = FOOTER.servicesLine.split(" | ") as ServiceLabel[];
+const SERVICE_ITEMS = (FOOTER.servicesLine.split(" | ") as ServiceLabel[]).map(
+  (label) => {
+    const slug = SERVICE_SLUGS[label];
+    return { label, href: slug ? servicePath(slug) : "/services" };
+  },
+);
+
+const LINK = "no-underline underline-offset-4 hover:underline";
 
 export function Footer() {
   return (
-    <footer className="border-t border-line">
-      <div className="mx-auto grid max-w-[var(--maxw)] gap-12 px-[var(--pad)] py-16 md:grid-cols-3">
+    <footer className="border-t border-line px-[6%] py-10 text-[12px] leading-[1.75] text-fg">
+      <div className="mx-auto grid max-w-[1280px] gap-8 md:grid-cols-[1fr_1.4fr_1fr] md:gap-12">
         <div>
-          <p className="m-0 text-[13px] font-semibold tracking-[0.14em]">
-            <Link
-              href="/"
-              aria-label="Pecunia Studios"
-              className="text-fg no-underline"
-            >
+          <p className="m-0 text-[22px] leading-[1.2] font-extrabold">
+            <Link href="/" aria-label="Pecunia Studios" className="no-underline">
               <BrandMark />
             </Link>
           </p>
-          <p className="mt-4 m-0 max-w-[28ch] text-[14px] text-content-text">
-            {FOOTER.descriptor}
-          </p>
+          <p className="mt-5 mb-0 max-w-[32ch]">{FOOTER.descriptor}</p>
         </div>
 
-        <div>
-          <p className="m-0 text-[13px] text-fg-faint">Services</p>
-          <p className="mt-4 m-0 max-w-[36ch] text-[14px] leading-relaxed text-content-text">
-            {SERVICE_ITEMS.map((label, index) => (
-              <span key={label}>
+        <nav aria-label="Footer services">
+          <p className="m-0 font-semibold">Services</p>
+          <p className="mt-3 mb-0 max-w-[46ch]">
+            {SERVICE_ITEMS.map((item, index) => (
+              <span key={item.label}>
                 {index > 0 ? " | " : null}
-                <Link
-                  href={SERVICE_HREFS[label]}
-                  className="text-content-text no-underline hover:text-fg"
-                >
-                  {label}
+                <Link href={item.href} className={LINK}>
+                  {item.label}
                 </Link>
               </span>
             ))}
           </p>
-        </div>
+        </nav>
 
-        <div>
-          <p className="m-0 text-[13px] text-fg-faint">Company</p>
-          <div className="mt-4">
-            <Magnetic>
-              <a href={NAV_CTA.href} className="btn btn-green btn-compact">
-                {NAV_CTA.label}
-              </a>
-            </Magnetic>
-          </div>
-          <ul className="mt-4 m-0 grid list-none gap-2 p-0 text-[14px]">
+        <nav aria-label="Company">
+          <p className="m-0 font-semibold">Company</p>
+          <a href={NAV_CTA.href} className="ps-button mt-3">
+            {NAV_CTA.label}
+          </a>
+          <ul className="mt-3 mb-0 flex list-none flex-wrap gap-x-5 p-0">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-fg-dim no-underline hover:text-fg"
+                  className={`${LINK} inline-flex min-h-8 items-center`}
                 >
                   {link.label}
                 </Link>
               </li>
             ))}
           </ul>
-        </div>
+        </nav>
       </div>
-      <div className="border-t border-line">
-        <div className="mx-auto flex max-w-[var(--maxw)] flex-wrap items-center justify-between gap-3 px-[var(--pad)] py-5 text-[13px] text-fg-faint">
-          <p className="m-0">{FOOTER.copyright}</p>
-        </div>
-      </div>
+
+      <p className="mx-auto mt-10 mb-0 max-w-[1280px]">
+        {FOOTER.copyright}
+      </p>
     </footer>
   );
 }

@@ -129,9 +129,9 @@ body {
   color: var(--fg);
   font-family: var(--font-montserrat), "Montserrat", ui-sans-serif, system-ui,
     sans-serif;
-  font-size: 16px;
-  line-height: 1.55;
-  font-weight: 800;
+  font-size: 15px;
+  line-height: 1.75;
+  font-weight: 400;
   transition:
     background-color 0.22s var(--ease),
     color 0.22s var(--ease),
@@ -143,12 +143,12 @@ a {
 }
 
 ::selection {
-  background: var(--ledger);
-  color: #f6f0e4;
+  background: var(--green);
+  color: var(--dark-text);
 }
 
 :focus-visible {
-  outline: 2px solid var(--brass);
+  outline: 2px solid var(--fg);
   outline-offset: 3px;
 }
 
@@ -391,12 +391,142 @@ h2 {
   transform: none;
 }
 
-.font-light,
-.font-normal,
-.font-medium,
-.font-semibold,
-.font-bold {
+/*
+ * Contact / enquiry form is out of scope for the October 2026 redesign and
+ * must render exactly as before: it keeps the legacy all-800 weight.
+ */
+#contact {
+  font-weight: 800;
+}
+
+#contact :is(.font-light, .font-normal, .font-medium, .font-semibold, .font-bold) {
   font-weight: 800 !important;
+}
+
+/* ===== October 2026 redesign primitives (approved-design.html) ===== */
+
+.ps-section {
+  position: relative;
+  padding: 76px 6%;
+  border-bottom: 1px solid var(--line);
+}
+
+.ps-section-raised {
+  background: var(--bg-raised);
+}
+
+.ps-inner {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.ps-kicker {
+  margin: 0 0 22px;
+  color: var(--fg);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.ps-h2 {
+  max-width: 760px;
+  margin: 0 0 28px;
+  color: var(--fg);
+  font-size: clamp(30px, 4.4vw, 48px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -2px;
+}
+
+.ps-lead {
+  margin: 0 0 20px;
+  color: var(--fg);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.75;
+}
+
+.ps-support {
+  max-width: 680px;
+  margin: 0 0 20px;
+  color: var(--fg-dim);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+.ps-small {
+  color: var(--fg);
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.ps-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 14px 22px;
+  border: 1px solid var(--green);
+  border-radius: 3px;
+  background: var(--green);
+  color: var(--dark-text);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 180ms var(--ease),
+    border-color 180ms var(--ease);
+}
+
+.ps-button:hover {
+  background: color-mix(in srgb, var(--green) 86%, black);
+  border-color: color-mix(in srgb, var(--green) 86%, black);
+}
+
+/* Outline variant for use on green surfaces (About Us). */
+.ps-button-outline {
+  background: transparent;
+  border-color: var(--dark-text);
+  color: var(--dark-text);
+}
+
+.ps-button-outline:hover {
+  background: color-mix(in srgb, var(--dark-text) 8%, transparent);
+  border-color: var(--dark-text);
+}
+
+.ps-button:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+.ps-on-green .ps-button:focus-visible,
+.ps-on-green :focus-visible {
+  outline-color: var(--dark-text);
+}
+
+.ps-text-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (max-width: 650px) {
+  .ps-section {
+    padding: 45px 6%;
+  }
+
+  .ps-h2 {
+    font-size: 33px;
+    letter-spacing: -1.3px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

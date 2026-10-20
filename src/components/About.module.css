@@ -1,0 +1,62 @@
+/* /about — light restyle on the October 2026 primitives. */
+
+.section.section {
+  border-bottom: 0;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-bottom: 28px;
+  color: var(--fg-dim);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.back:hover {
+  color: var(--fg);
+}
+
+.title.title {
+  max-width: 14ch;
+  font-size: clamp(38px, 5vw, 64px);
+  line-height: 1.02;
+}
+
+.body {
+  max-width: 680px;
+  margin-top: 12px;
+}
+
+.lead.lead {
+  max-width: 680px;
+  font-size: clamp(17px, 1.6vw, 20px);
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.emphasis {
+  font-weight: 700;
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 680px);
+    gap: 64px;
+    align-items: start;
+  }
+
+  .body {
+    margin-top: 6px;
+  }
+}
+
+@media (max-width: 650px) {
+  .title.title {
+    font-size: 38px;
+    letter-spacing: -1.3px;
+  }
+}

@@ -1,37 +1,46 @@
 "use client";
 
-import { useEffect, useId, useState, type MouseEvent } from "react";
+import { useEffect, useId, useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_CTA, NAV_LINKS } from "@/data/homepage-copy";
 import { BrandMark } from "@/components/BrandMark";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { jumpHomeToTop, markPendingHomeTop } from "./scroll-home";
-import { Magnetic } from "./Magnetic";
+import styles from "./Header.module.css";
+
+const DESKTOP_QUERY = "(min-width: 960px)";
+
+function isCurrent(pathname: string, href: string) {
+  if (href.includes("#")) return false;
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const menuId = useId();
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    const desktop = window.matchMedia(DESKTOP_QUERY);
+    const onDesktop = () => {
+      if (desktop.matches) setOpen(false);
     };
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", onKeyDown);
+    desktop.addEventListener("change", onDesktop);
     return () => {
       document.body.style.overflow = "";
       document.removeEventListener("keydown", onKeyDown);
+      desktop.removeEventListener("change", onDesktop);
     };
   }, [open]);
 
@@ -59,34 +68,26 @@ export function Header() {
   };
 
   return (
-    <header
-      className={`fixed top-0 right-0 left-0 z-50 transition-[background-color,backdrop-filter,padding] duration-300 ${
-        scrolled || open
-          ? "bg-header-bg py-3 backdrop-blur-md"
-          : "bg-transparent py-5"
-      }`}
-    >
-      <div className="wrap grid grid-cols-[1fr_auto] items-center gap-6 min-[960px]:grid-cols-[auto_1fr_auto]">
+    <header className={styles.header} data-site-header="">
+      <div className={styles.bar}>
         <Link
           href="/"
           scroll={false}
           aria-label="Pecunia Studios"
-          className="min-w-0 justify-self-start text-[15px] font-semibold tracking-[0.14em] text-fg no-underline min-[480px]:text-[16px] min-[768px]:text-[17px] min-[960px]:text-[18px]"
+          className={styles.brand}
           onClick={onLogoClick}
         >
           <BrandMark />
         </Link>
 
-        <nav
-          className="hidden justify-self-end min-[960px]:block"
-          aria-label="Primary"
-        >
-          <ul className="m-0 flex list-none items-center gap-8 p-0">
+        <nav className={styles.primary} aria-label="Primary">
+          <ul>
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-[14px] font-medium text-fg-dim no-underline transition-colors hover:text-fg"
+                  className={styles.navLink}
+                  aria-current={isCurrent(pathname, link.href) ? "page" : undefined}
                 >
                   {link.label}
                 </Link>
@@ -95,33 +96,23 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="hidden items-center gap-3 min-[960px]:flex">
+        <div className={styles.actions}>
           <ThemeToggle />
-          <Magnetic>
-            <a href={NAV_CTA.href} className="btn btn-green">
-              {NAV_CTA.label}
-            </a>
-          </Magnetic>
-        </div>
-
-        {/* Mobile bar controls: theme toggle stays visible whether the menu is open or closed */}
-        <div className="flex items-center gap-2 min-[960px]:hidden">
-          <ThemeToggle />
+          <a href={NAV_CTA.href} className={`ps-button ${styles.cta}`}>
+            {NAV_CTA.label}
+          </a>
           <button
+            ref={menuButtonRef}
             type="button"
-            className="grid size-11 shrink-0 place-items-center border border-line bg-transparent text-fg"
+            className={styles.menuButton}
             aria-expanded={open}
             aria-controls={menuId}
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((value) => !value)}
           >
-            <span className="flex w-4 flex-col gap-1.5" aria-hidden="true">
-              <span
-                className={`block h-px bg-fg transition-transform ${open ? "translate-y-[3.5px] rotate-45" : ""}`}
-              />
-              <span
-                className={`block h-px bg-fg transition-transform ${open ? "-translate-y-[3.5px] -rotate-45" : ""}`}
-              />
+            <span className={styles.menuLines} aria-hidden="true">
+              <span />
+              <span />
             </span>
           </button>
         </div>
@@ -129,21 +120,17 @@ export function Header() {
 
       <nav
         id={menuId}
-        className={`overflow-hidden bg-bg min-[960px]:hidden ${open ? "max-h-screen" : "max-h-0"}`}
+        className={styles.mobile}
         aria-label="Mobile"
         hidden={!open}
       >
-        <ul className="m-0 grid list-none gap-1 px-[var(--pad)] pt-8 pb-10">
-          {NAV_LINKS.map((link, index) => (
-            <li
-              key={link.href}
-              style={{
-                transitionDelay: open ? `${80 + index * 50}ms` : "0ms",
-              }}
-            >
+        <ul>
+          {NAV_LINKS.map((link) => (
+            <li key={link.href}>
               <Link
                 href={link.href}
-                className="block py-3 text-[28px] font-bold tracking-[-0.02em] text-fg no-underline"
+                className={styles.mobileLink}
+                aria-current={isCurrent(pathname, link.href) ? "page" : undefined}
                 onClick={closeMenu}
               >
                 {link.label}
@@ -151,8 +138,8 @@ export function Header() {
             </li>
           ))}
         </ul>
-        <div className="flex flex-col items-start gap-4 px-[var(--pad)] pb-12">
-          <a href={NAV_CTA.href} className="btn btn-green" onClick={closeMenu}>
+        <div className={styles.mobileCta}>
+          <a href={NAV_CTA.href} className="ps-button" onClick={closeMenu}>
             {NAV_CTA.label}
           </a>
         </div>

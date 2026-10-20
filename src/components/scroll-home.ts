@@ -58,8 +58,13 @@ function waitForElement(id: string): Promise<HTMLElement | null> {
   });
 }
 
+function headerOffset() {
+  const header = document.querySelector<HTMLElement>("[data-site-header]");
+  return header ? header.getBoundingClientRect().height : HEADER_OFFSET;
+}
+
 function aboutTargetY(el: HTMLElement) {
-  return Math.max(0, el.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET);
+  return Math.max(0, el.getBoundingClientRect().top + window.scrollY - headerOffset());
 }
 
 export async function scrollToAboutSection() {

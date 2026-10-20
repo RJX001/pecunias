@@ -1,0 +1,35 @@
+---
+description: Pecunia Studios October 2026 redesign handoff takes priority over all older Pecunia design specifications
+alwaysApply: true
+---
+
+# Pecunia redesign — source-of-truth priority
+
+The **October 2026 redesign handoff** (`Pecunia_Studios_Cursor_Handoff.zip`) is the approved visual and structural design for this site. **Wherever it conflicts with older Pecunia design documents, the new handoff wins.** Never restore a previous layout, colour, section or typography treatment because it appears in an older document.
+
+## Priority order (highest first)
+
+1. `docs/redesign-2026-10/PECUNIA_CURSOR_REDESIGN_IMPLEMENTATION.md` — implementation brief, including the form exclusion.
+2. `docs/redesign-2026-10/HANDOFF_README.md` — explicit approved decisions from the ZIP.
+3. `docs/redesign-2026-10/approved-design.readable.html` — approved composition, styles and motion (a readable copy with embedded images/map data stripped; the original lives only in the ZIP).
+4. `docs/redesign-2026-10/approved-services.png` — approved service-panel appearance.
+5. Owner decisions recorded in `docs/redesign-2026-10/IMPLEMENTATION_CHECKLIST.md`.
+6. Older specs — **historical only, superseded where they conflict**: `pecuniastudios-build-spec.md`, `pecuniastudios-build-spppp.md`, `pecuniastudios-theme-spec.md`, `pecuniastudios-services-page-spec.md`, `pecuniastudios-redesign-v2-spec.md`, and everything else in `docs/` outside `docs/redesign-2026-10/`.
+
+## Do not reintroduce
+
+- The old six-service catalogue (`src/data/services.ts` categories) on any public page.
+- Ledger / brass / cream / wine palette accents, dot-grid backgrounds, black-filled cards, panels or buttons.
+- A thin green scroll-progress rail down the left edge.
+- "Digital & E-commerce" as the visible first service name (it is **Premium Website Design**; the `digital-ecommerce` slug stays for URL compatibility).
+- "AI-Generated Content" in visible UI (use **Content Creation**).
+- The homepage "The Standard" section (removed by owner decision).
+- Animation-direction selectors, variant previews, iframe shells or other prototype-only controls.
+
+## Hard constraints
+
+- **Never edit the contact / enquiry form**: `src/components/Contact.tsx`, `src/app/api/contact/route.ts`, `src/lib/contact-schema.ts`, `src/lib/rate-limit.ts`, or the `.field` styles in `src/app/globals.css`.
+- Never modify the source ZIP or its extracted reference files.
+- Brand green is `#00C978`; light surfaces with dark readable text; dark text on green.
+- UK English. No invented prices, statistics, testimonials, awards or client outcomes. Case-study covers are illustrative concepts, not delivered work.
+- No deployment, DNS, environment-variable or production-configuration changes without explicit approval.

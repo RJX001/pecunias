@@ -6,14 +6,26 @@ import "./globals.css";
 const montserrat = Montserrat({
   subsets: ["latin"],
   display: "swap",
-  weight: "800",
+  weight: ["400", "500", "600", "700", "800", "900"],
   variable: "--font-montserrat",
 });
 
+const SITE_DESCRIPTION =
+  "Pecunia brings strategy, marketing, technology and automation together to help ambitious businesses move beyond where they are now.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.pecuniastudios.co.uk"),
   title: "Pecunia Studios",
-  description:
-    "Pecunia brings strategy, marketing, technology and automation together to help ambitious businesses move beyond where they are now.",
+  description: SITE_DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: "Pecunia Studios",
+    locale: "en_GB",
+    title: "Pecunia Studios",
+    description: SITE_DESCRIPTION,
+    url: "/",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
