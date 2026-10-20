@@ -79,7 +79,7 @@ const INCOMING = [
     [305, 195],
     [305, 205],
   ],
-].map((points) => measure(points as Point[]));
+].map((points) => measure(points as unknown as readonly Point[]));
 
 const SERVICE_INPUTS = [
   [
@@ -104,7 +104,7 @@ const SERVICE_INPUTS = [
     [14, 330],
     [108, 330],
   ],
-].map((points) => measure(points as Point[]));
+].map((points) => measure(points as unknown as readonly Point[]));
 
 const SERVICE_CARDS = [
   [24, "Premium Website", "Design"],

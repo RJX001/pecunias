@@ -1,102 +1,156 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
+  GROWTH_CONTACT,
   GROWTH_STACK_INTRO,
+  SERVICE_PRINCIPLES,
+  getServiceFaqs,
   growthStack,
-  splitGrowthSystemTitle,
+  servicePath,
   type GrowthSystem,
 } from "@/data/growth-stack";
+import { APPROACH_INTRO, APPROACH_SUPPORT } from "@/data/approach";
+import { ProcessSteps } from "./service/ProcessSteps";
 import { FINAL_CTA } from "@/data/homepage-copy";
-import { Reveal } from "./Reveal";
+import { Breadcrumb } from "./service/Breadcrumb";
+import { SERVICE_IMAGES } from "./service/images";
+import { ServiceNav } from "./service/ServiceNav";
 import { WhatWeDo } from "./WhatWeDo";
-
-const SUBHEADLINE = "text-[22px] font-bold tracking-[-0.02em] md:text-[26px]";
-const CONNECTED_GREEN = "Not four separate suppliers.";
-const connectedInk = GROWTH_STACK_INTRO.slice(
-  0,
-  GROWTH_STACK_INTRO.indexOf(CONNECTED_GREEN),
-).trimEnd();
+import styles from "./service/service.module.css";
 
 export function ServiceDetail({ system }: { system: GrowthSystem }) {
-  const { code, name } = splitGrowthSystemTitle(system.title);
   const others = growthStack.filter((item) => item.slug !== system.slug);
+  const image = SERVICE_IMAGES[system.image];
+  const faqs = getServiceFaqs(system);
 
   return (
-    <section className="section-pad pt-32 md:pt-44">
-      <div className="mx-auto max-w-[var(--maxw)]">
-        <Reveal>
-          <Link
-            href="/#services"
-            aria-label="Back to Home"
-            className="inline-flex min-h-11 items-center text-[14px] font-medium text-fg-dim no-underline transition-colors hover:text-fg"
-          >
-            ← Home
-          </Link>
+    <>
+      <ServiceNav current={system.slug} />
+      <div className={styles.page}>
+        <Breadcrumb
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Services", href: "/services" },
+            { label: system.name },
+          ]}
+        />
 
-          <p className="kicker mt-10 font-mono service-row-num text-fg">{code}</p>
-          <h1 className="display max-w-[16ch] text-[clamp(40px,7vw,88px)]">
-            {name}
-          </h1>
-          <p className={`mt-6 m-0 max-w-[36ch] ${SUBHEADLINE} text-green`}>
-            {system.description}
-          </p>
-          <div className="mt-6 md:mt-10">
-            {system.body.map((paragraph) => (
-              <p key={paragraph} className="support max-w-[60ch]">
-                {paragraph}
-              </p>
+        <section className={styles.hero}>
+          <div className={styles.heroCopy}>
+            <p className={styles.eyebrow}>
+              {system.number} / Pecunia Studios
+            </p>
+            <h1 className={styles.title}>{system.name}</h1>
+            <p className={styles.strap}>{system.description}</p>
+            <div className={styles.body}>
+              {system.body.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+            <div className={styles.actions}>
+              <a href={FINAL_CTA.href} className={`ps-button ${styles.pill}`}>
+                {FINAL_CTA.cta}
+              </a>
+              <a href="#what-we-do" className={styles.inlineLink}>
+                WHAT WE DO ↓
+              </a>
+            </div>
+          </div>
+          <div className={styles.art}>
+            <Image
+              src={image.src}
+              alt={system.artLabel}
+              fill
+              priority
+              sizes="(max-width: 700px) 440px, 46vw"
+              style={{ objectPosition: system.imagePosition }}
+            />
+            <span className={styles.artCaption}>{system.name}</span>
+          </div>
+        </section>
+
+        <section className={styles.section} id="what-we-do">
+          <div className={styles.sectionLabel}>
+            <span>01</span>
+            <h2>What we do</h2>
+          </div>
+          <WhatWeDo items={system.whatWeDo} />
+        </section>
+
+        {system.closing ? (
+          <section className={styles.section}>
+            <div className={styles.sectionLabel}>
+              <span>02</span>
+              <h2>Why it matters</h2>
+            </div>
+            <p className={styles.impactLine}>{system.closing}</p>
+            <ul className={styles.principles}>
+              {SERVICE_PRINCIPLES.map((principle, index) => (
+                <li key={principle}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <h3>{principle}</h3>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        <section className={styles.section}>
+          <div className={styles.sectionLabel}>
+            <span>03</span>
+            <h2>The Pecunia Approach</h2>
+          </div>
+          <h3 className={styles.processStrap}>{APPROACH_INTRO}</h3>
+          <p className={styles.body}>{APPROACH_SUPPORT}</p>
+          <ProcessSteps />
+        </section>
+
+        <section className={styles.section}>
+          <div className={styles.sectionLabel}>
+            <span>04</span>
+            <h2>Common questions</h2>
+          </div>
+          <div className={styles.faq}>
+            {faqs.map((faq) => (
+              <details key={faq.question}>
+                <summary>{faq.question}</summary>
+                {faq.answer.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </details>
             ))}
           </div>
-          {system.closing ? (
-            <p
-              className={`mt-8 m-0 max-w-[48ch] ${SUBHEADLINE} ${
-                system.slug === "ai-automation-crm" ? "text-green" : "text-fg"
-              }`}
-            >
-              {system.closing}
-            </p>
-          ) : null}
-        </Reveal>
+        </section>
 
-        <Reveal>
-          <WhatWeDo items={system.whatWeDo} />
-        </Reveal>
-
-        <Reveal>
-          <p className="mt-16 m-0 max-w-[28ch] text-[clamp(22px,3.2vw,40px)] font-bold tracking-[-0.02em] leading-[1.15]">
-            <span className="text-fg">{connectedInk}</span>{" "}
-            <span className="text-green">{CONNECTED_GREEN}</span>
-          </p>
-
-          <nav
-            aria-label={GROWTH_STACK_INTRO}
-            className="mt-10 border-t border-line"
-          >
+        <section className={styles.section}>
+          <div className={styles.sectionLabel}>
+            <span>05</span>
+            <h2>{GROWTH_STACK_INTRO}</h2>
+          </div>
+          <ul className={styles.related}>
             {others.map((item) => (
-              <Link
-                key={item.slug}
-                href={`/services/${item.slug}`}
-                className="group grid min-h-[56px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-line py-4 text-fg no-underline transition-colors hover:bg-bg-raised"
-              >
-                <span className="min-w-0 text-[16px] font-semibold tracking-[-0.01em]">
-                  {item.title}
-                </span>
-                <span
-                  className="inline-block text-green-text transition-transform duration-300 ease-[var(--ease)] group-hover:translate-x-1"
-                  aria-hidden="true"
-                >
-                  →
-                </span>
-              </Link>
+              <li key={item.slug}>
+                <Link href={servicePath(item.slug)}>
+                  {item.name} <span aria-hidden="true">↗</span>
+                </Link>
+              </li>
             ))}
-          </nav>
-        </Reveal>
+          </ul>
+        </section>
 
-        <div className="service-cta">
-          <a href={FINAL_CTA.href} className="btn btn-green">
+        <section className={styles.enquiry}>
+          <span className={styles.eyebrow}>Start A Growth Project</span>
+          <h2>
+            Your business has potential.
+            <br />
+            Let&apos;s build the system to capture it.
+          </h2>
+          <p>{GROWTH_CONTACT}</p>
+          <a href={FINAL_CTA.href} className={`ps-button ${styles.pill}`}>
             {FINAL_CTA.cta}
           </a>
-        </div>
+        </section>
       </div>
-    </section>
+    </>
   );
 }

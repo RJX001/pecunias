@@ -19,9 +19,17 @@ export async function generateMetadata({
   if (!system) {
     return { title: "Services | Pecunia Studios" };
   }
+  const description = `${system.description} ${system.body[0]}`;
   return {
-    title: `${system.title} | Pecunia Studios`,
-    description: system.description,
+    title: `${system.name} | Pecunia Studios`,
+    description,
+    alternates: { canonical: `/services/${system.slug}` },
+    openGraph: {
+      title: `${system.name} | Pecunia Studios`,
+      description,
+      url: `/services/${system.slug}`,
+      images: [`/images/${system.image === "studio" ? "premium-studio.png" : system.image === "city" ? "city.jpg" : "sunset.jpg"}`],
+    },
   };
 }
 

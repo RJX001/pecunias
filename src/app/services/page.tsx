@@ -7,6 +7,12 @@ import { GROWTH_STACK_HEADING, GROWTH_STACK_INTRO } from "@/data/growth-stack";
 export const metadata: Metadata = {
   title: `${GROWTH_STACK_HEADING} | Pecunia Studios`,
   description: GROWTH_STACK_INTRO,
+  alternates: { canonical: "/services" },
+  openGraph: {
+    title: `${GROWTH_STACK_HEADING} | Pecunia Studios`,
+    description: GROWTH_STACK_INTRO,
+    url: "/services",
+  },
 };
 
 export default function ServicesPage() {
