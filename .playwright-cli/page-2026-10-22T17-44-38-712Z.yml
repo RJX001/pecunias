@@ -1,0 +1,500 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Pecunia Studios" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]:
+          - generic [ref=e6]: PECUNIA
+          - generic [aria-hidden] [ref=e7]: ·
+          - generic [ref=e8]: STUDIOS
+      - navigation "Primary" [ref=e9]:
+        - list [ref=e10]:
+          - listitem [ref=e11]:
+            - link "Services" [ref=e12] [cursor=pointer]:
+              - /url: /services
+          - listitem [ref=e13]:
+            - link "Approach" [ref=e14] [cursor=pointer]:
+              - /url: /#approach
+          - listitem [ref=e15]:
+            - link "About" [ref=e16] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=e17]:
+            - link "Knowledge Centre" [ref=e18] [cursor=pointer]:
+              - /url: /knowledge-centre
+      - generic [ref=e19]:
+        - button "Switch to dark theme" [ref=e20] [cursor=pointer]:
+          - generic [ref=e21]: Dark
+        - link "Book A Call" [ref=e22] [cursor=pointer]:
+          - /url: /#contact
+  - main [ref=e23]:
+    - group "Pecunia Studios" [ref=e25]:
+      - generic [ref=e26]:
+        - button "Reveal city imagery in PECUNIA, letter 1 P" [ref=e27] [cursor=pointer]: P
+        - button "Reveal city imagery in PECUNIA, letter 2 E" [ref=e28] [cursor=pointer]: E
+        - button "Reveal city imagery in PECUNIA, letter 3 C" [ref=e29] [cursor=pointer]: C
+        - button "Reveal city imagery in PECUNIA, letter 4 U" [ref=e30] [cursor=pointer]: U
+        - button "Reveal city imagery in PECUNIA, letter 5 N" [ref=e31] [cursor=pointer]: "N"
+        - button "Reveal city imagery in PECUNIA, letter 6 I" [ref=e32] [cursor=pointer]: I
+        - button "Reveal city imagery in PECUNIA, letter 7 A" [ref=e33] [cursor=pointer]: A
+      - generic [ref=e34]:
+        - button "Reveal city imagery in STUDIOS, letter 1 S" [ref=e35] [cursor=pointer]: S
+        - button "Reveal city imagery in STUDIOS, letter 2 T" [ref=e36] [cursor=pointer]: T
+        - button "Reveal city imagery in STUDIOS, letter 3 U" [ref=e37] [cursor=pointer]: U
+        - button "Reveal city imagery in STUDIOS, letter 4 D" [ref=e38] [cursor=pointer]: D
+        - button "Reveal city imagery in STUDIOS, letter 5 I" [ref=e39] [cursor=pointer]: I
+        - button "Reveal city imagery in STUDIOS, letter 6 O" [ref=e40] [cursor=pointer]: O
+        - button "Reveal city imagery in STUDIOS, letter 7 S" [ref=e41] [cursor=pointer]: S
+    - generic [ref=e42]:
+      - generic [ref=e43]:
+        - paragraph [ref=e44]: You're one move away from...
+        - heading "Turning Your Ambition Into Income." [level=1] [ref=e45]
+        - paragraph [ref=e48]: Your business doesn't need more noise. It needs the right move.
+        - paragraph [ref=e49]: Pecunia brings strategy, marketing, technology and automation together to help ambitious businesses move beyond where they are now.
+        - link "Make The Move →" [ref=e50] [cursor=pointer]:
+          - /url: /#contact
+        - list [ref=e51]:
+          - listitem [ref=e52]:
+            - paragraph [ref=e53]: Strategy
+          - listitem [ref=e54]:
+            - paragraph [ref=e55]: Build
+          - listitem [ref=e56]:
+            - paragraph [ref=e57]: Acquire
+          - listitem [ref=e58]:
+            - paragraph [ref=e59]: Convert
+          - listitem [ref=e60]:
+            - paragraph [ref=e61]: Automate
+          - listitem [ref=e62]:
+            - paragraph [ref=e63]: Scale
+      - generic [ref=e65]:
+        - img "Search to enquiry. Content. Discovery. Website. Enquiry. One connected growth system."
+        - generic [ref=e66]:
+          - button "Pause motion" [ref=e67] [cursor=pointer]
+          - button "Replay motion" [ref=e68] [cursor=pointer]: Replay motion ↻
+        - paragraph [ref=e69]: Content. Discovery. Website. Enquiry. One connected growth system.
+    - region [ref=e70]:
+      - generic [ref=e71]:
+        - paragraph [ref=e72]: Growth Philosophy
+        - heading "We don't just market businesses. We build the system behind growth." [level=2] [ref=e73]:
+          - generic [ref=e74]: We don't just market businesses.
+          - generic [ref=e75]: We build the system behind growth.
+        - paragraph [ref=e76]: Growth rarely comes from one campaign, one website or one clever advert. It comes from having the right strategy, infrastructure, acquisition channels and systems working together.
+        - paragraph [ref=e77]: "We combine marketing, technology, data, creative and automation to build growth systems designed around one objective:"
+        - paragraph [ref=e78]: Make the business perform better.
+    - region [ref=e79]:
+      - generic [ref=e80]:
+        - generic [ref=e81]:
+          - paragraph [ref=e82]: Our Services
+          - heading "Our Services — The Growth Stack" [level=2] [ref=e83]: Our Services —The Growth Stack
+          - paragraph [ref=e84]: Five connected services. One growth system.
+          - link "Start A Growth Project →" [ref=e85] [cursor=pointer]:
+            - /url: /#contact
+        - generic [ref=e86]:
+          - article [ref=e87]:
+            - heading [level=3] [ref=e88]:
+              - button "Premium Website Design" [expanded] [ref=e89]:
+                - generic [aria-hidden] [ref=e90]: "01"
+            - generic [ref=e93]:
+              - img "Illustrative premium website design studio" [ref=e95]
+              - paragraph [ref=e96]: Digital infrastructure built to convert.
+              - list [ref=e97]:
+                - listitem [ref=e98]: Premium Website Design
+                - listitem [ref=e99]: Custom AI Integration
+                - listitem [ref=e100]: Custom Dashboards
+              - link "Read more about premium websites" [ref=e101] [cursor=pointer]:
+                - /url: /services/digital-ecommerce
+                - generic [aria-hidden] [ref=e103]: →
+          - article [ref=e104]:
+            - heading [level=3] [ref=e105]:
+              - button "Paid Growth" [ref=e106] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e107]: "02"
+          - article [ref=e109]:
+            - heading [level=3] [ref=e110]:
+              - button "Organic Growth & Content" [ref=e111] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e112]: "03"
+          - article [ref=e114]:
+            - heading [level=3] [ref=e115]:
+              - button "AI, Automation & CRM" [ref=e116] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e117]: "04"
+          - article [ref=e119]:
+            - heading [level=3] [ref=e120]:
+              - button "Search Visibility & SEO" [ref=e121] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e122]: "05"
+    - region [ref=e124]:
+      - generic [ref=e126]:
+        - paragraph [ref=e127]: Selected work
+        - generic [ref=e128]:
+          - generic [ref=e129]:
+            - heading "Premium Websites." [level=2] [ref=e130]
+            - paragraph [ref=e131]: Distinctive design. Seamless experiences. Explore the websites and digital platforms we've built for real businesses.
+          - generic [ref=e132]:
+            - button "Previous website" [disabled] [ref=e133]: ←
+            - button "Next website" [ref=e134] [cursor=pointer]: →
+        - region "Premium websites" [ref=e135]:
+          - generic [ref=e136]:
+            - 'article "1 of 4: Atlantis Linen Services" [ref=e137]':
+              - link "Visit Atlantis Linen Services website (opens in a new tab)" [ref=e138] [cursor=pointer]:
+                - /url: https://atlantislinenservices.co.uk/
+                - generic [ref=e143]: atlantislinenservices.co.uk
+                - img "Homepage preview of Atlantis Linen Services" [ref=e145]
+                - generic [aria-hidden] [ref=e146]: Visit website ↗
+              - paragraph [ref=e147]: Hospitality & commercial laundry
+              - heading "Atlantis Linen Services" [level=3] [ref=e148]
+              - paragraph [ref=e149]: A cinematic service website bringing linen hire, product choices and quotation journeys together.
+              - link "View live website (opens in a new tab)" [ref=e150] [cursor=pointer]:
+                - /url: https://atlantislinenservices.co.uk/
+                - text: View live website
+                - generic [aria-hidden] [ref=e151]: →
+                - generic [ref=e152]: (opens in a new tab)
+            - article [aria-hidden] [ref=e153]:
+              - link [ref=e154] [cursor=pointer]:
+                - /url: https://www.cardchart.co.uk/
+                - generic [ref=e159]: www.cardchart.co.uk
+                - generic [aria-hidden] [ref=e162]: Visit website ↗
+              - paragraph [ref=e163]: Trading card platform
+              - heading [level=3] [ref=e164]: CardChart
+              - paragraph [ref=e165]: A card-market interface connecting search, pricing, collection tools and market insights.
+              - link [ref=e166] [cursor=pointer]:
+                - /url: https://www.cardchart.co.uk/
+                - text: View live website
+                - generic [aria-hidden] [ref=e167]: →
+                - generic [ref=e168]: (opens in a new tab)
+            - article [aria-hidden] [ref=e169]:
+              - link [ref=e170] [cursor=pointer]:
+                - /url: https://beckburychippy.food2go.co.uk/
+                - generic [ref=e175]: beckburychippy.food2go.co.uk
+                - generic [aria-hidden] [ref=e178]: Visit website ↗
+              - paragraph [ref=e179]: Restaurant & online ordering
+              - heading [level=3] [ref=e180]: Beckbury Chippy
+              - paragraph [ref=e181]: A branded takeaway storefront giving customers a clear route to the menu and online ordering.
+              - link [ref=e182] [cursor=pointer]:
+                - /url: https://beckburychippy.food2go.co.uk/
+                - text: View live website
+                - generic [aria-hidden] [ref=e183]: →
+                - generic [ref=e184]: (opens in a new tab)
+            - article [aria-hidden] [ref=e185]:
+              - link [ref=e186] [cursor=pointer]:
+                - /url: https://completelysecured.co.uk/
+                - generic [ref=e191]: completelysecured.co.uk
+                - generic [aria-hidden] [ref=e194]: Visit website ↗
+              - paragraph [ref=e195]: Security & e-commerce
+              - heading [level=3] [ref=e196]: Completely Secured
+              - paragraph [ref=e197]: A security product storefront showcasing bollards, installation services and online shopping.
+              - link [ref=e198] [cursor=pointer]:
+                - /url: https://completelysecured.co.uk/
+                - text: View live website
+                - generic [aria-hidden] [ref=e199]: →
+                - generic [ref=e200]: (opens in a new tab)
+        - generic [ref=e201]:
+          - paragraph [ref=e202]:
+            - generic [aria-hidden] [ref=e208]: 1 / 4
+            - generic [ref=e209]: Atlantis Linen Services, 1 of 4
+          - button "Skip previews" [ref=e210] [cursor=pointer]:
+            - text: Skip previews
+            - generic [aria-hidden] [ref=e211]: ↓
+        - paragraph [ref=e212]: Scroll to explore the websites
+      - generic [ref=e213]: End of website previews
+    - region [ref=e214]:
+      - generic [ref=e215]:
+        - paragraph [ref=e216]: Search visibility
+        - heading "Be discovered. Be understood." [level=2] [ref=e217]: Be discovered.Be understood.
+        - paragraph [ref=e218]: Your next customer could start with a search, a map or a question. We connect SEO, local presence and useful answers to help them find a clearer path to your business.
+        - link "Explore Search Visibility" [ref=e219] [cursor=pointer]:
+          - /url: /services/search-visibility
+          - text: Explore Search Visibility
+          - generic [aria-hidden] [ref=e220]: →
+        - generic [ref=e221]:
+          - generic [ref=e222]:
+            - paragraph [ref=e223]: One connected search strategy
+            - tablist "Search visibility services" [ref=e224]:
+              - tab "AI Search Visibility" [selected] [ref=e225] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e227]: ↗
+              - tab "Answer Engine Optimisation" [ref=e228] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e230]: ↗
+              - tab "Generative Engine Optimisation" [ref=e231] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e233]: ↗
+              - tab "Technical SEO" [ref=e234] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e236]: ↗
+              - tab "Local SEO" [ref=e237] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e239]: ↗
+              - tab "On-page & Content SEO" [ref=e240] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e242]: ↗
+              - tab "E-commerce SEO" [ref=e243] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e245]: ↗
+              - tab "International SEO" [ref=e246] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e248]: ↗
+              - tab "Image & Video SEO" [ref=e249] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e251]: ↗
+              - tab "Off-page SEO & Digital PR" [ref=e252] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e254]: ↗
+              - tab "Structured Data & Entity SEO" [ref=e255] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e257]: ↗
+              - tab "SEO Audits & Migration Support" [ref=e258] [cursor=pointer]:
+                - generic [aria-hidden] [ref=e260]: ↗
+            - button "Pause topic cycle" [ref=e261] [cursor=pointer]
+          - tabpanel "AI Search Visibility" [ref=e265]:
+            - generic [aria-hidden] [ref=e266]:
+              - generic [ref=e267]:
+                - generic [ref=e268]: ⌕
+                - generic [ref=e269]: Find your next opportunity
+              - generic [ref=e273]:
+                - generic [ref=e274]: SEO
+                - generic [ref=e275]: LOCAL
+                - generic [ref=e276]: ANSWERS
+              - generic [ref=e277]:
+                - text: P
+                - generic [ref=e278]: PECUNIA
+              - paragraph [ref=e279]: Clear information. Connected discovery.
+            - generic [ref=e280]:
+              - paragraph [ref=e281]: AI Search Visibility
+              - heading "Make your expertise easier to understand." [level=3] [ref=e282]
+              - paragraph [ref=e283]: Clear, accessible information helps people and search systems understand what your business does. We review the foundations behind that visibility.
+              - 'link "Explore this service : Search Visibility and SEO" [ref=e284] [cursor=pointer]':
+                - /url: /services/search-visibility
+                - text: Explore this service
+                - generic [ref=e285]: ": Search Visibility and SEO"
+                - generic [aria-hidden] [ref=e286]: →
+        - paragraph [ref=e287]: SEO · Local search · Helpful content · AI-assisted discovery
+    - region [ref=e288]:
+      - generic [ref=e289]:
+        - generic [ref=e290]:
+          - paragraph [aria-hidden] [ref=e291]: The Pecunia Approach
+          - heading "The Pecunia Approach" [level=2] [ref=e292]
+          - paragraph [ref=e293]: We don't sell activity. We build for outcomes.
+          - paragraph [ref=e294]: Anyone can launch a campaign. Anyone can build a website. Anyone can generate content. The difference is whether those things actually contribute to growth. Our process starts with the commercial objective and works backwards.
+        - list [ref=e295]:
+          - listitem [ref=e296]:
+            - heading "01 — Diagnose" [level=3] [ref=e297]
+            - paragraph [ref=e298]: We analyse the business, market, offer, customer journey, competitors and existing performance. We identify what's working. More importantly, we identify what's leaking.
+          - listitem [ref=e299]:
+            - heading "02 — Strategise" [level=3] [ref=e300]
+            - paragraph [ref=e301]: We establish the growth model. Who are we trying to acquire? Which channels should reach them? What should they see? Where should they land? What happens next? What needs to be true for acquisition to be profitable?
+            - paragraph [ref=e302]: Every decision starts with the numbers.
+          - listitem [ref=e303]:
+            - heading "03 — Build" [level=3] [ref=e304]
+            - paragraph [ref=e305]: We build the infrastructure required to execute the strategy. Websites. Landing pages. Funnels. CRM systems. Automations. Tracking. Creative. Campaigns. E-commerce systems.
+            - paragraph [ref=e306]: Everything has a role. Everything connects back to the objective.
+          - listitem [ref=e307]:
+            - heading "04 — Launch" [level=3] [ref=e308]
+            - paragraph [ref=e309]: Strategy means nothing until it meets the market. We launch. We measure. We collect real-world data. Then we use that data to understand what the market actually responds to.
+          - listitem [ref=e310]:
+            - heading "05 — Optimise" [level=3] [ref=e311]
+            - paragraph [ref=e312]: Launching is the beginning, not the finish line. We continuously analyse acquisition, conversion and customer behaviour. Creative gets tested. Offers get refined. Landing pages get improved. Campaigns get restructured. Budgets move towards what performs.
+          - listitem [ref=e313]:
+            - heading "06 — Scale" [level=3] [ref=e314]
+            - paragraph [ref=e315]: Once we identify what works, we build on it. More qualified traffic. More efficient acquisition. More conversions. More automation. More capacity.
+            - paragraph [ref=e316]: The objective isn't to make something work once. It's to build something that can scale.
+    - region [ref=e317]:
+      - generic [ref=e318]:
+        - paragraph [ref=e319]: Built in 2026. Built for what's next.
+        - heading "About Pecunia Studios" [level=2] [ref=e322]
+        - generic [ref=e323]:
+          - paragraph [ref=e324]: "Pecunia Studios was founded in 2026 by a marketing specialist and an AI specialist with a shared belief: Modern businesses shouldn't have to choose between great marketing and great technology."
+          - paragraph [ref=e325]: The agency was built to bring both together.
+          - link "About Us →" [ref=e326] [cursor=pointer]:
+            - /url: /about
+    - region [ref=e327]:
+      - generic [ref=e328]:
+        - generic [ref=e329]:
+          - paragraph [aria-hidden] [ref=e330]: Our Commitment
+          - heading "Our Commitment" [level=2] [ref=e331]
+          - paragraph [ref=e332]: We don't promise magic. We build accountability into the system.
+          - paragraph [ref=e333]: Marketing isn't a vending machine. You can't put money in and guarantee exactly what comes out. Markets change. Customers change. Competition changes. What we can control is the process.
+        - generic [ref=e334]:
+          - list [ref=e335]:
+            - listitem [ref=e336]:
+              - generic [aria-hidden] [ref=e337]: "01"
+              - generic [ref=e338]: Clear commercial objectives
+            - listitem [ref=e339]:
+              - generic [aria-hidden] [ref=e340]: "02"
+              - generic [ref=e341]: Defined KPIs
+            - listitem [ref=e342]:
+              - generic [aria-hidden] [ref=e343]: "03"
+              - generic [ref=e344]: Transparent reporting
+            - listitem [ref=e345]:
+              - generic [aria-hidden] [ref=e346]: "04"
+              - generic [ref=e347]: Continuous testing
+            - listitem [ref=e348]:
+              - generic [aria-hidden] [ref=e349]: "05"
+              - generic [ref=e350]: Conversion optimisation
+            - listitem [ref=e351]:
+              - generic [aria-hidden] [ref=e352]: "06"
+              - generic [ref=e353]: Active campaign management
+            - listitem [ref=e354]:
+              - generic [aria-hidden] [ref=e355]: "07"
+              - generic [ref=e356]: Data-led decision making
+            - listitem [ref=e357]:
+              - generic [aria-hidden] [ref=e358]: "08"
+              - generic [ref=e359]: Rapid identification of problems
+            - listitem [ref=e360]:
+              - generic [aria-hidden] [ref=e361]: "09"
+              - generic [ref=e362]: Strategic recommendations
+            - listitem [ref=e363]:
+              - generic [aria-hidden] [ref=e364]: "10"
+              - generic [ref=e365]: Continuous optimisation
+          - paragraph [ref=e366]: If something isn't working, we don't hide behind the numbers.
+          - paragraph [ref=e367]: We find out why. Then we fix it.
+    - region [ref=e368]:
+      - generic [ref=e369]:
+        - paragraph [aria-hidden] [ref=e370]: Why Pecunia?
+        - generic [ref=e371]:
+          - generic [ref=e372]:
+            - heading "Why Pecunia?" [level=2] [ref=e373]
+            - paragraph [ref=e374]: Because you don't need another marketing supplier.
+          - generic [ref=e375]:
+            - paragraph [ref=e376]: You need a team capable of seeing the entire growth system.
+            - paragraph [ref=e377]: Too many businesses have their website with one company, advertising with another, content somewhere else and automation handled by someone who doesn't understand the customer journey. The result?
+        - list [ref=e378]:
+          - listitem [ref=e379]: Disconnected systems.
+          - listitem [ref=e380]: Disconnected data.
+          - listitem [ref=e381]: Disconnected decisions.
+        - paragraph [ref=e382]: Pecunia brings strategy, technology, acquisition, conversion, creative and automation together.
+        - paragraph [ref=e383]: One team. One strategy. One growth system.
+        - generic [aria-hidden] [ref=e385]:
+          - generic [ref=e386]:
+            - generic [ref=e387]: Strategy
+            - generic [ref=e388]:
+              - generic [ref=e389]: ↗
+              - text: Technology
+            - generic [ref=e390]:
+              - generic [ref=e391]: ↗
+              - text: Acquisition
+            - generic [ref=e392]:
+              - generic [ref=e393]: ↗
+              - text: Conversion
+            - generic [ref=e394]:
+              - generic [ref=e395]: ↗
+              - text: Creative
+            - generic [ref=e396]:
+              - generic [ref=e397]: ↗
+              - text: Automation
+          - generic [ref=e398]:
+            - generic [ref=e399]: ↗
+            - generic [ref=e400]: Strategy
+            - generic [ref=e401]:
+              - generic [ref=e402]: ↗
+              - text: Technology
+            - generic [ref=e403]:
+              - generic [ref=e404]: ↗
+              - text: Acquisition
+            - generic [ref=e405]:
+              - generic [ref=e406]: ↗
+              - text: Conversion
+            - generic [ref=e407]:
+              - generic [ref=e408]: ↗
+              - text: Creative
+            - generic [ref=e409]:
+              - generic [ref=e410]: ↗
+              - text: Automation
+        - generic [ref=e411]:
+          - heading "Built For Businesses Serious About Growth." [level=2] [ref=e412]:
+            - generic [ref=e413]: Built For Businesses
+            - generic [ref=e414]: Serious About Growth.
+          - paragraph [ref=e415]: We work with ambitious businesses that understand growth requires more than simply turning up the marketing. They have something worth building. Something worth scaling. And the ambition to do it properly.
+          - paragraph [ref=e416]: We're not built around selling isolated services. We're built around solving growth problems.
+          - list [ref=e417]:
+            - listitem [ref=e418]: If the opportunity is there, we'll find it.
+            - listitem [ref=e419]: If the system is broken, we'll fix it.
+            - listitem [ref=e420]: If it works, we'll scale it.
+    - generic [ref=e422]:
+      - generic [ref=e423]:
+        - heading "Your business has potential. Let's build the system to capture it." [level=2] [ref=e424]
+        - paragraph [ref=e425]: Tell us where you are, where you want to go and what's currently standing in the way. We'll identify the opportunities, build the strategy and show you what it would take to get there.
+      - generic [ref=e426]:
+        - paragraph [ref=e428]: Start A Growth Project
+        - generic [ref=e431]:
+          - generic [ref=e432]:
+            - generic [ref=e433]: Name
+            - textbox "Name" [ref=e434]
+          - generic [ref=e435]:
+            - generic [ref=e436]: Business Name
+            - textbox "Business Name" [ref=e437]
+          - generic [ref=e438]:
+            - generic [ref=e439]: Mobile Number
+            - textbox "Mobile Number" [ref=e440]
+          - generic [ref=e441]:
+            - generic [ref=e442]: Service Needed
+            - combobox "Service Needed" [ref=e443]:
+              - option "Select a service" [disabled] [selected]
+              - option "Website Development"
+              - option "Digital Marketing"
+              - option "Paid Advertising"
+              - option "Marketplace & Store Setup"
+              - option "Creative Services"
+              - option "App Development"
+              - option "Not sure yet"
+          - generic [ref=e444]:
+            - generic [ref=e445]: Project Details
+            - textbox "Project Details" [ref=e446]:
+              - /placeholder: What are you trying to achieve?
+          - generic [ref=e447]:
+            - generic [ref=e448]: Social Media / Website Links (optional)
+            - textbox "Social Media / Website Links (optional)" [ref=e449]:
+              - /placeholder: Add your website, Instagram, LinkedIn or other relevant links
+          - button "Submit Request" [ref=e451] [cursor=pointer]
+  - contentinfo [ref=e452]:
+    - generic [ref=e453]:
+      - generic [ref=e454]:
+        - paragraph [ref=e455]:
+          - link "Pecunia Studios" [ref=e456] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e457]:
+              - generic [ref=e458]: PECUNIA
+              - generic [aria-hidden] [ref=e459]: ·
+              - generic [ref=e460]: STUDIOS
+        - paragraph [ref=e461]: Strategy. Technology. Acquisition. Growth.
+      - navigation "Footer services" [ref=e462]:
+        - paragraph [ref=e463]: Services
+        - paragraph [ref=e464]:
+          - link "Websites" [ref=e466] [cursor=pointer]:
+            - /url: /services/digital-ecommerce
+          - generic [ref=e467]:
+            - text: "|"
+            - link "E-commerce" [ref=e468] [cursor=pointer]:
+              - /url: /services/digital-ecommerce
+          - generic [ref=e469]:
+            - text: "|"
+            - link "Paid Media" [ref=e470] [cursor=pointer]:
+              - /url: /services/paid-growth
+          - generic [ref=e471]:
+            - text: "|"
+            - link "SEO" [ref=e472] [cursor=pointer]:
+              - /url: /services/search-visibility
+          - generic [ref=e473]:
+            - text: "|"
+            - link "Automation" [ref=e474] [cursor=pointer]:
+              - /url: /services/ai-automation-crm
+          - generic [ref=e475]:
+            - text: "|"
+            - link "CRM" [ref=e476] [cursor=pointer]:
+              - /url: /services/ai-automation-crm
+          - generic [ref=e477]:
+            - text: "|"
+            - link "AI" [ref=e478] [cursor=pointer]:
+              - /url: /services/ai-automation-crm
+          - generic [ref=e479]:
+            - text: "|"
+            - link "Creative" [ref=e480] [cursor=pointer]:
+              - /url: /services/organic-growth-content
+          - generic [ref=e481]:
+            - text: "|"
+            - link "Growth Strategy" [ref=e482] [cursor=pointer]:
+              - /url: /services
+      - navigation "Company" [ref=e483]:
+        - paragraph [ref=e484]: Company
+        - link "Book A Call" [ref=e485] [cursor=pointer]:
+          - /url: /#contact
+        - list [ref=e486]:
+          - listitem [ref=e487]:
+            - link "Services" [ref=e488] [cursor=pointer]:
+              - /url: /services
+          - listitem [ref=e489]:
+            - link "Approach" [ref=e490] [cursor=pointer]:
+              - /url: /#approach
+          - listitem [ref=e491]:
+            - link "About" [ref=e492] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=e493]:
+            - link "Knowledge Centre" [ref=e494] [cursor=pointer]:
+              - /url: /knowledge-centre
+    - paragraph [ref=e495]: © 2026 Pecunia Studios. Company registered in England & Wales.
+  - button "Open Next.js Dev Tools" [ref=e501] [cursor=pointer]
