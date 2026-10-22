@@ -41,7 +41,7 @@
   --fg: var(--paper);
   --fg-dim: var(--stone);
   --fg-faint: var(--stone);
-  /* Descriptive/body copy. Headings stay --fg (ink). */
+  /* Descriptive/body copy. Section headings use brand green via .ps-h2 and .display. */
   --content-text: #000000; /* light */
 
   --maxw: 1240px;
@@ -203,6 +203,7 @@ h2 {
 
 .display {
   margin: 0;
+  color: var(--green);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 0.98;
@@ -434,11 +435,17 @@ h2 {
 .ps-h2 {
   max-width: 760px;
   margin: 0 0 28px;
-  color: var(--fg);
+  color: var(--green);
   font-size: clamp(30px, 4.4vw, 48px);
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -2px;
+}
+
+/* A heading on a green surface. Light sections keep brand green above. */
+.ps-on-green .ps-h2,
+.ps-on-green .display {
+  color: #005B37;
 }
 
 .ps-lead {

@@ -43,14 +43,14 @@
   grid-column: 1;
   grid-row: 1;
   display: flex;
-  gap: 9px;
+  gap: 7px;
   min-width: 0;
   height: 490px;
 }
 
 .panel {
   position: relative;
-  flex: 0 0 42px;
+  flex: 0 0 36px;
   min-width: 0;
   overflow: hidden;
   isolation: isolate;
@@ -186,6 +186,39 @@
 
 .artImage {
   object-fit: cover;
+}
+
+.searchArt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  height: 100%;
+  padding: 18px 20px;
+  background: linear-gradient(135deg, #e0f8ea, #8de5b9);
+  color: #005b37;
+}
+
+.searchArt span {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.searchArt strong {
+  color: #181410;
+  font-size: 26px;
+  line-height: 1.15;
+  letter-spacing: -0.6px;
+}
+
+.searchArt p {
+  margin: 0;
+  padding-top: 12px;
+  border-top: 1px solid #005b3740;
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
 }
 
 @keyframes art-enter {

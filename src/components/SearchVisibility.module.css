@@ -1,0 +1,383 @@
+/* Homepage Search Visibility topic cycle. Light page, green topic panel. */
+
+.section {
+  overflow-x: clip;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.heading {
+  max-width: 14ch;
+}
+
+.accent {
+  color: #005b37;
+}
+
+.intro {
+  max-width: 710px;
+}
+
+.explore,
+.cardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  border-bottom: 1px solid var(--green);
+  padding-bottom: 4px;
+}
+
+.explore:focus-visible,
+.cardLink:focus-visible,
+.pause:focus-visible,
+.tab:focus-visible {
+  outline: 2px solid #005b37;
+  outline-offset: 3px;
+}
+
+.showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 70px;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.topics {
+  min-width: 0;
+  padding: 34px;
+  border-radius: 18px;
+  background: #e4f8ee;
+  color: #254532;
+}
+
+.topicLabel {
+  margin: 0 0 23px;
+  color: #3c6650;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 11px;
+  max-height: 290px;
+  margin: 0;
+  padding: 60px 12px 60px 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-padding: 80px 0;
+  scrollbar-width: thin;
+  scrollbar-color: #00c978 #d4f0e0;
+  mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent);
+}
+
+.tab {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 17px;
+  border: 1px solid #9cc9b2;
+  border-radius: 30px;
+  background: transparent;
+  color: #254532;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.tab[aria-selected="true"] {
+  border-color: #00c978;
+  background: #00c978;
+  color: #181410;
+  transform: translateX(5px);
+}
+
+.tabMark {
+  flex-shrink: 0;
+}
+
+.pause {
+  margin-top: 20px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid #005b37;
+  border-radius: 6px;
+  background: #fff;
+  color: #181410;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.stack {
+  position: relative;
+  min-width: 0;
+  margin: 0 24px;
+}
+
+.backOne,
+.backTwo {
+  position: absolute;
+  border-radius: 18px;
+}
+
+.backOne {
+  inset: 30px -18px;
+  background: #d5eee0;
+  transform: rotate(6deg);
+}
+
+.backTwo {
+  inset: 45px -26px;
+  background: #eff5f0;
+  transform: rotate(-7deg);
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #cce4d5;
+  border-radius: 16px;
+  background: #fff;
+  color: #181410;
+  box-shadow: 0 20px 45px #005b3712;
+}
+
+.illustration {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+  padding: 25px;
+  background: linear-gradient(140deg, #e7f8ee, #c9efdc);
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border: 1px solid #fff;
+  border-radius: 7px;
+  background: #ffffffd9;
+  color: #42634f;
+  font-size: 10px;
+}
+
+.searchBar > span:first-child {
+  color: #008b53;
+  font-size: 21px;
+  line-height: 1;
+}
+
+.searchBar i {
+  width: 5px;
+  height: 5px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: #00c978;
+}
+
+.resultLine {
+  width: 43%;
+  height: 4px;
+  margin-top: 14px;
+  border-radius: 3px;
+  background: #6dab8d55;
+}
+
+.resultShort {
+  width: 29%;
+  margin-top: 8px;
+}
+
+.orbit {
+  position: absolute;
+  inset: 103px 32px 36px;
+  border: 1px solid #68bb91;
+  border-radius: 50%;
+  transform: rotate(-12deg);
+}
+
+.orbit span {
+  position: absolute;
+  padding: 5px 8px;
+  border: 1px solid #a1d5b9;
+  border-radius: 20px;
+  background: #f7fff9;
+  color: #005b37;
+  font-size: 8px;
+  letter-spacing: 0.8px;
+  transform: rotate(12deg);
+}
+
+.orbit span:nth-child(1) {
+  top: 10px;
+  left: -12px;
+}
+
+.orbit span:nth-child(2) {
+  top: 17px;
+  right: -12px;
+}
+
+.orbit span:nth-child(3) {
+  bottom: -10px;
+  left: 28%;
+}
+
+.core {
+  position: absolute;
+  top: 119px;
+  left: calc(50% - 28px);
+  display: grid;
+  place-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: #00c978;
+  color: #181410;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  box-shadow: 0 12px 20px #005b3726;
+}
+
+.core span {
+  display: block;
+  font-size: 5px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.illustrationCaption {
+  position: absolute;
+  bottom: 14px;
+  left: 25px;
+  margin: 0;
+  color: #42634f;
+  font-size: 8px;
+  letter-spacing: 0.2px;
+}
+
+.copy {
+  padding: 27px;
+}
+
+.copyLabel {
+  margin: 0 0 13px;
+  color: #007f4b;
+  font-size: 10px;
+  letter-spacing: 0.6px;
+}
+
+.copy h3 {
+  margin: 0 0 15px;
+  color: #181410;
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.7px;
+}
+
+.copyBody {
+  min-height: 65px;
+  margin: 0 0 19px;
+  color: #6e6558;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.cardLink {
+  font-size: 11px;
+}
+
+.footnote {
+  margin: 33px 0 0;
+  color: var(--fg-dim);
+  font-size: 10px;
+  letter-spacing: 0.2px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:global([data-theme="dark"]) .accent {
+  color: var(--green);
+}
+
+@media (max-width: 750px) {
+  .showcase {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 35px;
+  }
+
+  .topics {
+    padding: 24px;
+  }
+
+  .intro {
+    font-size: 14px;
+  }
+
+  .stack {
+    width: calc(100% - 48px);
+    max-width: 450px;
+    margin: 0 auto;
+  }
+
+  .copy h3 {
+    font-size: 21px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab,
+  .tab[aria-selected="true"] {
+    transition: none;
+    transform: none;
+  }
+
+  .list {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    mask-image: none;
+  }
+
+  .pause {
+    display: none;
+  }
+}

@@ -1,10 +1,14 @@
-import { approachStages } from "@/data/approach";
+import { approachStages, type ApproachStage } from "@/data/approach";
 import styles from "./service.module.css";
 
-export function ProcessSteps() {
+export function ProcessSteps({
+  stages = approachStages,
+}: {
+  stages?: readonly ApproachStage[];
+}) {
   return (
     <div className={styles.process}>
-      {approachStages.map((stage, index) => (
+      {stages.map((stage, index) => (
         <details key={stage.title} {...(index === 0 ? { open: true } : {})}>
           <summary>{stage.title}</summary>
           {stage.body.map((paragraph) => (

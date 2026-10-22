@@ -20,6 +20,14 @@ export async function generateMetadata({
     return { title: "Services | Pecunia Studios" };
   }
   const description = `${system.description} ${system.body[0]}`;
+  const image =
+    system.image === "studio"
+      ? "/images/premium-studio.png"
+      : system.image === "city"
+        ? "/images/city.jpg"
+        : system.image === "sunset"
+          ? "/images/sunset.jpg"
+          : null;
   return {
     title: `${system.name} | Pecunia Studios`,
     description,
@@ -28,7 +36,7 @@ export async function generateMetadata({
       title: `${system.name} | Pecunia Studios`,
       description,
       url: `/services/${system.slug}`,
-      images: [`/images/${system.image === "studio" ? "premium-studio.png" : system.image === "city" ? "city.jpg" : "sunset.jpg"}`],
+      ...(image ? { images: [image] } : {}),
     },
   };
 }

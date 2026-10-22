@@ -8,6 +8,7 @@ export const NAV_LINKS = [
   { href: "/services", label: "Services" },
   { href: "/#approach", label: "Approach" },
   { href: "/about", label: "About" },
+  { href: "/knowledge-centre", label: "Knowledge Centre" },
 ] as const;
 
 export const NAV_CTA = {

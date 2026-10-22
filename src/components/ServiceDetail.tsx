@@ -9,7 +9,11 @@ import {
   servicePath,
   type GrowthSystem,
 } from "@/data/growth-stack";
-import { APPROACH_INTRO, APPROACH_SUPPORT } from "@/data/approach";
+import {
+  APPROACH_INTRO,
+  APPROACH_SUPPORT,
+  type ApproachStage,
+} from "@/data/approach";
 import { ProcessSteps } from "./service/ProcessSteps";
 import { FINAL_CTA } from "@/data/homepage-copy";
 import { Breadcrumb } from "./service/Breadcrumb";
@@ -18,10 +22,19 @@ import { ServiceNav } from "./service/ServiceNav";
 import { WhatWeDo } from "./WhatWeDo";
 import styles from "./service/service.module.css";
 
+function serviceStages(system: GrowthSystem): ApproachStage[] {
+  return system.steps.map((step, index) => ({
+    title: `${String(index + 1).padStart(2, "0")} — ${step.title}`,
+    body: [step.body],
+  }));
+}
+
 export function ServiceDetail({ system }: { system: GrowthSystem }) {
   const others = growthStack.filter((item) => item.slug !== system.slug);
-  const image = SERVICE_IMAGES[system.image];
+  const image = system.image ? SERVICE_IMAGES[system.image] : undefined;
   const faqs = getServiceFaqs(system);
+  const searchPage = system.slug === "search-visibility";
+  const stages = serviceStages(system);
 
   return (
     <>
@@ -56,16 +69,34 @@ export function ServiceDetail({ system }: { system: GrowthSystem }) {
               </a>
             </div>
           </div>
-          <div className={styles.art}>
-            <Image
-              src={image.src}
-              alt={system.artLabel}
-              fill
-              priority
-              sizes="(max-width: 700px) 440px, 46vw"
-              style={{ objectPosition: system.imagePosition }}
-            />
-            <span className={styles.artCaption}>{system.name}</span>
+          <div
+            className={`${styles.art} ${
+              system.graphic === "search" ? styles.artSearch : ""
+            }`}
+          >
+            {system.graphic === "search" ? (
+              <div
+                className={styles.searchHero}
+                role="img"
+                aria-label={system.artLabel}
+              >
+                <span aria-hidden="true">Search visibility</span>
+                <strong aria-hidden="true">Search. Find. Connect.</strong>
+                <p aria-hidden="true">SEO · Local · AI search</p>
+              </div>
+            ) : image ? (
+              <Image
+                src={image.src}
+                alt={system.artLabel}
+                fill
+                priority
+                sizes="(max-width: 700px) 440px, 46vw"
+                style={{ objectPosition: system.imagePosition }}
+              />
+            ) : null}
+            {system.graphic === "search" ? null : (
+              <span className={styles.artCaption}>{system.name}</span>
+            )}
           </div>
         </section>
 
@@ -74,7 +105,7 @@ export function ServiceDetail({ system }: { system: GrowthSystem }) {
             <span>01</span>
             <h2>What we do</h2>
           </div>
-          <WhatWeDo items={system.whatWeDo} />
+          <WhatWeDo items={system.deliverables} />
         </section>
 
         {system.closing ? (
@@ -84,11 +115,21 @@ export function ServiceDetail({ system }: { system: GrowthSystem }) {
               <h2>Why it matters</h2>
             </div>
             <p className={styles.impactLine}>{system.closing}</p>
-            <ul className={styles.principles}>
-              {SERVICE_PRINCIPLES.map((principle, index) => (
-                <li key={principle}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <h3>{principle}</h3>
+            {searchPage ? null : (
+              <ul className={styles.principles}>
+                {SERVICE_PRINCIPLES.map((principle, index) => (
+                  <li key={principle}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <h3>{principle}</h3>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <ul className={styles.benefits}>
+              {system.benefits.map((benefit) => (
+                <li key={benefit.title}>
+                  <h3>{benefit.title}</h3>
+                  <p>{benefit.body}</p>
                 </li>
               ))}
             </ul>
@@ -100,9 +141,17 @@ export function ServiceDetail({ system }: { system: GrowthSystem }) {
             <span>03</span>
             <h2>The Pecunia Approach</h2>
           </div>
-          <h3 className={styles.processStrap}>{APPROACH_INTRO}</h3>
-          <p className={styles.body}>{APPROACH_SUPPORT}</p>
-          <ProcessSteps />
+          {searchPage ? null : (
+            <>
+              <h3 className={styles.processStrap}>{APPROACH_INTRO}</h3>
+              <p className={styles.body}>{APPROACH_SUPPORT}</p>
+              <ProcessSteps />
+              <h3 className={`${styles.processStrap} ${styles.processFollow}`}>
+                How this service proceeds
+              </h3>
+            </>
+          )}
+          <ProcessSteps stages={stages} />
         </section>
 
         <section className={styles.section}>

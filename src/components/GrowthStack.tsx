@@ -135,14 +135,28 @@ export function GrowthStack() {
                 >
                   <div className={styles.body}>
                     <div className={styles.art}>
-                      <Image
-                        src={IMAGES[service.image]}
-                        alt={service.artLabel}
-                        fill
-                        sizes={ART_SIZES}
-                        className={styles.artImage}
-                        style={{ objectPosition: service.imagePosition }}
-                      />
+                      {service.graphic === "search" ? (
+                        <div
+                          className={styles.searchArt}
+                          role="img"
+                          aria-label={service.artLabel}
+                        >
+                          <span aria-hidden="true">Search visibility</span>
+                          <strong aria-hidden="true">
+                            Search. Find. Connect.
+                          </strong>
+                          <p aria-hidden="true">SEO · Local · AI search</p>
+                        </div>
+                      ) : service.image ? (
+                        <Image
+                          src={IMAGES[service.image]}
+                          alt={service.artLabel}
+                          fill
+                          sizes={ART_SIZES}
+                          className={styles.artImage}
+                          style={{ objectPosition: service.imagePosition }}
+                        />
+                      ) : null}
                     </div>
                     <p
                       className={`${styles.lead} ${

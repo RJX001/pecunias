@@ -1,139 +1,310 @@
 "use client";
 
 import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
+import Image from "next/image";
 import { caseStudies } from "@/data/case-studies";
 import styles from "./CaseStudies.module.css";
 
-const HEADING = "Case Studies";
+const HEADING = "Premium Websites.";
+const INTRO =
+  "Distinctive design. Seamless experiences. Explore the websites and digital platforms we've built for real businesses.";
+const PIN_QUERY =
+  "(min-width: 960px) and (pointer: fine) and (prefers-reduced-motion: no-preference)";
+const PIN_FALLBACK = 108;
 const SWIPE_THRESHOLD = 48;
 
+function pinnedRunway() {
+  return window.matchMedia(PIN_QUERY).matches;
+}
+
+function scrollByInstant(top: number) {
+  const root = document.documentElement;
+  const previous = root.style.scrollBehavior;
+  root.style.scrollBehavior = "auto";
+  window.scrollBy({ top, behavior: "auto" });
+  root.style.scrollBehavior = previous;
+}
+
 export function CaseStudies() {
+  const sectionRef = useRef<HTMLElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
   const slideRef = useRef<HTMLElement>(null);
+  const endRef = useRef<HTMLDivElement>(null);
+  const pinTopRef = useRef(PIN_FALLBACK);
+  const startX = useRef<number | null>(null);
   const [index, setIndex] = useState(0);
   const [step, setStep] = useState(0);
   const last = caseStudies.length - 1;
+  const project = caseStudies[index];
 
   useEffect(() => {
     const slide = slideRef.current;
-    if (!slide) return;
+    const frame = windowRef.current;
+    if (!slide || !frame) return;
     const measure = () => {
-      const gap = 20;
-      setStep(slide.getBoundingClientRect().width + gap);
+      const width = slide.getBoundingClientRect().width;
+      setStep(width > 0 ? width : frame.getBoundingClientRect().width);
     };
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(slide);
+    observer.observe(frame);
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const media = window.matchMedia(PIN_QUERY);
+    const header = document.querySelector("[data-site-header]");
+
+    const measurePin = () => {
+      const height = header?.getBoundingClientRect().height ?? PIN_FALLBACK - 16;
+      const next = Math.ceil(height) + 16;
+      if (next === pinTopRef.current && section.style.getPropertyValue("--pin-top")) return;
+      pinTopRef.current = next;
+      section.style.setProperty("--pin-top", `${next}px`);
+    };
+
+    const sync = () => {
+      if (!media.matches) return;
+      const pin = pinTopRef.current;
+      const rect = section.getBoundingClientRect();
+      const count = caseStudies.length;
+      if (rect.top > pin) {
+        setIndex(0);
+        return;
+      }
+      if (rect.bottom < window.innerHeight) {
+        setIndex(count - 1);
+        return;
+      }
+      const run = section.offsetHeight - window.innerHeight + pin;
+      const progress = Math.max(0, Math.min(1, (pin - rect.top) / Math.max(run, 1)));
+      setIndex(Math.min(count - 1, Math.floor(progress * count)));
+    };
+
+    const onResize = () => {
+      measurePin();
+      sync();
+    };
+
+    measurePin();
+    sync();
+    media.addEventListener("change", onResize);
+    window.addEventListener("scroll", sync, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
+    const observer = new ResizeObserver(onResize);
+    observer.observe(section);
+    if (header) observer.observe(header);
+    return () => {
+      media.removeEventListener("change", onResize);
+      window.removeEventListener("scroll", sync);
+      window.removeEventListener("resize", onResize);
+      observer.disconnect();
+    };
+  }, []);
+
+  const scrollToIndex = (target: number) => {
+    const section = sectionRef.current;
+    if (!section || !pinnedRunway()) return;
+    const pin = pinTopRef.current;
+    const run = section.offsetHeight - window.innerHeight + pin;
+    if (run <= 0) return;
+    const rect = section.getBoundingClientRect();
+    const desiredTop = pin - ((target + 0.5) / caseStudies.length) * run;
+    scrollByInstant(rect.top - desiredTop);
+  };
+
   const go = (next: number) => {
-    setIndex(Math.min(last, Math.max(0, next)));
+    const clamped = Math.min(last, Math.max(0, next));
+    if (clamped === index) return;
+    const active = document.activeElement;
+    const slides = windowRef.current?.querySelectorAll("article");
+    const current = slides?.[index];
+    if (clamped !== index && active instanceof HTMLElement && current?.contains(active)) {
+      windowRef.current?.focus({ preventScroll: true });
+    }
+    setIndex(clamped);
+    scrollToIndex(clamped);
+  };
+
+  const skip = () => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const rect = section.getBoundingClientRect();
+    scrollByInstant(rect.bottom - pinTopRef.current);
+    setIndex(last);
+    endRef.current?.focus({ preventScroll: true });
   };
 
   const onKeyDown = (event: KeyboardEvent<HTMLElement>) => {
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      go(index + 1);
-    } else if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      go(index - 1);
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+    const target = event.target;
+    if (
+      target instanceof HTMLElement &&
+      target.closest("input, textarea, select")
+    ) {
+      return;
     }
+    event.preventDefault();
+    go(event.key === "ArrowRight" ? index + 1 : index - 1);
   };
 
-  const startX = useRef<number | null>(null);
   const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (pinnedRunway()) return;
     if (event.pointerType === "mouse" && event.button !== 0) return;
     startX.current = event.clientX;
   };
+
   const onPointerUp = (event: PointerEvent<HTMLDivElement>) => {
     if (startX.current === null) return;
     const delta = event.clientX - startX.current;
     startX.current = null;
+    if (pinnedRunway()) return;
     if (delta <= -SWIPE_THRESHOLD) go(index + 1);
     else if (delta >= SWIPE_THRESHOLD) go(index - 1);
   };
 
   return (
-    <section id="case-studies" className="ps-section" aria-labelledby="case-studies-heading">
-      <div className="ps-inner">
-        <p className="ps-kicker">{HEADING}</p>
-        <div className={styles.heading}>
-          <h2 id="case-studies-heading" className="ps-h2">
-            {HEADING}
-          </h2>
-          <div className={styles.controls}>
-            <button
-              type="button"
-              className={styles.control}
-              aria-label="Previous case study"
-              disabled={index === 0}
-              onClick={() => go(index - 1)}
-            >
-              <span aria-hidden="true">←</span>
-            </button>
-            <button
-              type="button"
-              className={styles.control}
-              aria-label="Next case study"
-              disabled={index === last}
-              onClick={() => go(index + 1)}
-            >
-              <span aria-hidden="true">→</span>
-            </button>
+    <section
+      ref={sectionRef}
+      id="premium-websites"
+      className={`ps-section ${styles.section}`}
+      aria-labelledby="premium-websites-heading"
+      onKeyDown={onKeyDown}
+    >
+      <div className={styles.pin}>
+        <div className="ps-inner">
+          <p className="ps-kicker">Selected work</p>
+          <div className={styles.heading}>
+            <div className={styles.headingCopy}>
+              <h2 id="premium-websites-heading" className="ps-h2">
+                {HEADING}
+              </h2>
+              <p className={styles.intro}>{INTRO}</p>
+            </div>
+            <div className={styles.controls}>
+              <button
+                type="button"
+                className={styles.control}
+                aria-label="Previous website"
+                disabled={index === 0}
+                onClick={() => go(index - 1)}
+              >
+                <span aria-hidden="true">←</span>
+              </button>
+              <button
+                type="button"
+                className={styles.control}
+                aria-label="Next website"
+                disabled={index === last}
+                onClick={() => go(index + 1)}
+              >
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div
-          ref={windowRef}
-          className={styles.window}
-          role="region"
-          aria-roledescription="carousel"
-          aria-label="Illustrative case studies"
-          tabIndex={0}
-          onKeyDown={onKeyDown}
-          onPointerDown={onPointerDown}
-          onPointerUp={onPointerUp}
-          onPointerCancel={() => {
-            startX.current = null;
-          }}
-        >
           <div
-            className={styles.track}
-            style={{ transform: step ? `translateX(${-step * index}px)` : undefined }}
+            ref={windowRef}
+            className={styles.window}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Premium websites"
+            tabIndex={0}
+            onPointerDown={onPointerDown}
+            onPointerUp={onPointerUp}
+            onPointerCancel={() => {
+              startX.current = null;
+            }}
           >
-            {caseStudies.map((study, slideIndex) => {
-              const visible = slideIndex === index;
-              return (
-                <article
-                  key={study.name}
-                  ref={slideIndex === 0 ? slideRef : undefined}
-                  className={styles.slide}
-                  role="group"
-                  aria-roledescription="slide"
-                  aria-label={`${slideIndex + 1} of ${caseStudies.length}: ${study.name}`}
-                  aria-hidden={visible ? undefined : true}
-                  inert={visible ? undefined : true}
-                >
-                  <div className={styles.cover} aria-hidden="true">
-                    <div className={`${styles.shape} ${styles[study.cover]}`} />
-                    <span className={styles.number}>{study.number}</span>
-                  </div>
-                  <h3 className={styles.name}>{study.name}</h3>
-                </article>
-              );
-            })}
+            <div
+              className={styles.track}
+              style={{ transform: `translate3d(${-step * index}px, 0, 0)` }}
+            >
+              {caseStudies.map((study, slideIndex) => {
+                const visible = slideIndex === index;
+                return (
+                  <article
+                    key={study.url}
+                    ref={slideIndex === 0 ? slideRef : undefined}
+                    className={styles.slide}
+                    aria-hidden={visible ? undefined : true}
+                    inert={visible ? undefined : true}
+                    aria-label={`${slideIndex + 1} of ${caseStudies.length}: ${study.name}`}
+                  >
+                    <a
+                      className={styles.screen}
+                      href={study.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Visit ${study.name} website (opens in a new tab)`}
+                    >
+                      <span className={styles.browser} aria-hidden="true">
+                        <span />
+                        <span />
+                        <span />
+                        <small>{study.host}</small>
+                      </span>
+                      <span className={styles.shotFrame}>
+                        <Image
+                          src={study.image}
+                          alt={study.imageAlt}
+                          fill
+                          sizes="(min-width: 960px) 54vw, 92vw"
+                          className={styles.shot}
+                        />
+                      </span>
+                      <span className={styles.open} aria-hidden="true">
+                        Visit website <span aria-hidden="true">↗</span>
+                      </span>
+                    </a>
+                    <p className={styles.category}>{study.category}</p>
+                    <h3 className={styles.name}>{study.name}</h3>
+                    <p className={styles.description}>{study.description}</p>
+                    <a
+                      className={styles.visit}
+                      href={study.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View live website <span aria-hidden="true">→</span>
+                      <span className={styles.srOnly}> (opens in a new tab)</span>
+                    </a>
+                  </article>
+                );
+              })}
+            </div>
           </div>
+
+          <div className={styles.meta}>
+            <p className={styles.position} aria-live="polite">
+              <span className={styles.meter} aria-hidden="true">
+                {caseStudies.map((study, meterIndex) => (
+                  <span
+                    key={study.url}
+                    data-on={meterIndex <= index ? "true" : "false"}
+                  />
+                ))}
+              </span>
+              <span aria-hidden="true">
+                {index + 1} / {caseStudies.length}
+              </span>
+              <span className={styles.srOnly}>
+                {project.name}, {index + 1} of {caseStudies.length}
+              </span>
+            </p>
+            <button type="button" className={styles.skip} onClick={skip}>
+              Skip previews <span aria-hidden="true">↓</span>
+            </button>
+          </div>
+          <p className={styles.hint}>Scroll to explore the websites</p>
         </div>
-        <p className={styles.position} aria-live="polite">
-          <span aria-hidden="true">
-            {index + 1} / {caseStudies.length}
-          </span>
-          <span className={styles.srOnly}>
-            {caseStudies[index].name}, {index + 1} of {caseStudies.length}
-          </span>
-        </p>
-        <p className={styles.note}>Illustrative concept covers.</p>
+      </div>
+      <div ref={endRef} tabIndex={-1} className={styles.endMark}>
+        End of website previews
       </div>
     </section>
   );

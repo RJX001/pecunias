@@ -1,76 +1,114 @@
-.wordmark {
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  padding: 34px 5% 0;
+/*
+ * One-line homepage wordmark. PECUNIA and STUDIOS share Montserrat 800
+ * and the header's tight tracking (-0.05em). Width is Montserrat ExtraBold
+ * advances for both words at that tracking (8.982em) plus slack so the line
+ * fills the row without clipping. 14vh keeps the hero headline on a laptop.
+ */
+.frame {
+  container-type: inline-size;
+  width: 100%;
+  max-width: 100%;
+  padding: 16px 5% 2px;
 }
 
-.letters {
+.wordmark {
+  --wm-gap: clamp(10px, 1.8cqi, 28px);
+  --wm-size: max(22px, min(calc((100cqi - var(--wm-gap)) / 10.05), 14vh));
+
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: var(--wm-gap);
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  font-size: clamp(22px, 5.2vw, 96px);
+  font-size: var(--wm-size);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.word {
+  display: flex;
+  align-items: baseline;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .letter {
+  position: relative;
   display: block;
-  min-width: 0;
-  margin: 0;
-  padding: 0 2px 8px;
+  flex: 0 0 auto;
+  margin: 0 -0.05em 0 0;
+  padding: 0.04em 0 0.02em;
+  appearance: none;
   border: 0;
   border-radius: 0;
   background-color: transparent;
-  background-size: cover;
   background-repeat: no-repeat;
+  background-size: cover;
   -webkit-background-clip: text;
   background-clip: text;
   color: var(--fg);
+  -webkit-text-fill-color: currentColor;
   font-family: inherit;
-  font-size: clamp(45px, 13.6vw, 158px);
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -0.07em;
+  font-size: 1em;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: normal;
   cursor: pointer;
   transition:
     transform 0.5s,
     color 0.3s;
 }
 
+.letter:last-child {
+  margin-right: 0;
+}
+
 .letter:hover,
 .letter:focus-visible,
 .letter[data-pinned] {
+  z-index: 1;
   color: transparent;
+  -webkit-text-fill-color: transparent;
   transform: translateY(-4px);
 }
 
-.studios {
-  display: block;
-  margin-right: 3px;
-  color: var(--fg-dim);
-  font-size: 11px;
-  letter-spacing: 8px;
-  text-align: right;
-}
-
-@media (max-width: 750px) {
-  .letter {
-    font-size: clamp(43px, 12.8vw, 95px);
-  }
+.letter:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
 }
 
 @media (max-width: 480px) {
-  .wordmark {
-    padding-top: 25px;
-  }
-
-  .studios {
-    font-size: 9px;
-    letter-spacing: 6px;
+  .frame {
+    padding-top: 12px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .letter {
+  .letter,
+  .letter:hover,
+  .letter:focus-visible,
+  .letter[data-pinned] {
+    color: var(--fg);
+    -webkit-text-fill-color: currentColor;
+    transform: none;
     transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .letter,
+  .letter:hover,
+  .letter:focus-visible,
+  .letter[data-pinned] {
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+    background-image: none;
+    transform: none;
   }
 }

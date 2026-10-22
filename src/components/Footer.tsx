@@ -7,7 +7,7 @@ const SERVICE_SLUGS = {
   Websites: "digital-ecommerce",
   "E-commerce": "digital-ecommerce",
   "Paid Media": "paid-growth",
-  SEO: "organic-growth-content",
+  SEO: "search-visibility",
   Automation: "ai-automation-crm",
   CRM: "ai-automation-crm",
   AI: "ai-automation-crm",

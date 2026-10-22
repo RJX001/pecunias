@@ -1,32 +1,239 @@
-/* Our Commitment — approved-design.html `#v2-commitment ol` (final cascade). */
+.section {
+  overflow-x: clip;
+}
 
-.list {
+.top {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 35px;
-  margin: 35px 0;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 28px 60px;
+  align-items: start;
+}
+
+.top :global(.ps-h2) {
+  margin-bottom: 18px;
+}
+
+.lead {
+  margin: 0;
+  color: var(--fg);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.copy p {
+  margin: 0 0 17px;
+  color: var(--fg-dim);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.copy p:last-child {
+  margin-bottom: 0;
+}
+
+.disconnected {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin: 30px 0 0;
+  padding: 25px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  list-style: none;
+  counter-reset: disconnected;
+}
+
+.disconnected li {
+  margin: 0;
+  color: var(--fg);
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  counter-increment: disconnected;
+}
+
+.disconnected li::before {
+  content: counter(disconnected, decimal-leading-zero);
+  display: block;
+  margin-bottom: 8px;
+  color: var(--fg-dim);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 1.4;
+}
+
+.bridge {
+  margin: 22px 0 0;
+  color: var(--green-text);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+.closingLine {
+  margin: 8px 0 0;
+  color: var(--fg);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.billboard {
+  overflow: hidden;
+  margin: 36px 0 48px;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.band {
+  display: flex;
+  width: max-content;
+  color: var(--green);
+  font-size: clamp(30px, 5vw, 68px);
+  font-weight: 800;
+  letter-spacing: -1.6px;
+  line-height: 1.05;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.sequence {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.word {
+  display: inline-flex;
+  align-items: baseline;
+  text-transform: uppercase;
+}
+
+.mark {
+  margin: 0 0.35em;
+  color: var(--green-deep);
+  font-style: normal;
+}
+
+.audience {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px 60px;
+  align-items: start;
+}
+
+.audience :global(.ps-h2) {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  max-width: none;
+  margin: 0;
+}
+
+.headingLine {
+  display: block;
+}
+
+.audienceCopy,
+.audienceEmphasis {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.audienceCopy {
+  grid-column: 2;
+  grid-row: 1;
+  color: var(--fg);
+}
+
+.audienceEmphasis {
+  grid-column: 2;
+  grid-row: 2;
+  color: var(--green-text);
+  font-weight: 600;
+}
+
+.statements {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin: 8px 0 0;
   padding: 0;
   list-style: none;
 }
 
-.item {
-  display: flex;
-  align-items: baseline;
-  padding: 14px 0;
+.statements li {
+  margin: 0;
+  padding-top: 14px;
   border-top: 1px solid var(--line);
   color: var(--fg);
+  font-size: 15px;
+  line-height: 1.6;
 }
 
-.number {
-  flex: none;
-  margin-right: 15px;
-  color: var(--fg-dim);
-  font-size: 11px;
-  font-variant-numeric: tabular-nums;
+.resolve {
+  color: var(--green-text);
 }
 
-@media (max-width: 650px) {
-  .list {
+@media (max-width: 800px) {
+  .top,
+  .audience {
     grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .audience :global(.ps-h2),
+  .audienceCopy,
+  .audienceEmphasis,
+  .statements {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+}
+
+@media (max-width: 640px) {
+  .disconnected,
+  .statements {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .disconnected li {
+    font-size: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .band {
+    display: block;
+    width: auto;
+    padding: 0 8px;
+    font-size: 24px;
+    line-height: 1.35;
+    white-space: normal;
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .sequence {
+    display: inline;
+  }
+
+  .sequence + .sequence {
+    display: none;
+  }
+
+  .word {
+    display: inline;
+  }
+
+  .mark {
+    margin: 0 8px;
   }
 }

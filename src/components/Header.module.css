@@ -38,6 +38,7 @@
 
 .primary ul {
   display: flex;
+  flex-wrap: nowrap;
   gap: 25px;
   margin: 0;
   padding: 0;
@@ -51,6 +52,7 @@
   font-size: 16px;
   font-weight: 600;
   line-height: 1.2;
+  white-space: nowrap;
   text-decoration: none;
   text-decoration-thickness: 2px;
   text-underline-offset: 8px;
@@ -196,5 +198,20 @@
   .menuButton,
   .mobile {
     display: none;
+  }
+}
+
+@media (min-width: 960px) and (max-width: 1140px) {
+  .bar {
+    gap: 12px;
+    padding-inline: 4%;
+  }
+
+  .primary ul {
+    gap: 14px;
+  }
+
+  .navLink {
+    font-size: 14px;
   }
 }
