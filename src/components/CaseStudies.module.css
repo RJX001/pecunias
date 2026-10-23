@@ -65,6 +65,10 @@
 }
 
 .window {
+  width: 100%;
+  max-width: 1040px;
+  margin-inline: auto;
+  flex-shrink: 0;
   overflow: hidden;
   touch-action: pan-y;
 }
@@ -142,22 +146,22 @@
   background: var(--green);
   color: var(--dark-text);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 800;
   box-shadow: 0 4px 20px color-mix(in srgb, var(--fg) 8%, transparent);
 }
 
 .category {
-  margin: 20px 0 7px;
+  margin: 0 0 7px;
   color: var(--fg-dim);
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: 1.2px;
   line-height: 1.4;
   text-transform: uppercase;
 }
 
 .name {
-  margin: 0 0 9px;
+  margin: 0 0 16px;
   color: var(--fg);
   font-size: 23px;
   font-weight: 800;
@@ -181,7 +185,7 @@
   border-bottom: 1px solid var(--green);
   color: var(--fg);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 800;
   line-height: 1.4;
   text-decoration: none;
 }
@@ -238,7 +242,7 @@
   color: var(--green-text);
   font-family: inherit;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 800;
   line-height: 1.2;
   cursor: pointer;
 }
@@ -327,19 +331,11 @@
   }
 
   .slide {
-    display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-    column-gap: 32px;
-    align-content: center;
-  }
-
-  .screen {
-    grid-row: 1 / span 4;
-    align-self: center;
+    display: block;
   }
 
   .shotFrame {
-    height: clamp(140px, 30svh, 340px);
+    height: clamp(160px, calc(100svh - 500px), 540px);
     aspect-ratio: auto;
   }
 

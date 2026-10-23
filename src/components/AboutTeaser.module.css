@@ -4,7 +4,7 @@
  */
 
 .section {
-  background: #00c978;
+  background: #23FA6C;
   color: #181410;
 }
 
@@ -23,7 +23,7 @@
   min-height: 360px;
   margin-bottom: 40px;
   overflow: hidden;
-  background: radial-gradient(ellipse, #00c97825, transparent 65%);
+  background: radial-gradient(ellipse, #23FA6C25, transparent 65%);
 }
 
 .window {
@@ -32,7 +32,7 @@
   height: 320px;
   overflow: hidden;
   border-radius: 18px;
-  background: #00c978;
+  background: #23FA6C;
   box-shadow: 0 25px 60px #25422f25;
   transition:
     width 0.9s cubic-bezier(0.4, 0, 0.2, 1),

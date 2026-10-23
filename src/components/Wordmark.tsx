@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { CITY_PHOTO, SUNSET_PHOTO, optimisedBackground } from "./hero-images";
 import styles from "./Wordmark.module.css";
 
@@ -30,7 +30,9 @@ export function Wordmark() {
     <div className={styles.frame}>
       <div className={styles.wordmark} role="group" aria-label="Pecunia Studios">
         {WORDS.map((entry, wordIndex) => (
-          <div key={entry.word} className={styles.word}>
+          <Fragment key={entry.word}>
+          {wordIndex > 0 && <span className={styles.dot} aria-hidden="true" />}
+          <div className={styles.word}>
             {entry.letters.map((letter, letterIndex) => {
               const id = `${entry.word}-${letterIndex}`;
               const cycleIndex = wordIndex * entry.letters.length + letterIndex;
@@ -54,6 +56,7 @@ export function Wordmark() {
               );
             })}
           </div>
+          </Fragment>
         ))}
       </div>
     </div>

@@ -34,7 +34,6 @@ export function SearchVisibility() {
   const [active, setActive] = useState(0);
   const [userPaused, setUserPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const [reading, setReading] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -81,7 +80,6 @@ export function SearchVisibility() {
       reducedMotion ||
       prefersReducedMotion() ||
       userPaused ||
-      hovered ||
       focused ||
       reading ||
       hidden ||
@@ -99,7 +97,7 @@ export function SearchVisibility() {
     }, CYCLE_MS);
 
     return () => window.clearInterval(timer);
-  }, [reducedMotion, userPaused, hovered, focused, reading, hidden, inView]);
+  }, [reducedMotion, userPaused, focused, reading, hidden, inView]);
 
   useEffect(() => {
     const list = listRef.current;
@@ -131,14 +129,6 @@ export function SearchVisibility() {
       readingTimer.current = null;
       setReading(false);
     }, duration);
-  }
-
-  function onPointerEnter(event: ReactPointerEvent<HTMLElement>) {
-    if (event.pointerType === "mouse") setHovered(true);
-  }
-
-  function onPointerLeave(event: ReactPointerEvent<HTMLElement>) {
-    if (event.pointerType === "mouse") setHovered(false);
   }
 
   function onPointerDown(event: ReactPointerEvent<HTMLElement>) {
@@ -189,8 +179,6 @@ export function SearchVisibility() {
       id="search-visibility"
       className={`ps-section ${styles.section}`}
       aria-labelledby="search-visibility-heading"
-      onPointerEnter={onPointerEnter}
-      onPointerLeave={onPointerLeave}
       onPointerDown={onPointerDown}
       onFocus={() => setFocused(true)}
       onBlur={(event) => {
@@ -268,8 +256,6 @@ export function SearchVisibility() {
           </div>
 
           <div className={styles.stack}>
-            <div className={styles.backOne} aria-hidden="true" />
-            <div className={styles.backTwo} aria-hidden="true" />
             <div
               id={panelId}
               role="tabpanel"
@@ -277,26 +263,6 @@ export function SearchVisibility() {
               className={styles.card}
               onPointerDown={() => setUserPaused(true)}
             >
-              <div className={styles.illustration} aria-hidden="true">
-                <div className={styles.searchBar}>
-                  <span>⌕</span>
-                  <span>Find your next opportunity</span>
-                  <i />
-                </div>
-                <div className={styles.resultLine} />
-                <div className={`${styles.resultLine} ${styles.resultShort}`} />
-                <div className={styles.orbit}>
-                  <span>SEO</span>
-                  <span>LOCAL</span>
-                  <span>ANSWERS</span>
-                </div>
-                <div className={styles.core}>
-                  P<span>PECUNIA</span>
-                </div>
-                <p className={styles.illustrationCaption}>
-                  Clear information. Connected discovery.
-                </p>
-              </div>
               <div className={styles.copy}>
                 <p className={styles.copyLabel}>{topic.label}</p>
                 <h3>{topic.heading}</h3>

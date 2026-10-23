@@ -5,8 +5,8 @@
 [data-theme="light"] {
   --brass: #a9812e;
   --brass-dim: #7d611f;
-  --ledger: #33473b;
-  --ledger-light: #4c6858;
+  --ledger: #181410;
+  --ledger-light: #181410;
   --wine: #6b2e3a;
   --dark-text: #12181a;
 
@@ -19,20 +19,16 @@
   --header-bg: rgba(255, 255, 255, 0.92);
   --recessed-bg: rgba(24, 20, 16, 0.045);
 
-  /* Primary bright growth accent. --ledger stays the muted secondary green. */
-  --green: #00C978;
+  /* Owner-approved brand accent; small text retains neutral ink for contrast. */
+  --green: #23FA6C;
   /*
    * Approved soft value is #1c3628 (opaque dark green). On a white canvas that
    * turns glows/soft fills into dark smudges under ink headlines, so the light
    * theme derives its soft fill from the bright accent instead.
    */
   --green-soft: color-mix(in srgb, var(--green) 22%, transparent);
-  --green-deep: #25422f;
-  /*
-   * Small-text green (codes, badges, 13–18px labels). #00C978 on white is ~2.2:1,
-   * so light uses the muted ledger green; dark maps back to the bright accent.
-   * Rails, dots, fills and display-size emphasis keep --green.
-   */
+  --green-deep: var(--green);
+  /* Small labels use neutral ink on light surfaces for readability. */
   --green-text: var(--ledger);
 
   --bg: var(--ink);
@@ -62,9 +58,9 @@
   --line-strong: rgba(246, 240, 228, 0.28);
   --header-bg: rgba(18, 24, 26, 0.92);
   --recessed-bg: rgba(0, 0, 0, 0.15);
-  --green: #00C978;
-  --green-soft: #1c3628;
-  --green-deep: #25422f;
+  --green: #23FA6C;
+  --green-soft: color-mix(in srgb, var(--green) 22%, transparent);
+  --green-deep: var(--green);
   --green-text: var(--green);
   /* Cream/off-white body copy — never #000 on dark. */
   --content-text: var(--paper);
@@ -131,7 +127,7 @@ body {
     sans-serif;
   font-size: 15px;
   line-height: 1.75;
-  font-weight: 400;
+  font-weight: 800;
   transition:
     background-color 0.22s var(--ease),
     color 0.22s var(--ease),
@@ -426,7 +422,7 @@ h2 {
   margin: 0 0 22px;
   color: var(--fg);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 800;
   line-height: 1.5;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -452,7 +448,7 @@ h2 {
   margin: 0 0 20px;
   color: var(--fg);
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 800;
   line-height: 1.75;
 }
 
@@ -461,7 +457,7 @@ h2 {
   margin: 0 0 20px;
   color: var(--fg-dim);
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 800;
   line-height: 1.75;
 }
 
@@ -484,7 +480,7 @@ h2 {
   color: var(--dark-text);
   font-family: inherit;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 800;
   line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
@@ -553,4 +549,10 @@ h2 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Owner-approved typography applies consistently to writing and controls. */
+body, body * {
+  font-family: var(--font-montserrat), "Montserrat", sans-serif !important;
+  font-weight: 800 !important;
 }
