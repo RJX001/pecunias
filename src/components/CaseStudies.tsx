@@ -235,6 +235,8 @@ export function CaseStudies() {
                     inert={visible ? undefined : true}
                     aria-label={`${slideIndex + 1} of ${caseStudies.length}: ${study.name}`}
                   >
+                    <p className={styles.category}>{study.category}</p>
+                    <h3 className={styles.name}>{study.name}</h3>
                     <a
                       className={styles.screen}
                       href={study.url}
@@ -253,25 +255,13 @@ export function CaseStudies() {
                           src={study.image}
                           alt={study.imageAlt}
                           fill
-                          sizes="(min-width: 960px) 54vw, 92vw"
+                          sizes="(min-width: 1200px) 1040px, 90vw"
                           className={styles.shot}
                         />
                       </span>
                       <span className={styles.open} aria-hidden="true">
                         Visit website <span aria-hidden="true">↗</span>
                       </span>
-                    </a>
-                    <p className={styles.category}>{study.category}</p>
-                    <h3 className={styles.name}>{study.name}</h3>
-                    <p className={styles.description}>{study.description}</p>
-                    <a
-                      className={styles.visit}
-                      href={study.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      View live website <span aria-hidden="true">→</span>
-                      <span className={styles.srOnly}> (opens in a new tab)</span>
                     </a>
                   </article>
                 );

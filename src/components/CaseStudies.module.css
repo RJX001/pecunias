@@ -65,6 +65,10 @@
 }
 
 .window {
+  width: 100%;
+  max-width: 1040px;
+  margin-inline: auto;
+  flex-shrink: 0;
   overflow: hidden;
   touch-action: pan-y;
 }
@@ -147,7 +151,7 @@
 }
 
 .category {
-  margin: 20px 0 7px;
+  margin: 0 0 7px;
   color: var(--fg-dim);
   font-size: 10px;
   font-weight: 800;
@@ -157,7 +161,7 @@
 }
 
 .name {
-  margin: 0 0 9px;
+  margin: 0 0 16px;
   color: var(--fg);
   font-size: 23px;
   font-weight: 800;
@@ -327,19 +331,11 @@
   }
 
   .slide {
-    display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-    column-gap: 32px;
-    align-content: center;
-  }
-
-  .screen {
-    grid-row: 1 / span 4;
-    align-self: center;
+    display: block;
   }
 
   .shotFrame {
-    height: clamp(140px, 30svh, 340px);
+    height: clamp(160px, calc(100svh - 500px), 540px);
     aspect-ratio: auto;
   }
 
