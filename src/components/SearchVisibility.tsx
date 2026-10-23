@@ -140,7 +140,7 @@ export function SearchVisibility() {
   }
 
   function selectFromKeyboard(index: number) {
-    setUserPaused(true);
+    markReading(2500);
     setActive(index);
     tabRefs.current[index]?.focus({ preventScroll: true });
   }
@@ -180,7 +180,10 @@ export function SearchVisibility() {
       className={`ps-section ${styles.section}`}
       aria-labelledby="search-visibility-heading"
       onPointerDown={onPointerDown}
-      onFocus={() => setFocused(true)}
+      onFocus={(event) => {
+        // Keyboard readers keep control; a mouse click must not stop autoplay.
+        setFocused(event.target.matches(":focus-visible"));
+      }}
       onBlur={(event) => {
         const next = event.relatedTarget;
         if (!(next instanceof Node) || !event.currentTarget.contains(next)) {
@@ -230,7 +233,7 @@ export function SearchVisibility() {
                     aria-controls={panelId}
                     tabIndex={selected ? 0 : -1}
                     onClick={() => {
-                      setUserPaused(true);
+                      markReading(2500);
                       setActive(index);
                     }}
                     onKeyDown={(event) => onTabKeyDown(event, index)}
@@ -261,7 +264,6 @@ export function SearchVisibility() {
               role="tabpanel"
               aria-labelledby={`${baseId}-tab-${topic.id}`}
               className={styles.card}
-              onPointerDown={() => setUserPaused(true)}
             >
               <div className={styles.copy}>
                 <p className={styles.copyLabel}>{topic.label}</p>
