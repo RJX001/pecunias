@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { HERO_JOURNEY_LABEL, HERO_JOURNEY_STATUS } from "@/data/hero-headlines";
-import { CITY_PHOTO, SUNSET_PHOTO, optimisedUrl } from "./hero-images";
 import styles from "./HeroJourney.module.css";
 
 type Point = readonly [number, number];
@@ -13,8 +12,6 @@ type Scene = {
   freshCycle: boolean;
   family: string;
   surface: string;
-  sunset: HTMLImageElement | null;
-  city: HTMLImageElement | null;
 };
 
 type Engine = {
@@ -34,7 +31,6 @@ const STAGE_BLEND_SECONDS = 0.4;
 const PHASE_WRAP = 300;
 /** Static reduced-motion frame: "Create" active, every dot mid-travel on its path. */
 const STATIC_PHASE = 1.43;
-const PHOTO_WIDTH = 384;
 
 const GREEN = "#23FA6C";
 const INK = "#181410";
@@ -240,28 +236,6 @@ function drawJourney(ctx: CanvasRenderingContext2D, scene: Scene) {
     ctx.restore();
   };
 
-  const photo = (
-    img: HTMLImageElement | null,
-    x: number,
-    y: number,
-    w: number,
-    h: number,
-  ) => {
-    ctx.save();
-    ctx.beginPath();
-    ctx.roundRect(x, y, w, h, 10);
-    ctx.clip();
-    if (img?.complete && img.naturalWidth) {
-      const scale = Math.max(w / img.naturalWidth, h / img.naturalHeight);
-      const dw = img.naturalWidth * scale;
-      const dh = img.naturalHeight * scale;
-      ctx.drawImage(img, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh);
-    } else {
-      box(x, y, w, h, "#e9eae5");
-    }
-    ctx.restore();
-  };
-
   INCOMING.forEach((path) => strokeLine(path.points, CONNECTOR, 1.4));
 
   const cycle = phase % (STAGES.length * STAGE_SECONDS);
@@ -278,13 +252,9 @@ function drawJourney(ctx: CanvasRenderingContext2D, scene: Scene) {
     label(name, 60 + i * 104, 51, 12, mixHex(PILL_TEXT, INK, weight));
   });
 
-  ctx.save();
-  ctx.translate(39, 83);
-  card(0, 0, 114, 114);
-  photo(scene.sunset, 7, 7, 100, 65);
-  label("Content", 10, 89, 12);
-  label("Creation", 10, 105, 12);
-  ctx.restore();
+  card(39, 107, 114, 66);
+  label("Content", 51, 134, 12, INK, 90);
+  label("Creation", 51, 152, 12, INK, 90);
 
   card(166, 83, 278, 66);
   ctx.strokeStyle = GREEN;
@@ -313,12 +283,11 @@ function drawJourney(ctx: CanvasRenderingContext2D, scene: Scene) {
   ["#cdd2c8", "#cdd2c8", GREEN].forEach((colour, i) =>
     box(120 + i * 10, 214, 5, 5, colour, 3),
   );
-  photo(scene.city, 120, 240, 112, 96);
-  box(244, 240, 188, 96, GREEN, 10);
-  label("PECUNIA", 256, 268, 23, INK, 164);
-  label("Your digital presence", 256, 290, 12, INK, 164);
-  box(255, 305, 116, 20, "#fff", 3);
-  label("Make The Move", 264, 319, 10, INK);
+  box(120, 240, 312, 96, GREEN, 10);
+  label("PECUNIA", 136, 268, 23, INK, 280);
+  label("Your digital presence", 136, 290, 12, INK, 280);
+  box(136, 305, 116, 20, "#fff", 3);
+  label("Make The Move", 145, 319, 10, INK);
 
   box(20, 350, 460, 150, scene.surface, 0);
   strokeLine(
@@ -396,14 +365,6 @@ function drawJourney(ctx: CanvasRenderingContext2D, scene: Scene) {
   INCOMING.forEach((path, i) => pulse(path, i * 0.23));
 }
 
-function loadPhoto(src: string, onLoad: () => void) {
-  const img = new Image();
-  img.decoding = "async";
-  img.onload = onLoad;
-  img.src = src;
-  return img;
-}
-
 export function HeroJourney() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const engineRef = useRef<Engine | null>(null);
@@ -434,8 +395,6 @@ export function HeroJourney() {
       freshCycle: true,
       family: "Montserrat, sans-serif",
       surface: "#fff",
-      sunset: null,
-      city: null,
     };
 
     const readTheme = () => {
@@ -493,8 +452,6 @@ export function HeroJourney() {
     };
 
     readTheme();
-    scene.sunset = loadPhoto(optimisedUrl(SUNSET_PHOTO, PHOTO_WIDTH), draw);
-    scene.city = loadPhoto(optimisedUrl(CITY_PHOTO, PHOTO_WIDTH), draw);
     resize(canvas.clientWidth);
 
     const resizeObserver = new ResizeObserver(([entry]) =>
@@ -554,8 +511,6 @@ export function HeroJourney() {
       intersectionObserver.disconnect();
       themeObserver.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
-      if (scene.sunset) scene.sunset.onload = null;
-      if (scene.city) scene.city.onload = null;
     };
   }, []);
 
