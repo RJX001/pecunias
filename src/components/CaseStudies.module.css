@@ -7,6 +7,18 @@
   position: relative;
 }
 
+.sectionHeading {
+  padding-bottom: 28px;
+}
+
+.sectionHeading .intro {
+  max-width: 760px;
+}
+
+.pinInner {
+  position: relative;
+}
+
 .heading {
   display: flex;
   align-items: flex-end;
@@ -133,7 +145,7 @@
 }
 
 .shot {
-  object-fit: cover;
+  object-fit: contain;
   object-position: top;
 }
 
@@ -313,13 +325,40 @@
     box-sizing: border-box;
     height: calc(100svh - var(--pin-top, 108px));
     max-height: calc(100svh - var(--pin-top, 108px));
-    padding: 16px 0 12px;
+    padding: 8px 0;
     overflow-x: hidden;
     overflow-y: auto;
   }
 
+  .sectionHeading {
+    padding-top: 40px;
+  }
+
   .heading {
-    margin-bottom: 14px;
+    height: 0;
+    margin: 0;
+  }
+
+  .controls {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .window {
+    max-width: min(1040px, calc((100svh - var(--pin-top, 108px) - 210px) * 1265 / 712));
+  }
+
+  .meta {
+    margin-top: 10px;
+  }
+
+  .category, .name {
+    padding-right: 100px;
+  }
+
+  .browser {
+    padding-block: 7px;
   }
 
   .heading :global(.ps-h2) {
@@ -335,8 +374,8 @@
   }
 
   .shotFrame {
-    height: clamp(160px, calc(100svh - 500px), 540px);
-    aspect-ratio: auto;
+    height: auto;
+    aspect-ratio: 1265 / 712;
   }
 
   .category {

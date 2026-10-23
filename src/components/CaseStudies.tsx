@@ -175,16 +175,15 @@ export function CaseStudies() {
       aria-labelledby="premium-websites-heading"
       onKeyDown={onKeyDown}
     >
+      <div className={`ps-inner ${styles.sectionHeading}`}>
+        <p className="ps-kicker">Selected work</p>
+        <h2 id="premium-websites-heading" className="ps-h2">{HEADING}</h2>
+        <p className={styles.intro}>{INTRO}</p>
+      </div>
       <div className={styles.pin}>
-        <div className="ps-inner">
-          <p className="ps-kicker">Selected work</p>
+        <div className={`ps-inner ${styles.pinInner}`}>
+
           <div className={styles.heading}>
-            <div className={styles.headingCopy}>
-              <h2 id="premium-websites-heading" className="ps-h2">
-                {HEADING}
-              </h2>
-              <p className={styles.intro}>{INTRO}</p>
-            </div>
             <div className={styles.controls}>
               <button
                 type="button"
