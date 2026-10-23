@@ -11,7 +11,7 @@
 }
 
 .accent {
-  color: #005b37;
+  color: var(--green);
 }
 
 .intro {
@@ -25,7 +25,7 @@
   gap: 8px;
   color: var(--fg);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 800;
   line-height: 1.4;
   text-decoration: none;
   border-bottom: 1px solid var(--green);
@@ -36,7 +36,7 @@
 .cardLink:focus-visible,
 .pause:focus-visible,
 .tab:focus-visible {
-  outline: 2px solid #005b37;
+  outline: 2px solid var(--green);
   outline-offset: 3px;
 }
 
@@ -52,15 +52,15 @@
   min-width: 0;
   padding: 34px;
   border-radius: 18px;
-  background: #e4f8ee;
-  color: #254532;
+  background: color-mix(in srgb, var(--green) 12%, white);
+  color: var(--green);
 }
 
 .topicLabel {
   margin: 0 0 23px;
-  color: #3c6650;
+  color: var(--green);
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: 1.3px;
   line-height: 1.5;
   text-transform: uppercase;
@@ -79,7 +79,7 @@
   overscroll-behavior: contain;
   scroll-padding: 80px 0;
   scrollbar-width: thin;
-  scrollbar-color: #00c978 #d4f0e0;
+  scrollbar-color: #23FA6C color-mix(in srgb, var(--green) 20%, white);
   mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent);
 }
 
@@ -92,13 +92,13 @@
   width: 100%;
   min-height: 48px;
   padding: 12px 17px;
-  border: 1px solid #9cc9b2;
+  border: 1px solid color-mix(in srgb, var(--green) 35%, white);
   border-radius: 30px;
   background: transparent;
-  color: #254532;
+  color: var(--green);
   font: inherit;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 800;
   line-height: 1.5;
   text-align: left;
   cursor: pointer;
@@ -108,8 +108,8 @@
 }
 
 .tab[aria-selected="true"] {
-  border-color: #00c978;
-  background: #00c978;
+  border-color: #23FA6C;
+  background: #23FA6C;
   color: #181410;
   transform: translateX(5px);
 }
@@ -122,13 +122,13 @@
   margin-top: 20px;
   min-height: 44px;
   padding: 8px 14px;
-  border: 1px solid #005b37;
+  border: 1px solid var(--green);
   border-radius: 6px;
   background: #fff;
   color: #181410;
   font: inherit;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 800;
   line-height: 1.4;
   cursor: pointer;
 }
@@ -147,7 +147,7 @@
 
 .backOne {
   inset: 30px -18px;
-  background: #d5eee0;
+  background: color-mix(in srgb, var(--green) 16%, white);
   transform: rotate(6deg);
 }
 
@@ -160,11 +160,11 @@
 .card {
   position: relative;
   overflow: hidden;
-  border: 1px solid #cce4d5;
+  border: 1px solid color-mix(in srgb, var(--green) 20%, white);
   border-radius: 16px;
   background: #fff;
   color: #181410;
-  box-shadow: 0 20px 45px #005b3712;
+  box-shadow: 0 20px 45px #23FA6C12;
 }
 
 .illustration {
@@ -172,7 +172,7 @@
   height: 240px;
   overflow: hidden;
   padding: 25px;
-  background: linear-gradient(140deg, #e7f8ee, #c9efdc);
+  background: linear-gradient(140deg, color-mix(in srgb, var(--green) 10%, white), color-mix(in srgb, var(--green) 22%, white));
 }
 
 .searchBar {
@@ -183,12 +183,12 @@
   border: 1px solid #fff;
   border-radius: 7px;
   background: #ffffffd9;
-  color: #42634f;
+  color: var(--green);
   font-size: 10px;
 }
 
 .searchBar > span:first-child {
-  color: #008b53;
+  color: var(--green);
   font-size: 21px;
   line-height: 1;
 }
@@ -198,7 +198,7 @@
   height: 5px;
   margin-left: auto;
   border-radius: 50%;
-  background: #00c978;
+  background: #23FA6C;
 }
 
 .resultLine {
@@ -217,7 +217,7 @@
 .orbit {
   position: absolute;
   inset: 103px 32px 36px;
-  border: 1px solid #68bb91;
+  border: 1px solid color-mix(in srgb, var(--green) 45%, white);
   border-radius: 50%;
   transform: rotate(-12deg);
 }
@@ -225,10 +225,10 @@
 .orbit span {
   position: absolute;
   padding: 5px 8px;
-  border: 1px solid #a1d5b9;
+  border: 1px solid color-mix(in srgb, var(--green) 30%, white);
   border-radius: 20px;
-  background: #f7fff9;
-  color: #005b37;
+  background: color-mix(in srgb, var(--green) 3%, white);
+  color: var(--green);
   font-size: 8px;
   letter-spacing: 0.8px;
   transform: rotate(12deg);
@@ -258,19 +258,19 @@
   width: 56px;
   height: 56px;
   border-radius: 12px;
-  background: #00c978;
+  background: #23FA6C;
   color: #181410;
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1;
   text-align: center;
-  box-shadow: 0 12px 20px #005b3726;
+  box-shadow: 0 12px 20px #23FA6C26;
 }
 
 .core span {
   display: block;
   font-size: 5px;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: 1px;
 }
 
@@ -279,7 +279,7 @@
   bottom: 14px;
   left: 25px;
   margin: 0;
-  color: #42634f;
+  color: var(--green);
   font-size: 8px;
   letter-spacing: 0.2px;
 }
@@ -290,7 +290,7 @@
 
 .copyLabel {
   margin: 0 0 13px;
-  color: #007f4b;
+  color: var(--green);
   font-size: 10px;
   letter-spacing: 0.6px;
 }
@@ -299,7 +299,7 @@
   margin: 0 0 15px;
   color: #181410;
   font-size: 23px;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.25;
   letter-spacing: -0.7px;
 }

@@ -11,7 +11,7 @@
   margin: 0;
   color: var(--fg);
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 800;
   line-height: 1.75;
 }
 
@@ -30,7 +30,7 @@
   margin: 0 0 20px;
   color: var(--fg-dim);
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 800;
   line-height: 1.75;
 }
 
@@ -48,7 +48,7 @@
   margin: 0;
   color: var(--fg);
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 800;
   line-height: 1.5;
 }
 

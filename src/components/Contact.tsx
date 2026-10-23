@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { FINAL_CTA } from "@/data/homepage-copy";
 import { SERVICE_OPTIONS } from "@/lib/contact-schema";
 import { Magnetic } from "./Magnetic";
+import { Testimonials } from "./Testimonials";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -82,6 +83,7 @@ export function Contact() {
             <span className="text-green">{FINAL_CTA_GREEN}</span>
           </h2>
           <p className="support">{FINAL_CTA.support}</p>
+          <Testimonials />
         </header>
 
         <div className="grid min-w-0 gap-5">

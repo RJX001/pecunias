@@ -7,7 +7,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: SITE_URL, changeFrequency: "monthly", priority: 1 },
     { url: `${SITE_URL}/about`, changeFrequency: "yearly", priority: 0.6 },
-    { url: `${SITE_URL}/knowledge-centre`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/services`, changeFrequency: "monthly", priority: 0.9 },
     ...growthStack.map((system) => ({
       url: `${SITE_URL}${servicePath(system.slug)}`,

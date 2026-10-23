@@ -36,7 +36,7 @@ const PHASE_WRAP = 300;
 const STATIC_PHASE = 1.43;
 const PHOTO_WIDTH = 384;
 
-const GREEN = "#00c978";
+const GREEN = "#23FA6C";
 const INK = "#181410";
 const MUTED = "#777b73";
 const CONNECTOR = "#dce1da";
@@ -181,9 +181,16 @@ function drawJourney(ctx: CanvasRenderingContext2D, scene: Scene) {
     y: number,
     size = 15,
     color = INK,
+    maxWidth?: number,
   ) => {
     ctx.fillStyle = color;
-    ctx.font = `500 ${size}px ${family}`;
+    ctx.font = `800 ${size}px ${family}`;
+    if (maxWidth) {
+      while (ctx.measureText(text).width > maxWidth && size > 8) {
+        size -= 0.25;
+        ctx.font = `800 ${size}px ${family}`;
+      }
+    }
     ctx.fillText(text, x, y);
   };
 
@@ -293,23 +300,23 @@ function drawJourney(ctx: CanvasRenderingContext2D, scene: Scene) {
     GREEN,
     2,
   );
-  label("Discover your brand", 209, 112, 14);
-  label("SEO · Organic Growth", 209, 134, 11, MUTED);
+  label("Discover your brand", 209, 112, 14, INK, 220);
+  label("SEO · Organic Growth", 209, 134, 11, MUTED, 220);
 
-  card(166, 159, 278, 36);
-  box(180, 173, 7, 7, GREEN, 4);
-  label("Paid Growth", 199, 182, 13);
-  label("Google · Meta · TikTok", 294, 181, 10, MUTED);
+  card(166, 155, 278, 42);
+  box(180, 170, 7, 7, GREEN, 4);
+  label("Paid Growth", 199, 173, 12, INK, 230);
+  label("Google · Meta · TikTok", 199, 189, 10, MUTED, 230);
 
   card(108, 205, 336, 143);
   box(108, 205, 336, 23, "#f1f3ee", 9);
   ["#cdd2c8", "#cdd2c8", GREEN].forEach((colour, i) =>
     box(120 + i * 10, 214, 5, 5, colour, 3),
   );
-  photo(scene.city, 119, 238, 112, 98);
-  box(241, 238, 191, 98, GREEN, 6);
-  label("PECUNIA", 255, 267, 23, INK);
-  label("Your digital presence", 255, 290, 12, INK);
+  photo(scene.city, 120, 240, 112, 96);
+  box(244, 240, 188, 96, GREEN, 10);
+  label("PECUNIA", 256, 268, 23, INK, 164);
+  label("Your digital presence", 256, 290, 12, INK, 164);
   box(255, 305, 116, 20, "#fff", 3);
   label("Make The Move", 264, 319, 10, INK);
 
@@ -345,8 +352,8 @@ function drawJourney(ctx: CanvasRenderingContext2D, scene: Scene) {
   SERVICE_CARDS.forEach(([x, first, second]) => {
     card(x, 369, 140, 63);
     box(x + 13, 382, 6, 6, GREEN, 3);
-    label(first, x + 13, 404, 12);
-    label(second, x + 13, 421, 12);
+    label(first, x + 13, 404, 12, INK, 114);
+    label(second, x + 13, 421, 12, INK, 114);
   });
 
   strokeLine(
@@ -523,7 +530,7 @@ export function HeroJourney() {
     };
     document.fonts?.ready.then(redrawWithFonts);
     document.fonts
-      ?.load(`500 12px ${scene.family}`)
+      ?.load(`800 12px ${scene.family}`)
       .then(redrawWithFonts, () => undefined);
 
     engineRef.current = {
