@@ -1,6 +1,6 @@
 /**
- * Approved hero copy from PecuniaStudios-Cursor-4-SubAgent-Implementation.md
- * §§5–7. Agent 2 must render these strings exactly.
+ * Approved hero copy. Render these strings exactly.
+ * The old rail and journey status are not part of the title flow.
  */
 
 export const HERO_IDENTITY = "Pecunia Studios";
@@ -22,19 +22,4 @@ export const HERO_SUPPORT = [
 
 export const HERO_CTA = "Make The Move →";
 
-export const HERO_RAIL = [
-  "Strategy",
-  "Build",
-  "Acquire",
-  "Convert",
-  "Automate",
-  "Scale",
-] as const;
-
-export const HERO_JOURNEY_STATUS =
-  "Content. Discovery. Website. Enquiry. One connected growth system.";
-
-export const HERO_JOURNEY_LABEL = `Search to enquiry. ${HERO_JOURNEY_STATUS}`;
-
 export type HeroHeadline = (typeof HERO_HEADLINES)[number];
-export type HeroRailNode = (typeof HERO_RAIL)[number];

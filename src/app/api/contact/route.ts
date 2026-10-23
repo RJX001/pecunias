@@ -53,6 +53,7 @@ async function persistLead(lead: ContactPayload) {
   existing.push({
     name: lead.name,
     businessName: lead.businessName,
+    email: lead.email,
     mobile: lead.mobile,
     service: lead.service,
     details: lead.details,
@@ -75,13 +76,14 @@ async function sendResendEmail(lead: ContactPayload) {
     "",
     `Name: ${asPlainText(lead.name)}`,
     `Business name: ${asPlainText(lead.businessName) || "—"}`,
-    `Mobile: ${asPlainText(lead.mobile) || "—"}`,
-    `Service needed: ${lead.service}`,
+    `Email: ${asPlainText(lead.email)}`,
+    `Phone: ${asPlainText(lead.mobile) || "—"}`,
+    `What do you need: ${lead.service}`,
     "",
-    "Project details:",
-    asPlainText(lead.details),
+    "Tell us more:",
+    asPlainText(lead.details) || "—",
     "",
-    "Social links:",
+    "Website or Instagram:",
     asPlainText(lead.socialLinks) || "—",
   ].join("\n");
 

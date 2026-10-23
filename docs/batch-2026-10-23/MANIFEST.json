@@ -1,0 +1,71 @@
+{
+  "package": "Pecunia-Cursor-Batch-2026-10-23",
+  "purpose": "Local implementation handover; no publishing authority",
+  "files": [
+    {
+      "path": "assets/projects/atlantis.webp",
+      "bytes": 27218,
+      "sha256": "8ef90eb09b93a972d6e5614faf195ebef870146b51e97e978008c5287fba6433"
+    },
+    {
+      "path": "assets/projects/beckbury.webp",
+      "bytes": 54580,
+      "sha256": "b4ba4bffd061d3fa7587e4661971085e9ca3103a878804c2bdd543a8e49459be"
+    },
+    {
+      "path": "assets/projects/cardchart.webp",
+      "bytes": 29088,
+      "sha256": "4f321d3ed1c4199e9016162447ddfb8e2cd13900a9b538492435c0097137aa33"
+    },
+    {
+      "path": "assets/projects/secured.webp",
+      "bytes": 68562,
+      "sha256": "c561cdc3869ccbb95181735392914a15bc0011ce6bca7413ebfd03a988e183de"
+    },
+    {
+      "path": "CURSOR_IMPLEMENTATION_GUIDE.md",
+      "bytes": 15000,
+      "sha256": "387ea522e376d6e2190dd63d593b97774e27fec8548f72e275541fcc87aa2612"
+    },
+    {
+      "path": "CURSOR_PROMPT.txt",
+      "bytes": 2862,
+      "sha256": "c09cca24cfa634be50f1b9f3591878d2bdd40ff6e92be893ccf5a9a05a2c3ff3"
+    },
+    {
+      "path": "references/approved-title-flow.fragment.html",
+      "bytes": 6684,
+      "sha256": "a5e404381547701f9446d12ec91d87793ad46b5f2cb51bd2dcc49e50b01b017b"
+    },
+    {
+      "path": "references/approved-title-flow.html",
+      "bytes": 88583,
+      "sha256": "2e6a7eb687d09c6c76ccd6c597c5bf753c98b54428f1d681de6e2ab2fe94b361"
+    },
+    {
+      "path": "references/booking-form-reference.png",
+      "bytes": 292694,
+      "sha256": "2a914d2cbeef588faf2ea53efcb390cd2cfa97de0d39694a6418192a6f13e740"
+    },
+    {
+      "path": "references/local-title-flow.png",
+      "bytes": 36384,
+      "sha256": "3d110d02d430d33278909a0b15a6136ab5a08cf7298cc224202f57d750e00c4f"
+    },
+    {
+      "path": "references/seo-explanation.png",
+      "bytes": 63370,
+      "sha256": "83e0e572d5be5372c74a23f6a5c4696eb1f1b4e18c3fdfebec7dfd43b582493c"
+    },
+    {
+      "path": "references/wide-project-layout.html",
+      "bytes": 366277,
+      "sha256": "a080c3b704d57d9d2b1c3815d9931e83b275d083cdaa5c948610923db1c363bd"
+    },
+    {
+      "path": "START_HERE.md",
+      "bytes": 2111,
+      "sha256": "aa69bc535c9ca485e3682892b423bfe96c4bdc5ab5b14c19020311dd2b7b6365"
+    }
+  ]
+}

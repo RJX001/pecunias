@@ -5,6 +5,7 @@ import {
   useId,
   useRef,
   useState,
+  type FocusEvent,
   type KeyboardEvent,
   type PointerEvent as ReactPointerEvent,
   type WheelEvent,
@@ -24,6 +25,7 @@ import {
 import styles from "./SearchVisibility.module.css";
 
 const CYCLE_MS = 3500;
+const SELECTION_PAUSE_MS = 2500;
 const REDUCE_MOTION = "(prefers-reduced-motion: reduce)";
 
 function prefersReducedMotion() {
@@ -32,17 +34,20 @@ function prefersReducedMotion() {
 
 export function SearchVisibility() {
   const [active, setActive] = useState(0);
-  const [userPaused, setUserPaused] = useState(false);
+  const [explicitPaused, setExplicitPaused] = useState(false);
+  const [keyboardPaused, setKeyboardPaused] = useState(false);
+  const [selectionHold, setSelectionHold] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [focused, setFocused] = useState(false);
-  const [reading, setReading] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [inView, setInView] = useState(false);
 
   const sectionRef = useRef<HTMLElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const readingTimer = useRef<number | null>(null);
+  const holdTimer = useRef<number | null>(null);
+  // True only after a keyboard event. A click focuses the tab, so focus
+  // alone must not keep the cycle paused.
+  const keyboardIntent = useRef(false);
   const baseId = useId();
   const panelId = `${baseId}-panel`;
   const topic = SEARCH_VISIBILITY_TOPICS[active];
@@ -76,12 +81,28 @@ export function SearchVisibility() {
   }, []);
 
   useEffect(() => {
+    const onKeyDown = (event: globalThis.KeyboardEvent) => {
+      if (event.metaKey || event.altKey || event.ctrlKey) return;
+      keyboardIntent.current = true;
+    };
+    const onPointerDown = () => {
+      keyboardIntent.current = false;
+    };
+    document.addEventListener("keydown", onKeyDown, true);
+    document.addEventListener("pointerdown", onPointerDown, true);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown, true);
+      document.removeEventListener("pointerdown", onPointerDown, true);
+    };
+  }, []);
+
+  useEffect(() => {
     if (
       reducedMotion ||
       prefersReducedMotion() ||
-      userPaused ||
-      focused ||
-      reading ||
+      explicitPaused ||
+      keyboardPaused ||
+      selectionHold ||
       hidden ||
       document.hidden ||
       !inView
@@ -97,7 +118,14 @@ export function SearchVisibility() {
     }, CYCLE_MS);
 
     return () => window.clearInterval(timer);
-  }, [reducedMotion, userPaused, focused, reading, hidden, inView]);
+  }, [
+    reducedMotion,
+    explicitPaused,
+    keyboardPaused,
+    selectionHold,
+    hidden,
+    inView,
+  ]);
 
   useEffect(() => {
     const list = listRef.current;
@@ -114,33 +142,53 @@ export function SearchVisibility() {
 
   useEffect(() => {
     return () => {
-      if (readingTimer.current !== null) {
-        window.clearTimeout(readingTimer.current);
+      if (holdTimer.current !== null) {
+        window.clearTimeout(holdTimer.current);
+        holdTimer.current = null;
       }
     };
   }, []);
 
-  function markReading(duration: number) {
-    setReading(true);
-    if (readingTimer.current !== null) {
-      window.clearTimeout(readingTimer.current);
+  function pauseForSelection() {
+    if (reducedMotion || prefersReducedMotion()) return;
+    if (holdTimer.current !== null) {
+      window.clearTimeout(holdTimer.current);
+    } else {
+      setSelectionHold(true);
     }
-    readingTimer.current = window.setTimeout(() => {
-      readingTimer.current = null;
-      setReading(false);
-    }, duration);
+    holdTimer.current = window.setTimeout(() => {
+      holdTimer.current = null;
+      setSelectionHold(false);
+    }, SELECTION_PAUSE_MS);
   }
 
-  function onPointerDown(event: ReactPointerEvent<HTMLElement>) {
-    markReading(event.pointerType === "mouse" ? 1200 : 8000);
+  function onSectionPointerDown(event: ReactPointerEvent<HTMLElement>) {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    // A click focuses the tab without a key event. Drop keyboard-reading
+    // pause even when focus does not move, then apply the short hold only.
+    keyboardIntent.current = false;
+    setKeyboardPaused(false);
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    if (target.closest("[data-topic-select]")) {
+      pauseForSelection();
+    }
   }
 
-  function onListWheel(event: WheelEvent<HTMLDivElement>) {
-    if (event.deltaY !== 0) markReading(4000);
+  function onSectionFocus() {
+    setKeyboardPaused(keyboardIntent.current);
+  }
+
+  function onSectionBlur(event: FocusEvent<HTMLElement>) {
+    const next = event.relatedTarget;
+    if (!(next instanceof Node) || !event.currentTarget.contains(next)) {
+      setKeyboardPaused(false);
+    }
   }
 
   function selectFromKeyboard(index: number) {
-    setUserPaused(true);
+    keyboardIntent.current = true;
+    setKeyboardPaused(true);
     setActive(index);
     tabRefs.current[index]?.focus({ preventScroll: true });
   }
@@ -173,20 +221,38 @@ export function SearchVisibility() {
     selectFromKeyboard(next);
   }
 
+  function onTabClick(index: number) {
+    setActive(index);
+    if (!keyboardIntent.current) {
+      pauseForSelection();
+    }
+  }
+
+  function toggleExplicitPause() {
+    if (explicitPaused) {
+      if (holdTimer.current !== null) {
+        window.clearTimeout(holdTimer.current);
+        holdTimer.current = null;
+      }
+      setSelectionHold(false);
+      setKeyboardPaused(false);
+    }
+    setExplicitPaused((current) => !current);
+  }
+
+  function onListWheel(event: WheelEvent<HTMLDivElement>) {
+    if (event.deltaY !== 0) pauseForSelection();
+  }
+
   return (
     <section
       ref={sectionRef}
       id="search-visibility"
       className={`ps-section ${styles.section}`}
       aria-labelledby="search-visibility-heading"
-      onPointerDown={onPointerDown}
-      onFocus={() => setFocused(true)}
-      onBlur={(event) => {
-        const next = event.relatedTarget;
-        if (!(next instanceof Node) || !event.currentTarget.contains(next)) {
-          setFocused(false);
-        }
-      }}
+      onPointerDown={onSectionPointerDown}
+      onFocus={onSectionFocus}
+      onBlur={onSectionBlur}
     >
       <div className="ps-inner">
         <p className="ps-kicker">{SEARCH_VISIBILITY_KICKER}</p>
@@ -211,7 +277,7 @@ export function SearchVisibility() {
               aria-label="Search visibility services"
               aria-orientation="vertical"
               onWheel={onListWheel}
-              onTouchMove={() => markReading(8000)}
+              onTouchMove={() => pauseForSelection()}
             >
               {SEARCH_VISIBILITY_TOPICS.map((item, index) => {
                 const selected = index === active;
@@ -226,13 +292,11 @@ export function SearchVisibility() {
                     type="button"
                     role="tab"
                     className={styles.tab}
+                    data-topic-select=""
                     aria-selected={selected}
                     aria-controls={panelId}
                     tabIndex={selected ? 0 : -1}
-                    onClick={() => {
-                      setUserPaused(true);
-                      setActive(index);
-                    }}
+                    onClick={() => onTabClick(index)}
                     onKeyDown={(event) => onTabKeyDown(event, index)}
                   >
                     <span>{item.label}</span>
@@ -247,10 +311,10 @@ export function SearchVisibility() {
               <button
                 type="button"
                 className={styles.pause}
-                aria-pressed={userPaused}
-                onClick={() => setUserPaused((current) => !current)}
+                aria-pressed={explicitPaused}
+                onClick={toggleExplicitPause}
               >
-                {userPaused ? "Resume topic cycle" : "Pause topic cycle"}
+                {explicitPaused ? "Resume topic cycle" : "Pause topic cycle"}
               </button>
             )}
           </div>
@@ -261,7 +325,7 @@ export function SearchVisibility() {
               role="tabpanel"
               aria-labelledby={`${baseId}-tab-${topic.id}`}
               className={styles.card}
-              onPointerDown={() => setUserPaused(true)}
+              data-topic-select=""
             >
               <div className={styles.copy}>
                 <p className={styles.copyLabel}>{topic.label}</p>

@@ -1,30 +1,37 @@
 /*
- * One-line homepage wordmark. PECUNIA and STUDIOS share Montserrat 800
- * and the header's tight tracking (-0.05em). Width is Montserrat ExtraBold
- * advances for both words at that tracking (8.982em) plus slack so the line
- * fills the row without clipping. 14vh keeps the hero headline on a laptop.
+ * Homepage wordmark plus the Create / Discover / Convert / Connect flow.
+ * PECUNIA and STUDIOS share Montserrat 800 and the header's tight tracking.
+ * Width is Montserrat ExtraBold advances for both words (8.982em) plus the
+ * dot and gaps, capped so the line fills the row without clipping.
  */
 .frame {
   container-type: inline-size;
   width: 100%;
   max-width: 100%;
-  padding: 16px 5% 2px;
+  padding: 16px 5% 0;
+}
+
+.flow {
+  --wm-size: max(22px, min(calc(100cqi / 10.55), 14vh));
+  --flow-width: min(100%, calc(9.48 * var(--wm-size)));
+
+  position: relative;
+  width: 100%;
+  max-width: 100%;
 }
 
 .wordmark {
-  --wm-gap: 0.065em;
-  --wm-size: max(22px, min(calc(100cqi / 10.55), 14vh));
-
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--wm-gap);
+  gap: 0.065em;
   width: 100%;
   max-width: 100%;
   margin: 0;
   padding: 0;
   overflow: visible;
-  font-size: clamp(22px, 5.2vw, 96px);
   font-size: var(--wm-size);
   line-height: 1;
   white-space: nowrap;
@@ -92,9 +99,118 @@
   outline-offset: 3px;
 }
 
+.connections {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: var(--flow-width);
+  height: calc(48px + var(--wm-size) * 0.85);
+  margin: calc(var(--wm-size) * -0.85) auto 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.structure,
+.activeLine {
+  fill: none;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+}
+
+.structure {
+  stroke: color-mix(in srgb, var(--fg) 28%, transparent);
+  stroke-width: 1.5;
+}
+
+.activeLine {
+  stroke: var(--green);
+  stroke-width: 1.8;
+}
+
+.pulse {
+  fill: var(--green);
+}
+
+.pulse[data-hidden="true"] {
+  display: none;
+}
+
+.stageRow {
+  position: relative;
+  z-index: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(4px, 1vw, 12px);
+  width: var(--flow-width);
+  margin: -8px auto 0;
+}
+
+.stage {
+  appearance: none;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px clamp(2px, 1vw, 10px);
+  border: 0;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 14%, transparent);
+  font-family: inherit;
+  font-size: clamp(10px, 2.4vw, 13px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition:
+    background-color 0.35s,
+    color 0.35s,
+    box-shadow 0.35s;
+}
+
+.stage[aria-pressed="true"] {
+  background: var(--green);
+  color: var(--dark-text);
+  box-shadow: none;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 22px;
+  margin-top: 12px;
+}
+
+.action {
+  min-height: 36px;
+  margin: 0;
+  padding: 6px 2px;
+  border: 0;
+  background: transparent;
+  color: var(--fg-dim);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.action:hover,
+.action:focus-visible {
+  color: var(--fg);
+}
+
 @media (max-width: 480px) {
   .frame {
     padding-top: 12px;
+  }
+
+  .connections {
+    height: calc(40px + var(--wm-size) * 0.85);
+    margin-top: calc(var(--wm-size) * -0.85);
   }
 }
 
@@ -108,6 +224,14 @@
     transform: none;
     transition: none;
   }
+
+  .stage {
+    transition: none;
+  }
+
+  .pulse {
+    display: none !important;
+  }
 }
 
 @media (forced-colors: active) {
@@ -119,5 +243,31 @@
     -webkit-text-fill-color: CanvasText;
     background-image: none;
     transform: none;
+  }
+
+  .dot,
+  .pulse {
+    background: Highlight;
+    fill: Highlight;
+  }
+
+  .activeLine {
+    stroke: Highlight;
+  }
+
+  .structure {
+    stroke: CanvasText;
+  }
+
+  .stage {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+    box-shadow: none;
+  }
+
+  .stage[aria-pressed="true"] {
+    background: Highlight;
+    color: HighlightText;
   }
 }

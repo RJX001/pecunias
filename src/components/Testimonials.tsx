@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState, type PointerEvent } from "react";
+import { useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { testimonials } from "@/data/testimonials";
 import styles from "./Testimonials.module.css";
 export function Testimonials() {
@@ -9,6 +9,11 @@ export function Testimonials() {
   const review = testimonials[index];
   function move(delta: number) {
     setIndex((i) => (i + delta + testimonials.length) % testimonials.length);
+  }
+  function onControlKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    move(event.key === "ArrowRight" ? 1 : -1);
   }
   function release(e: PointerEvent) {
     if (start.current === null) return;
@@ -75,6 +80,7 @@ export function Testimonials() {
         <button
           type="button"
           onClick={() => move(-1)}
+          onKeyDown={onControlKeyDown}
           aria-label="Previous testimonial"
         >
           ←
@@ -85,6 +91,7 @@ export function Testimonials() {
         <button
           type="button"
           onClick={() => move(1)}
+          onKeyDown={onControlKeyDown}
           aria-label="Next testimonial"
         >
           →

@@ -5,16 +5,14 @@ import {
   HERO_CTA,
   HERO_HEADLINES,
   HERO_LEAD_IN,
-  HERO_RAIL,
   HERO_SUPPORT,
 } from "@/data/hero-headlines";
 import { FINAL_CTA } from "@/data/homepage-copy";
-import { HeroJourney } from "./HeroJourney";
 import styles from "./Hero.module.css";
 
-const HEADLINE_TYPE_MS = 50;
-const HEADLINE_HOLD_MS = 1400;
-const HEADLINE_EXIT_MS = 250;
+const HEADLINE_TYPE_MS = 80;
+const HEADLINE_HOLD_MS = 4500;
+const HEADLINE_EXIT_MS = 350;
 
 const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
 
@@ -34,8 +32,7 @@ export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduced = useSyncExternalStore(subscribeReduced, getReduced, () => false);
   const [headlineIndex, setHeadlineIndex] = useState(0);
-  const [typedCount, setTypedCount] = useState(0);
-  const [headlinePhase, setHeadlinePhase] = useState<HeadlinePhase>("typing");
+  const [typedCount, setTypedCount] = useState(HERO_HEADLINES[0].length);
 
   useEffect(() => {
     if (reduced) return;
@@ -45,127 +42,134 @@ export function Hero() {
 
     let cancelled = false;
     let running = false;
-    let typeId = 0;
-    let headlineHoldId = 0;
-    let headlineExitId = 0;
+    let timer = 0;
     let index = 0;
-    let char = 0;
+    let char = HERO_HEADLINES[0].length;
+    let phase: HeadlinePhase = "hold";
+    let remaining = HEADLINE_HOLD_MS;
+    let startedAt = 0;
+    let inView = false;
+    let pageVisible = document.visibilityState === "visible";
 
-    const clearTimers = () => {
-      window.clearTimeout(typeId);
-      window.clearTimeout(headlineHoldId);
-      window.clearTimeout(headlineExitId);
+    setHeadlineIndex(0);
+    setTypedCount(char);
+
+    const clearTimer = () => {
+      window.clearTimeout(timer);
+      timer = 0;
     };
 
-    const typeNext = () => {
+    const arm = (delay: number, fn: () => void) => {
+      remaining = delay;
+      startedAt = performance.now();
+      timer = window.setTimeout(fn, delay);
+    };
+
+    const step = () => {
+      if (cancelled) return;
       const phrase = HERO_HEADLINES[index];
-      typeId = window.setTimeout(() => {
-        if (cancelled) return;
+
+      if (phase === "typing") {
         char += 1;
         setTypedCount(char);
         if (char >= phrase.length) {
-          setHeadlinePhase("hold");
-          headlineHoldId = window.setTimeout(() => {
-            if (cancelled) return;
-            setHeadlinePhase("exiting");
-            headlineExitId = window.setTimeout(() => {
-              if (cancelled) return;
-              index = (index + 1) % HERO_HEADLINES.length;
-              char = 0;
-              setHeadlineIndex(index);
-              setTypedCount(0);
-              setHeadlinePhase("typing");
-              typeNext();
-            }, HEADLINE_EXIT_MS);
-          }, HEADLINE_HOLD_MS);
-          return;
+          phase = "hold";
+          arm(HEADLINE_HOLD_MS, step);
+        } else {
+          arm(HEADLINE_TYPE_MS, step);
         }
-        typeNext();
-      }, HEADLINE_TYPE_MS);
-    };
+        return;
+      }
 
-    const start = () => {
-      if (running || cancelled) return;
-      running = true;
-      char = 0;
-      setTypedCount(0);
+      if (phase === "hold") {
+        phase = "exiting";
+        arm(HEADLINE_EXIT_MS, step);
+        return;
+      }
+
+      index = (index + 1) % HERO_HEADLINES.length;
+      const next = HERO_HEADLINES[index];
+      char = Math.min(1, next.length);
+      phase = char >= next.length ? "hold" : "typing";
       setHeadlineIndex(index);
-      setHeadlinePhase("typing");
-      typeNext();
+      setTypedCount(next.length === 0 ? 0 : Math.max(char, 1));
+      arm(phase === "hold" ? HEADLINE_HOLD_MS : HEADLINE_TYPE_MS, step);
     };
 
-    const stop = () => {
+    const halt = () => {
+      if (!running) return;
       running = false;
-      clearTimers();
+      const waited = startedAt ? performance.now() - startedAt : 0;
+      remaining = Math.max(0, remaining - waited);
+      startedAt = 0;
+      clearTimer();
+    };
+
+    const resume = () => {
+      if (running || cancelled || !inView || !pageVisible) return;
+      running = true;
+      arm(remaining, step);
+    };
+
+    const sync = () => {
+      if (inView && pageVisible) resume();
+      else halt();
     };
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) start();
-        else stop();
+        inView = entry.isIntersecting;
+        sync();
       },
       { threshold: 0.2 },
     );
     observer.observe(section);
 
+    const onVisibility = () => {
+      pageVisible = document.visibilityState === "visible";
+      sync();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
     return () => {
       cancelled = true;
-      stop();
+      running = false;
+      clearTimer();
       observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, [reduced]);
 
-  const currentHeadline = HERO_HEADLINES[headlineIndex];
-  const typedHeadline = reduced
-    ? currentHeadline
-    : currentHeadline.slice(0, typedCount);
-  const phase: HeadlinePhase = reduced ? "hold" : headlinePhase;
+  const currentHeadline = HERO_HEADLINES[headlineIndex] ?? HERO_HEADLINES[0];
+  const shown =
+    reduced || typedCount <= 0
+      ? currentHeadline
+      : currentHeadline.slice(0, typedCount);
 
   return (
     <section ref={sectionRef} className={styles.hero}>
-      <div className="min-w-0">
-        <p className={styles.lead}>{HERO_LEAD_IN}</p>
-        <h1 className={`${styles.headline} display grid min-w-0`} aria-live="polite">
-          {HERO_HEADLINES.map((headline) => (
-            <span
-              key={headline}
-              className="invisible col-start-1 row-start-1 min-w-0 wrap-break-word"
-              aria-hidden="true"
-            >
-              {headline}
-            </span>
-          ))}
-          <span
-            className={`col-start-1 row-start-1 min-w-0 wrap-break-word ${
-              phase === "exiting"
-                ? "opacity-0 transition-opacity duration-[250ms] ease-[var(--ease)]"
-                : "opacity-100"
-            }`}
-            aria-hidden="true"
-          >
-            {typedHeadline}
+      <p className={styles.lead}>{HERO_LEAD_IN}</p>
+      <h1 className={styles.headline}>
+        {HERO_HEADLINES.map((headline) => (
+          <span key={headline} className={styles.sizer} aria-hidden="true">
+            {headline}
           </span>
-          <span className="sr-only">{currentHeadline}</span>
-        </h1>
-        {HERO_SUPPORT.map((paragraph) => (
-          <p key={paragraph} className={styles.support}>
-            {paragraph}
-          </p>
         ))}
-        <a href={FINAL_CTA.href} className="ps-button">
-          {HERO_CTA}
-        </a>
-        <ol className={styles.rail}>
-          {HERO_RAIL.map((node) => (
-            <li key={node}>
-              <p>{node}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-      <div className={styles.motion}>
-        <HeroJourney />
-      </div>
+        <span className={styles.visible} aria-hidden="true">
+          {shown}
+        </span>
+        <span className={styles.live} aria-live="polite">
+          {currentHeadline}
+        </span>
+      </h1>
+      {HERO_SUPPORT.map((paragraph) => (
+        <p key={paragraph} className={styles.support}>
+          {paragraph}
+        </p>
+      ))}
+      <a href={FINAL_CTA.href} className="ps-button">
+        {HERO_CTA}
+      </a>
     </section>
   );
 }
