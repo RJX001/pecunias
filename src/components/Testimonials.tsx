@@ -22,7 +22,9 @@ export function Testimonials() {
       <div
         className={styles.deck}
         onPointerDown={(e) => {
+          if (e.button !== 0 || (e.target as Element).closest("a")) return;
           start.current = e.clientX;
+          e.currentTarget.setPointerCapture(e.pointerId);
         }}
         onPointerUp={release}
         onPointerCancel={() => {
@@ -31,7 +33,7 @@ export function Testimonials() {
       >
         <div className={styles.back} aria-hidden="true" />
         <div className={styles.backTwo} aria-hidden="true" />
-        <figure className={styles.card}>
+        <figure key={index} className={styles.card}>
           <span className={styles.quoteMark} aria-hidden="true">
             “
           </span>

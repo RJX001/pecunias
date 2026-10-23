@@ -27,6 +27,7 @@
   transform: rotate(-4deg);
 }
 .card {
+  animation: reveal-card 220ms ease-out;
   position: relative;
   margin: 0;
   padding: 30px;
@@ -39,6 +40,10 @@
   min-height: 300px;
   display: flex;
   flex-direction: column;
+}
+@keyframes reveal-card {
+  from { opacity: 0; transform: translateX(15px) rotate(1deg); }
+  to { opacity: 1; transform: translateX(0) rotate(-2deg); }
 }
 .quoteMark {
   font-size: 55px;
@@ -105,6 +110,7 @@
   .card,
   .back,
   .backTwo {
+    animation: none;
     transform: none;
   }
 }
