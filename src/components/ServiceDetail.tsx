@@ -34,6 +34,7 @@ export function ServiceDetail({ system }: { system: GrowthSystem }) {
   const image = system.image ? SERVICE_IMAGES[system.image] : undefined;
   const faqs = getServiceFaqs(system);
   const searchPage = system.slug === "search-visibility";
+  const condensedBenefits = system.slug === "digital-ecommerce";
   const stages = serviceStages(system);
 
   return (
@@ -58,6 +59,15 @@ export function ServiceDetail({ system }: { system: GrowthSystem }) {
             <div className={styles.body}>
               {system.body.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
+              ))}
+              {system.references?.map((item) => (
+                <p key={`${item.href}-${item.label}`}>
+                  {item.before}{" "}
+                  <Link href={item.href} className={styles.referenceLink}>
+                    {item.label}
+                  </Link>
+                  {item.after}
+                </p>
               ))}
             </div>
             <div className={styles.actions}>
@@ -108,31 +118,53 @@ export function ServiceDetail({ system }: { system: GrowthSystem }) {
           <WhatWeDo items={system.deliverables} />
         </section>
 
-        {system.closing ? (
-          <section className={styles.section}>
+        {condensedBenefits || system.closing ? (
+          <section
+            className={`${styles.section} ${
+              condensedBenefits ? styles.whyCompact : ""
+            }`}
+          >
             <div className={styles.sectionLabel}>
               <span>02</span>
               <h2>Why it matters</h2>
             </div>
-            <p className={styles.impactLine}>{system.closing}</p>
-            {searchPage ? null : (
-              <ul className={styles.principles}>
-                {SERVICE_PRINCIPLES.map((principle, index) => (
-                  <li key={principle}>
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                    <h3>{principle}</h3>
-                  </li>
-                ))}
-              </ul>
+            {condensedBenefits ? (
+              <>
+                <p className={styles.objectiveRow}>
+                  Clear commercial objectives · Defined KPIs · Transparent
+                  reporting
+                </p>
+                <ul className={styles.benefitLabels}>
+                  {system.benefits.map((benefit) => (
+                    <li key={benefit.title}>
+                      <h3>{benefit.title}</h3>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <>
+                <p className={styles.impactLine}>{system.closing}</p>
+                {searchPage ? null : (
+                  <ul className={styles.principles}>
+                    {SERVICE_PRINCIPLES.map((principle, index) => (
+                      <li key={principle}>
+                        <span>{String(index + 1).padStart(2, "0")}</span>
+                        <h3>{principle}</h3>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <ul className={styles.benefits}>
+                  {system.benefits.map((benefit) => (
+                    <li key={benefit.title}>
+                      <h3>{benefit.title}</h3>
+                      {benefit.body ? <p>{benefit.body}</p> : null}
+                    </li>
+                  ))}
+                </ul>
+              </>
             )}
-            <ul className={styles.benefits}>
-              {system.benefits.map((benefit) => (
-                <li key={benefit.title}>
-                  <h3>{benefit.title}</h3>
-                  <p>{benefit.body}</p>
-                </li>
-              ))}
-            </ul>
           </section>
         ) : null}
 
@@ -166,6 +198,11 @@ export function ServiceDetail({ system }: { system: GrowthSystem }) {
                 {faq.answer.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
+                {faq.link ? (
+                  <p>
+                    <Link href={faq.link.href}>{faq.link.label}</Link>
+                  </p>
+                ) : null}
               </details>
             ))}
           </div>
