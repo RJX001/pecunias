@@ -23,8 +23,6 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--fg);
-  font-size: 13px;
   font-weight: 800;
   line-height: 1.4;
   text-decoration: none;
@@ -32,11 +30,25 @@
   padding-bottom: 4px;
 }
 
+.explore {
+  color: var(--fg);
+  font-size: 13px;
+}
+
+.cardLink {
+  color: #f6f0e4;
+  font-size: 11px;
+}
+
 .explore:focus-visible,
-.cardLink:focus-visible,
+.cardLink:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+
 .pause:focus-visible,
 .tab:focus-visible {
-  outline: 2px solid var(--green);
+  outline: 2px solid #181410;
   outline-offset: 3px;
 }
 
@@ -52,7 +64,7 @@
   min-width: 0;
   padding: 34px;
   border-radius: 18px;
-  background: color-mix(in srgb, var(--green) 12%, white);
+  background: #b9e9bc;
   color: #181410;
 }
 
@@ -79,7 +91,7 @@
   overscroll-behavior: contain;
   scroll-padding: 80px 0;
   scrollbar-width: thin;
-  scrollbar-color: #23FA6C color-mix(in srgb, var(--green) 20%, white);
+  scrollbar-color: #23FA6C #b9e9bc;
   mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent);
 }
 
@@ -92,9 +104,9 @@
   width: 100%;
   min-height: 48px;
   padding: 12px 17px;
-  border: 1px solid color-mix(in srgb, var(--green) 35%, white);
+  border: 1px solid rgba(24, 20, 16, 0.18);
   border-radius: 30px;
-  background: transparent;
+  background: #fff;
   color: #181410;
   font: inherit;
   font-size: 12px;
@@ -103,19 +115,29 @@
   text-align: left;
   cursor: pointer;
   transition:
-    background-color 0.2s,
+    background-color 250ms,
     transform 0.2s;
 }
 
 .tab[aria-selected="true"] {
   border-color: #23FA6C;
-  background: #23FA6C;
+  background: #a6d4ab;
   color: #181410;
   transform: translateX(5px);
 }
 
 .tabMark {
+  display: block;
   flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #181410;
+  transition: background-color 250ms;
+}
+
+.tab[aria-selected="true"] .tabMark {
+  background-color: #23FA6C;
 }
 
 .pause {
@@ -147,8 +169,8 @@
   min-height: 360px;
   border: 1px solid var(--line-strong);
   border-radius: 18px;
-  background: var(--bg-raised);
-  color: var(--fg);
+  background: #1c3628;
+  color: #f6f0e4;
 }
 
 .copy {
@@ -175,13 +197,9 @@
 .copyBody {
   min-height: 65px;
   margin: 0 0 19px;
-  color: var(--fg-dim);
+  color: #f6f0e4;
   font-size: 12px;
   line-height: 1.8;
-}
-
-.cardLink {
-  font-size: 11px;
 }
 
 .footnote {
@@ -233,7 +251,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .tab,
-  .tab[aria-selected="true"] {
+  .tab[aria-selected="true"],
+  .tabMark {
     transition: none;
     transform: none;
   }

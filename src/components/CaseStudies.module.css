@@ -181,14 +181,6 @@
   line-height: 1.2;
 }
 
-.description {
-  max-width: 440px;
-  margin: 0 0 14px;
-  color: var(--fg-dim);
-  font-size: 13px;
-  line-height: 1.7;
-}
-
 .visit {
   display: inline-flex;
   align-items: center;

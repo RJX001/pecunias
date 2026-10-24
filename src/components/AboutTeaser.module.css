@@ -1,10 +1,10 @@
 /*
  * About teaser — approved-design.html `#v2-about` / `.pg-media-*` (final cascade).
- * Text on green stays #181410 in both themes.
+ * Panel is light green #B9E9BC. Text on it stays #181410 in both themes.
  */
 
 .section {
-  background: #23FA6C;
+  background: #B9E9BC;
   color: #181410;
 }
 
@@ -23,7 +23,7 @@
   min-height: 360px;
   margin-bottom: 40px;
   overflow: hidden;
-  background: radial-gradient(ellipse, #23FA6C25, transparent 65%);
+  background: radial-gradient(ellipse, #B9E9BC25, transparent 65%);
 }
 
 .window {
@@ -32,7 +32,7 @@
   height: 320px;
   overflow: hidden;
   border-radius: 18px;
-  background: #23FA6C;
+  background: #B9E9BC;
   box-shadow: 0 25px 60px #25422f25;
   transition:
     width 0.9s cubic-bezier(0.4, 0, 0.2, 1),

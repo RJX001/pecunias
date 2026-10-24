@@ -300,9 +300,7 @@ export function SearchVisibility() {
                     onKeyDown={(event) => onTabKeyDown(event, index)}
                   >
                     <span>{item.label}</span>
-                    <span className={styles.tabMark} aria-hidden="true">
-                      ↗
-                    </span>
+                    <span className={styles.tabMark} aria-hidden="true" />
                   </button>
                 );
               })}

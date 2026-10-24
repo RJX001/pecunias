@@ -9,7 +9,7 @@ const SERVICE_SLUGS = {
   "Paid Media": "paid-growth",
   SEO: "search-visibility",
   Automation: "ai-automation-crm",
-  CRM: "ai-automation-crm",
+  CRM: "epos-crm",
   AI: "ai-automation-crm",
   Creative: "organic-growth-content",
   "Growth Strategy": null,

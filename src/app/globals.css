@@ -21,6 +21,9 @@
 
   /* Owner-approved brand accent; small text retains neutral ink for contrast. */
   --green: #23FA6C;
+  /* Panel and forest-card colours. Tokens only; no rule in this file uses them. */
+  --panel-mint: #B9E9BC;
+  --forest: #1C3628;
   /*
    * Approved soft value is #1c3628 (opaque dark green). On a white canvas that
    * turns glows/soft fills into dark smudges under ink headlines, so the light
