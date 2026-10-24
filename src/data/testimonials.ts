@@ -1,10 +1,62 @@
 export type Testimonial = {
   name: string;
   business: string;
+  website: string;
   quote: string;
-  role?: string;
-  rating?: number;
-  website?: string;
+  /** Why this wording is still a draft. Not rendered. */
+  basis: string;
+  /** False until the owner confirms client-approved wording. */
+  approved: boolean;
+  status: "draft_for_client_approval";
 };
-// Add only owner-supplied, approved review wording and actual ratings. Empty means hidden.
-export const testimonials: readonly Testimonial[] = [];
+
+/**
+ * Drafts for local review only. Testimonials.tsx renders nothing outside
+ * development, and it labels every card as awaiting approval.
+ */
+export const testimonials: readonly Testimonial[] = [
+  {
+    name: "Mr Gurdip Singh",
+    business: "Completely Secured",
+    website: "https://completelysecured.co.uk/",
+    quote:
+      "We’re pleased with the website Pecunia created for Completely Secured. It presents our business clearly and gives customers an easy way to explore what we offer.",
+    basis:
+      "Owner requested a short summary expressing satisfaction with website creation. Proposed wording, not a verbatim client quote.",
+    approved: false,
+    status: "draft_for_client_approval",
+  },
+  {
+    name: "Mr Larry M",
+    business: "Atlantis Linen Services",
+    website: "https://atlantislinenservices.co.uk/",
+    quote:
+      "Rajan and Taran were easy to work with, and we were happy with the time taken to create our website. We’re really pleased with the finished result.",
+    basis:
+      "Owner supplied satisfaction with turnaround and working with Rajan and Taran. Proposed wording requires approval.",
+    approved: false,
+    status: "draft_for_client_approval",
+  },
+  {
+    name: "Mr Aarron D",
+    business: "Beckbury Chippy",
+    website: "https://beckburychippy.food2go.co.uk/",
+    quote:
+      "We’re pleased with the new website for Beckbury Chippy and how it presents our business online.",
+    basis:
+      "No actual client feedback supplied. This is a suggested draft only; obtain genuine feedback/approval before using it.",
+    approved: false,
+    status: "draft_for_client_approval",
+  },
+  {
+    name: "Mr Patel",
+    business: "CardChart",
+    website: "https://www.cardchart.co.uk/",
+    quote:
+      "We’re happy with the ongoing development of CardChart and the work on its AI systems for the trading card market. It’s good to see the platform continuing to take shape.",
+    basis:
+      "Owner supplied satisfaction with ongoing development and AI systems for the TCG market. Proposed wording requires approval.",
+    approved: false,
+    status: "draft_for_client_approval",
+  },
+];
