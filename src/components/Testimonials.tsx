@@ -74,7 +74,7 @@ export function Testimonials() {
     if (!drag || drag.pointerId !== event.pointerId) return;
     const dx = event.clientX - drag.x;
     const dy = event.clientY - drag.y;
-    if (!drag.locked || Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy)) return;
+    if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy)) return;
     move(dx < 0 ? 1 : -1);
   }
 

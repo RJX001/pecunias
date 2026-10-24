@@ -87,7 +87,7 @@ export const GROWTH_STACK_KICKER = "Our Services";
 export const GROWTH_STACK_HEADING = "Our Services — The Growth Stack";
 
 export const GROWTH_STACK_INTRO =
-  "Six services spanning websites and apps, branding, advertising, SEO, automation, and EPOS and CRM.";
+  "Six services spanning websites and apps, branding and content, advertising, SEO, AI automation, and EPOS and CRM.";
 
 export const GROWTH_CONNECTED =
   "A project can use one service or combine website, app, brand, advertising, search, automation and EPOS or CRM work.";
@@ -126,8 +126,7 @@ export const growthStack: readonly GrowthSystem[] = [
     readMore: "Read more about websites and apps",
     image: "studio",
     imagePosition: "50% 60%",
-    artLabel:
-      "Illustrative studio photograph for website and app design. The Premium Websites examples elsewhere on this site are websites, not delivered apps.",
+    artLabel: "Illustrative studio photograph for website and app design",
     references: [
       {
         before: "Logo design and brand guidelines are part of",

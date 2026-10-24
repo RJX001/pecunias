@@ -228,6 +228,7 @@
   }
 
   .card[data-depth="0"] {
+    animation: none;
     transform: none;
   }
 

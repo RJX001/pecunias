@@ -131,8 +131,7 @@ export function ServiceDetail({ system }: { system: GrowthSystem }) {
             {condensedBenefits ? (
               <>
                 <p className={styles.objectiveRow}>
-                  Clear commercial objectives · Defined KPIs · Transparent
-                  reporting
+                  Clear commercial objectives · Defined KPIs · Transparent reporting
                 </p>
                 <ul className={styles.benefitLabels}>
                   {system.benefits.map((benefit) => (
