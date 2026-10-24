@@ -45,7 +45,7 @@
   display: flex;
   gap: 7px;
   min-width: 0;
-  height: 490px;
+  height: 520px;
 }
 
 .panel {
@@ -76,7 +76,7 @@
 }
 
 .panel[data-active] .panelHeading {
-  height: 95px;
+  height: 112px;
 }
 
 .trigger {
@@ -134,10 +134,10 @@
 .panel[data-active] .title {
   left: 22px;
   right: 16px;
-  bottom: 15px;
-  font-size: 20px;
-  line-height: 1.25;
-  letter-spacing: -0.7px;
+  bottom: 12px;
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
   white-space: normal;
   writing-mode: horizontal-tb;
   transform: none;
@@ -147,7 +147,7 @@
 
 .bodyWrap {
   position: absolute;
-  top: 95px;
+  top: 112px;
   left: 0;
   width: 100%;
   /* Keeps the copy from reflowing word-by-word while the panel widens. */
@@ -332,12 +332,12 @@
 
   .panel {
     display: grid;
-    grid-template-rows: 64px 0fr;
+    grid-template-rows: 78px 0fr;
     transition: grid-template-rows 0.7s var(--panel-ease);
   }
 
   .panel[data-active] {
-    grid-template-rows: 95px 1fr;
+    grid-template-rows: 116px 1fr;
   }
 
   .panelHeading,

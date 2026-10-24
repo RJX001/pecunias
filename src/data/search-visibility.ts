@@ -38,7 +38,7 @@ export const SEARCH_VISIBILITY_HEADING = {
 export const SEARCH_VISIBILITY_INTRO =
   "Your next customer could start with a search, a map or a question. We connect SEO, local presence and useful answers to help them find a clearer path to your business.";
 
-export const SEARCH_VISIBILITY_EXPLORE = "Explore Search Visibility";
+export const SEARCH_VISIBILITY_EXPLORE = "Explore SEO & AI Search Visibility";
 
 export const SEARCH_VISIBILITY_TOPIC_LABEL = "One connected search strategy";
 
@@ -134,8 +134,8 @@ export const SEARCH_VISIBILITY_PAGE: {
   steps: readonly SearchVisibilityDetail[];
   faqs: readonly SearchVisibilityFaq[];
 } = {
-  name: "Search Visibility & SEO",
-  number: "05",
+  name: "SEO & AI Search Visibility",
+  number: "04",
   description: "Help the right people discover your business.",
   body: [
     "Search visibility starts with a website people can use and search engines can understand. We bring technical SEO, local presence and useful content together to help customers discover and evaluate your business.",

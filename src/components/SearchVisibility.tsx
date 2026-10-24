@@ -334,7 +334,7 @@ export function SearchVisibility() {
                 <Link href={SEARCH_VISIBILITY_HREF} className={styles.cardLink}>
                   {SEARCH_VISIBILITY_TOPIC_LINK}
                   <span className={styles.srOnly}>
-                    : Search Visibility and SEO
+                    : SEO & AI Search Visibility
                   </span>
                   <span aria-hidden="true">→</span>
                 </Link>
