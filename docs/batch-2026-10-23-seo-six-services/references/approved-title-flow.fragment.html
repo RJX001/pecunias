@@ -1,0 +1,89 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
+#pecunia-title-flow-concept { --pc-bg:#11181a; --pc-paper:#fff; --pc-ink:#151915; --pc-green:#23fa6c; --pc-muted:#b5beb6; --pc-line:#52605a; color:var(--pc-paper); font-family:Montserrat,Arial,sans-serif; font-weight:800; }
+#pecunia-title-flow-concept * { box-sizing:border-box; }
+#pecunia-title-flow-concept .pc-product { container-type:inline-size; width:100%; max-width:900px; margin:0 auto; padding:30px clamp(16px,4vw,40px) 22px; background:var(--pc-bg); }
+#pecunia-title-flow-concept .pc-main-title { container-type:inline-size; display:flex; justify-content:center; align-items:center; gap:.065em; white-space:nowrap; font-size:clamp(22px,8.8cqi,80px); line-height:1; letter-spacing:-.055em; }
+#pecunia-title-flow-concept .pc-brand-dot { display:block; flex:0 0 .30em; width:.30em; height:.30em; border-radius:50%; background:var(--pc-green); }
+#pecunia-title-flow-concept .pc-connections { display:block; width:100%; height:64px; overflow:visible; }
+#pecunia-title-flow-concept .pc-stage-row { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+#pecunia-title-flow-concept .pc-stage { min-height:36px; border:0; border-radius:22px; padding:8px 4px; background:#eef1eb; color:#6a746b; font:inherit; font-size:11px; transition:background-color .35s,color .35s; }
+#pecunia-title-flow-concept .pc-stage[aria-pressed="true"] { background:var(--pc-green); color:var(--pc-ink); }
+#pecunia-title-flow-concept .pc-services { margin-top:28px; padding-top:22px; border-top:1px solid #ffffff20; }
+#pecunia-title-flow-concept .pc-services ul { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); column-gap:20px; row-gap:15px; padding:0; margin:0; list-style:none; }
+#pecunia-title-flow-concept .pc-services li { display:flex; align-items:flex-start; gap:9px; font-size:12px; line-height:1.5; }
+#pecunia-title-flow-concept .pc-services li::before { content:''; flex:0 0 5px; width:5px; height:5px; margin-top:6px; border-radius:50%; background:var(--pc-green); }
+#pecunia-title-flow-concept .pc-actions { display:flex; justify-content:center; gap:20px; margin-top:26px; }
+#pecunia-title-flow-concept .pc-action { min-height:36px; padding:5px 0; border:0; background:transparent; color:var(--pc-muted); font:inherit; font-size:11px; }
+#pecunia-title-flow-concept button:focus-visible { outline:2px solid var(--pc-green); outline-offset:4px; }
+@media(max-width:500px) {  #pecunia-title-flow-concept .pc-stage-row { gap:5px; } #pecunia-title-flow-concept .pc-services ul { grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:12px; } }
+@media(prefers-reduced-motion:reduce) { #pecunia-title-flow-concept .pc-stage { transition:none; } }
+</style>
+<div id="pecunia-title-flow-concept" class="viz-dotted-background">
+  <div class="pc-product">
+    <div class="pc-main-title" aria-label="Pecunia Studios"><span>PECUNIA</span><i class="pc-brand-dot" aria-hidden="true"></i><span>STUDIOS</span></div>
+    <svg class="pc-connections" aria-hidden="true" preserveAspectRatio="none">
+      <path class="pc-structure" fill="none" stroke="var(--pc-line)" stroke-width="1.3"/>
+      <path class="pc-active-line" fill="none" stroke="var(--pc-green)" stroke-width="1.8"/>
+      <circle class="pc-pulse" r="3.5" fill="var(--pc-green)"/>
+    </svg>
+    <div class="pc-stage-row" role="group" aria-label="Connected growth stages">
+      <button type="button" class="pc-stage cursor-interaction" aria-pressed="true" data-stage="0">Create</button>
+      <button type="button" class="pc-stage cursor-interaction" aria-pressed="false" data-stage="1">Discover</button>
+      <button type="button" class="pc-stage cursor-interaction" aria-pressed="false" data-stage="2">Convert</button>
+      <button type="button" class="pc-stage cursor-interaction" aria-pressed="false" data-stage="3">Connect</button>
+    </div>
+    <div class="pc-actions">
+      <button type="button" class="pc-action cursor-interaction pc-toggle">Pause animation</button>
+      <button type="button" class="pc-action cursor-interaction pc-replay">Replay ↻</button>
+    </div>
+  </div>
+</div>
+<script>
+(() => {
+  const root=document.getElementById('pecunia-title-flow-concept');
+  const svg=root.querySelector('.pc-connections');
+  const row=root.querySelector('.pc-stage-row');
+  const buttons=[...root.querySelectorAll('[data-stage]')];
+  const activePath=root.querySelector('.pc-active-line');
+  const pulse=root.querySelector('.pc-pulse');
+  const toggle=root.querySelector('.pc-toggle');
+  const motion=window.matchMedia('(prefers-reduced-motion: reduce)');
+  let paused=motion.matches,active=0,frame=0,start=0;
+  let positions=[];
+  function draw() {
+    const width=svg.clientWidth;
+    const bounds=row.getBoundingClientRect();
+    positions=buttons.map(button=>{const rect=button.getBoundingClientRect();return rect.left-bounds.left+rect.width/2;});
+    svg.setAttribute('viewBox',`0 0 ${width} 48`);
+    const dot=root.querySelector('.pc-brand-dot').getBoundingClientRect();
+    const svgBounds=svg.getBoundingClientRect();
+    const mid=dot.left-svgBounds.left+dot.width/2;
+    const origin=dot.bottom-svgBounds.top;
+    root.querySelector('.pc-structure').setAttribute('d',`M${mid},${origin} V23 M${positions[0]},48 V23 H${positions[3]} V48 `+positions.slice(1,3).map(x=>`M${x},23 V48`).join(' '));
+    activePath.setAttribute('d',`M${mid},${origin} V23 H${positions[active]} V48`);
+    buttons.forEach((button,i)=>button.setAttribute('aria-pressed',String(i===active)));
+  }
+  function animate(now) {
+    if(!start)start=now;
+    const elapsed=now-start;
+    if(elapsed>=4200){active=(active+1)%4;start=now;draw();}
+    const length=activePath.getTotalLength();
+    const point=activePath.getPointAtLength(length*Math.min(1,(elapsed%4200)/2800));
+    pulse.setAttribute('cx',point.x);pulse.setAttribute('cy',point.y);
+    if(!paused)frame=requestAnimationFrame(animate);
+  }
+  function sync() {
+    cancelAnimationFrame(frame);start=0;
+    toggle.textContent=paused?'Play animation':'Pause animation';
+    pulse.style.display=paused?'none':'';
+    draw();if(!paused)frame=requestAnimationFrame(animate);
+  }
+  buttons.forEach((button,i)=>button.addEventListener('click',()=>{active=i;sync();}));
+  toggle.addEventListener('click',()=>{paused=!paused;sync();});
+  root.querySelector('.pc-replay').addEventListener('click',()=>{active=0;paused=motion.matches;sync();});
+  motion.addEventListener('change',()=>{paused=motion.matches;sync();});
+  new ResizeObserver(draw).observe(row);
+  sync();
+})();
+</script>

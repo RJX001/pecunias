@@ -1,0 +1,116 @@
+{
+  "package": "Pecunia-Cursor-Batch-2026-10-23-SEO-Six-Services",
+  "date": "2026-10-23",
+  "files": [
+    {
+      "path": "assets/projects/atlantis.webp",
+      "bytes": 27218,
+      "sha256": "8ef90eb09b93a972d6e5614faf195ebef870146b51e97e978008c5287fba6433"
+    },
+    {
+      "path": "assets/projects/beckbury.webp",
+      "bytes": 54580,
+      "sha256": "b4ba4bffd061d3fa7587e4661971085e9ca3103a878804c2bdd543a8e49459be"
+    },
+    {
+      "path": "assets/projects/cardchart.webp",
+      "bytes": 29088,
+      "sha256": "4f321d3ed1c4199e9016162447ddfb8e2cd13900a9b538492435c0097137aa33"
+    },
+    {
+      "path": "assets/projects/secured.webp",
+      "bytes": 68562,
+      "sha256": "c561cdc3869ccbb95181735392914a15bc0011ce6bca7413ebfd03a988e183de"
+    },
+    {
+      "path": "CURSOR_IMPLEMENTATION_GUIDE.md",
+      "bytes": 16793,
+      "sha256": "e126b698803fc31f5badf8f450990deaeebb397d2c0de4da7353aca59658614e"
+    },
+    {
+      "path": "CURSOR_PROMPT.txt",
+      "bytes": 4687,
+      "sha256": "1f97af6adbdc15e5f5db2e3a4eb34c36db83c4261ad8d8a0ebcfdd463f52554a"
+    },
+    {
+      "path": "references/approved-title-flow.fragment.html",
+      "bytes": 6684,
+      "sha256": "a5e404381547701f9446d12ec91d87793ad46b5f2cb51bd2dcc49e50b01b017b"
+    },
+    {
+      "path": "references/approved-title-flow.html",
+      "bytes": 88583,
+      "sha256": "2e6a7eb687d09c6c76ccd6c597c5bf753c98b54428f1d681de6e2ab2fe94b361"
+    },
+    {
+      "path": "references/booking-form-reference.png",
+      "bytes": 292694,
+      "sha256": "2a914d2cbeef588faf2ea53efcb390cd2cfa97de0d39694a6418192a6f13e740"
+    },
+    {
+      "path": "references/local-title-flow.png",
+      "bytes": 36384,
+      "sha256": "3d110d02d430d33278909a0b15a6136ab5a08cf7298cc224202f57d750e00c4f"
+    },
+    {
+      "path": "references/public-seo-audit-2026-10-23.json",
+      "bytes": 133106,
+      "sha256": "84898ddd51fe1e57492a8289a75f787234b010d755e90ca73898f83aaa78960c"
+    },
+    {
+      "path": "references/seo-explanation.png",
+      "bytes": 63370,
+      "sha256": "83e0e572d5be5372c74a23f6a5c4696eb1f1b4e18c3fdfebec7dfd43b582493c"
+    },
+    {
+      "path": "references/service-benefits-before.png",
+      "bytes": 101825,
+      "sha256": "f5b06a5b5a48de4f92673cd96e6acc55da53d78d929e84ed612a2fd6001a50d6"
+    },
+    {
+      "path": "references/service-page-before.png",
+      "bytes": 599686,
+      "sha256": "7ae8de62ab2df82fd0e0c91f9f97f41b5e75aa8066352792a853e71891d6bbcc"
+    },
+    {
+      "path": "references/testimonial-placement-reference.png",
+      "bytes": 177019,
+      "sha256": "ea33ad6d0d6e852dc0a8579a79c7aab5770857c0913a832d55dbca0c7199698f"
+    },
+    {
+      "path": "references/testimonial-stack-reference.png",
+      "bytes": 677689,
+      "sha256": "3f284e76ea1506be7a65088e8b3bf069e952822122ee253d1665b90ef1c19a3a"
+    },
+    {
+      "path": "references/wide-project-layout.html",
+      "bytes": 366277,
+      "sha256": "a080c3b704d57d9d2b1c3815d9931e83b275d083cdaa5c948610923db1c363bd"
+    },
+    {
+      "path": "SEO_AND_SERVICE_STRUCTURE.md",
+      "bytes": 15854,
+      "sha256": "70f1042ca9f554baeb69a81f4a1b26bcf34512ae0064f58f45a9394ede809392"
+    },
+    {
+      "path": "SERVICES_UPDATE.md",
+      "bytes": 4653,
+      "sha256": "720fc9cd6f9ed770849279b30ee6fa752d0a4fab71cf8f49441867ace0272f03"
+    },
+    {
+      "path": "START_HERE.md",
+      "bytes": 3581,
+      "sha256": "c560c8ffb8c0cfd0b71febc4605c1923c68ec277539af7d8e60082eb7a3f4653"
+    },
+    {
+      "path": "TESTIMONIAL_DRAFTS.json",
+      "bytes": 1995,
+      "sha256": "0e5e3b00409c9cf751d47ff2bb8b02c65fb800526310cfdb6a499583b5c90909"
+    },
+    {
+      "path": "TESTIMONIALS_ADDENDUM.md",
+      "bytes": 3381,
+      "sha256": "53d5b1afac0d9b3fe1bbb0b270be2e7757741ac75e119cdaee196659e07b353c"
+    }
+  ]
+}

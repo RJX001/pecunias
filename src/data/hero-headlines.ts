@@ -5,6 +5,14 @@
 
 export const HERO_IDENTITY = "Pecunia Studios";
 
+/** Stable homepage H1. Distinct from the animated slogans. */
+export const HERO_TITLE =
+  "Website design, app development and digital marketing.";
+
+/** Short introduction directly under the stable H1. */
+export const HERO_INTRO =
+  "We help businesses, founders and individuals bring digital projects to life—from websites, apps and branding to advertising, SEO and connected business systems.";
+
 export const HERO_LEAD_IN = "You're one move away from...";
 
 export const HERO_HEADLINES = [

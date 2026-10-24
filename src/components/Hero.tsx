@@ -4,8 +4,10 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   HERO_CTA,
   HERO_HEADLINES,
+  HERO_INTRO,
   HERO_LEAD_IN,
   HERO_SUPPORT,
+  HERO_TITLE,
 } from "@/data/hero-headlines";
 import { FINAL_CTA } from "@/data/homepage-copy";
 import styles from "./Hero.module.css";
@@ -148,8 +150,10 @@ export function Hero() {
 
   return (
     <section ref={sectionRef} className={styles.hero}>
+      <h1 className={styles.title}>{HERO_TITLE}</h1>
+      <p className={styles.intro}>{HERO_INTRO}</p>
       <p className={styles.lead}>{HERO_LEAD_IN}</p>
-      <h1 className={styles.headline}>
+      <p className={styles.headline}>
         {HERO_HEADLINES.map((headline) => (
           <span key={headline} className={styles.sizer} aria-hidden="true">
             {headline}
@@ -161,7 +165,7 @@ export function Hero() {
         <span className={styles.live} aria-live="polite">
           {currentHeadline}
         </span>
-      </h1>
+      </p>
       {HERO_SUPPORT.map((paragraph) => (
         <p key={paragraph} className={styles.support}>
           {paragraph}

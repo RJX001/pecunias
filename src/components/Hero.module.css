@@ -4,6 +4,26 @@
   padding: 16px 5% 28px;
 }
 
+.title {
+  margin: 0 0 8px;
+  color: var(--fg);
+  font-size: clamp(22px, 2.5vw, 32px);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  overflow-wrap: break-word;
+}
+
+.intro {
+  max-width: 42rem;
+  margin: 0 0 16px;
+  color: var(--fg);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.65;
+  overflow-wrap: break-word;
+}
+
 .lead {
   margin: 0;
   color: var(--fg);
@@ -66,8 +86,22 @@
     padding: 12px 5% 24px;
   }
 
+  .title {
+    font-size: clamp(22px, 6.2vw, 28px);
+  }
+
   .headline {
     font-size: clamp(32px, 8.5vw, 42px);
     letter-spacing: -0.03em;
+  }
+}
+
+@media (forced-colors: active) {
+  .title,
+  .intro,
+  .lead,
+  .visible,
+  .support {
+    color: CanvasText;
   }
 }
