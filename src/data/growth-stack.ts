@@ -137,7 +137,7 @@ export const growthStack: readonly GrowthSystem[] = [
       {
         before:
           "The Premium Websites examples are website projects. They are not evidence of a delivered iOS, Android or Windows app.",
-        href: "/#work",
+        href: "/#premium-websites",
         label: "View Premium Websites",
         after: ".",
       },

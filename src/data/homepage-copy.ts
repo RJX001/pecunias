@@ -47,31 +47,31 @@ export const COMMITMENT = {
     "If something isn't working, we don't hide behind the numbers. We find out why. Then we fix it.",
 } as const;
 
+/** Concise Why section. Render these strings exactly. */
 export const WHY_PECUNIA = {
   heading: "Why Pecunia?",
-  copy: [
-    "Because you don't need another marketing supplier.",
-    "You need a team capable of seeing the entire growth system.",
-    "Too many businesses have their website with one company, advertising with another, content somewhere else and automation handled by someone who doesn't understand the customer journey. The result?",
+  support: "Because you don't need another marketing supplier.",
+  explanation: "One team to connect your marketing, technology and growth.",
+  statuses: [
+    { from: "Disconnected systems.", to: "Connected systems." },
+    { from: "Disconnected data.", to: "Connected data." },
+    { from: "Disconnected decisions.", to: "Clearer decisions." },
   ],
-  emphasis: "Disconnected systems. Disconnected data. Disconnected decisions.",
-  then: "Pecunia brings strategy, technology, acquisition, conversion, creative and automation together.",
+  capabilities: [
+    "Strategy",
+    "Technology",
+    "Creative",
+    "Acquisition",
+    "Conversion",
+    "Automation",
+  ],
   closing: "One team. One strategy. One growth system.",
 } as const;
 
+/** Compact audience note under Why. Not a second page heading. */
 export const BUILT_FOR = {
-  headingInk: "Built For Businesses",
-  headingGreen: "Serious About Growth.",
-  heading: "Built For Businesses Serious About Growth.",
-  copy: [
-    "We work with ambitious businesses that understand growth requires more than simply turning up the marketing. They have something worth building. Something worth scaling. And the ambition to do it properly.",
-    "We're not built around selling isolated services. We're built around solving growth problems.",
-  ],
-  statements: [
-    "If the opportunity is there, we'll find it.",
-    "If the system is broken, we'll fix it.",
-    "If it works, we'll scale it.",
-  ],
+  title: "Built for businesses serious about growth.",
+  note: "For ambitious businesses ready to build, improve and scale.",
 } as const;
 
 export const ABOUT = {

@@ -10,21 +10,27 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
-const SITE_DESCRIPTION =
-  "Pecunia brings strategy, marketing, technology and automation together to help ambitious businesses move beyond where they are now.";
+const TITLE = "Website Design, Apps & Digital Marketing · Pecunia Studios";
+const DESCRIPTION =
+  "Websites, apps, branding, advertising, SEO, automation and EPOS & CRM systems. Talk to Pecunia Studios about your next business or personal project.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.pecuniastudios.co.uk"),
-  title: "Pecunia Studios",
-  description: SITE_DESCRIPTION,
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: "Pecunia Studios",
     locale: "en_GB",
-    title: "Pecunia Studios",
-    description: SITE_DESCRIPTION,
+    title: TITLE,
+    description: DESCRIPTION,
     url: "/",
+  },
+  twitter: {
+    card: "summary",
+    title: TITLE,
+    description: DESCRIPTION,
   },
 };
 

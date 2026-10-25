@@ -2,21 +2,27 @@ import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { About } from "@/components/About";
 import { Footer } from "@/components/Footer";
-import { ABOUT } from "@/data/homepage-copy";
 
-const TITLE = "About | Pecunia Studios";
+const TITLE = "About Our Design & Marketing Team · Pecunia Studios";
+const DESCRIPTION =
+  "Meet Pecunia Studios and learn how our marketing and technology specialists approach website, app and business growth projects.";
 
 export const metadata: Metadata = {
   title: TITLE,
-  description: ABOUT.subheading,
+  description: DESCRIPTION,
   alternates: { canonical: "/about" },
   openGraph: {
     type: "website",
     siteName: "Pecunia Studios",
     locale: "en_GB",
     title: TITLE,
-    description: ABOUT.subheading,
+    description: DESCRIPTION,
     url: "/about",
+  },
+  twitter: {
+    card: "summary",
+    title: TITLE,
+    description: DESCRIPTION,
   },
 };
 

@@ -1,6 +1,7 @@
 /*
- * About teaser — approved-design.html `#v2-about` / `.pg-media-*` (final cascade).
- * Panel is light green #B9E9BC. Text on it stays #181410 in both themes.
+ * About teaser. Pale green #B9E9BC, dark #181410 text.
+ * The source portrait is 720×899. The frame stays at most 420px wide
+ * at that ratio, so the photo is never displayed above its native width.
  */
 
 .section {
@@ -13,66 +14,36 @@
 }
 
 .kicker.kicker {
+  margin: 0;
   color: #181410;
 }
 
-.scene {
-  position: relative;
+.layout {
   display: grid;
-  place-items: center;
-  min-height: 360px;
-  margin-bottom: 40px;
-  overflow: hidden;
-  background: radial-gradient(ellipse, #B9E9BC25, transparent 65%);
+  gap: 22px;
 }
 
-.window {
-  position: relative;
-  width: 64%;
-  height: 320px;
-  overflow: hidden;
-  border-radius: 18px;
-  background: #B9E9BC;
-  box-shadow: 0 25px 60px #25422f25;
-  transition:
-    width 0.9s cubic-bezier(0.4, 0, 0.2, 1),
-    border-radius 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.scene[data-expanded="true"] .window {
-  width: 100%;
-  border-radius: 4px;
-}
-
-.window::after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  background: #18141033;
-  pointer-events: none;
+.frame {
+  width: min(100%, 420px);
+  justify-self: center;
 }
 
 .photo {
-  object-fit: cover;
-  object-position: center 40%;
-  filter: grayscale(0.2);
-  opacity: 0.8;
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 25px 60px #25422f25;
 }
 
 .title {
-  position: absolute;
-  z-index: 2;
-  top: 36%;
-  right: 7%;
-  left: 7%;
   margin: 0;
-  color: #ffffff;
+  color: #181410;
   font-size: clamp(28px, 4.5vw, 46px);
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -2px;
-  text-shadow: 0 2px 20px #0009;
 }
 
 .body p {
@@ -91,26 +62,46 @@
   background: rgba(24, 20, 16, 0.08);
 }
 
-@media (max-width: 650px) {
-  .scene {
-    min-height: 290px;
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr) 420px;
+    grid-template-rows: auto auto 1fr;
+    column-gap: clamp(40px, 5vw, 72px);
+    row-gap: 18px;
+    align-items: start;
   }
 
-  .window {
-    width: 90%;
-    height: 270px;
+  .kicker,
+  .title,
+  .body {
+    grid-column: 1;
+    min-width: 0;
+  }
+
+  .kicker {
+    grid-row: 1;
   }
 
   .title {
-    letter-spacing: -1.3px;
+    grid-row: 2;
+  }
+
+  .body {
+    grid-row: 3;
+    align-self: start;
+  }
+
+  .frame {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
+    justify-self: end;
+    width: min(100%, 420px);
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .window,
-  .scene[data-expanded="true"] .window {
-    width: 100%;
-    border-radius: 4px;
-    transition: none;
+@media (max-width: 650px) {
+  .title {
+    letter-spacing: -1.3px;
   }
 }

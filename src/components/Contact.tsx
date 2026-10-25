@@ -124,30 +124,12 @@ export function Contact() {
         </header>
 
         <div className="grid min-w-0 gap-5">
-          <div className="flex flex-col items-center gap-1 text-center">
-            <p
-              id="contact-form-title"
-              className="m-0 text-[20px] font-extrabold tracking-[-0.02em] text-green md:text-[22px]"
-            >
-              {FORM_PROMPT}
-            </p>
-            <svg
-              className="block shrink-0 text-green"
-              width="12"
-              height="48"
-              viewBox="0 0 12 48"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M6 1.5V38.5M1.75 34 6 46.5 10.25 34"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
+          <p
+            id="contact-form-title"
+            className="m-0 text-center text-[20px] font-extrabold tracking-[-0.02em] text-green md:text-[22px]"
+          >
+            {FORM_PROMPT}
+          </p>
           {status === "success" ? (
             <div
               ref={successRef}

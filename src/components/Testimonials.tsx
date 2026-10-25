@@ -1,10 +1,11 @@
 "use client";
 
 import { useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
-import { testimonials } from "@/data/testimonials";
+import {
+  isPublicFeedbackSummary,
+  testimonials,
+} from "@/data/testimonials";
 import styles from "./Testimonials.module.css";
-
-const DRAFT_LABEL = "Draft — awaiting client approval";
 
 function initials(name: string) {
   return name
@@ -24,14 +25,15 @@ export function Testimonials() {
     pointerId: number;
     locked: boolean;
   } | null>(null);
-  const drafts = testimonials.filter((item) => item.approved === false);
+  const reviews = testimonials.filter(isPublicFeedbackSummary);
 
-  if (process.env.NODE_ENV !== "development" || drafts.length === 0) {
+  if (reviews.length === 0) {
     return null;
   }
 
-  const count = drafts.length;
-  const active = drafts[index] ?? drafts[0];
+  const count = reviews.length;
+  const activeIndex = ((index % count) + count) % count;
+  const active = reviews[activeIndex];
 
   function move(delta: number) {
     setIndex((current) => (current + delta + count) % count);
@@ -79,11 +81,11 @@ export function Testimonials() {
   }
 
   return (
-    <section className={styles.section} aria-labelledby="draft-feedback-heading">
-      <h3 id="draft-feedback-heading">Draft feedback</h3>
-      <p className={styles.note}>
-        Proposed wording for review. These are not approved client quotes.
-      </p>
+    <section className={styles.section} aria-labelledby="client-feedback-heading">
+      <h3 id="client-feedback-heading" className={styles.heading}>
+        What clients say
+      </h3>
+      <p className={styles.label}>Client feedback, summarised</p>
       <div
         className={styles.deck}
         onPointerDown={onPointerDown}
@@ -94,21 +96,17 @@ export function Testimonials() {
         }}
       >
         {[2, 1, 0].map((depth) => {
-          const review = drafts[(index + depth) % count];
+          const review = reviews[(activeIndex + depth) % count];
           const front = depth === 0;
           return (
             <figure
-              key={front ? `front-${index}` : `back-${depth}`}
+              key={front ? `front-${activeIndex}` : `back-${depth}`}
               className={styles.card}
               data-depth={depth}
               inert={front ? undefined : true}
               aria-hidden={front ? undefined : true}
             >
-              <p className={styles.draft}>{DRAFT_LABEL}</p>
-              <span className={styles.quoteMark} aria-hidden="true">
-                “
-              </span>
-              <blockquote>{review.quote}</blockquote>
+              <p className={styles.summary}>{review.summary}</p>
               <figcaption>
                 <span className={styles.avatar} aria-hidden="true">
                   {initials(review.name)}
@@ -116,14 +114,6 @@ export function Testimonials() {
                 <div>
                   <strong className={styles.name}>{review.name}</strong>
                   <span className={styles.business}>{review.business}</span>
-                  <a
-                    className={styles.site}
-                    href={review.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Visit website
-                  </a>
                 </div>
               </figcaption>
             </figure>
@@ -138,10 +128,10 @@ export function Testimonials() {
         >
           Previous
         </button>
-        <span role="status">
-          {index + 1} of {count}
+        <span role="status" aria-atomic="true">
+          {activeIndex + 1} of {count}
           <span className={styles.srOnly}>
-            {`, ${active.name}, ${active.business}. Draft, awaiting client approval. ${active.quote}`}
+            {`. ${active.name}, ${active.business}. ${active.summary}`}
           </span>
         </span>
         <button type="button" onClick={() => move(1)} onKeyDown={onControlKeyDown}>

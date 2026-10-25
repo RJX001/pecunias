@@ -11,15 +11,45 @@ export function generateStaticParams() {
   return growthStack.map((system) => ({ slug: system.slug }));
 }
 
+const SERVICES_TITLE = "Web, App & Marketing Services · Pecunia Studios";
+const SERVICES_DESCRIPTION =
+  "Explore six services spanning websites and apps, branding and content, advertising, SEO, AI automation, and EPOS & CRM systems.";
+
+function routeMetadata(
+  title: string,
+  description: string,
+  path: string,
+  image?: string | null,
+): Metadata {
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: {
+      type: "website",
+      siteName: "Pecunia Studios",
+      locale: "en_GB",
+      title,
+      description,
+      url: path,
+      ...(image ? { images: [image] } : {}),
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
+    },
+  };
+}
+
 export async function generateMetadata({
   params,
 }: PageProps<"/services/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const system = getGrowthSystem(slug);
   if (!system) {
-    return { title: "Services | Pecunia Studios" };
+    return routeMetadata(SERVICES_TITLE, SERVICES_DESCRIPTION, "/services");
   }
-  const description = `${system.description} ${system.body[0]}`;
   const image =
     system.image === "studio"
       ? "/images/premium-studio.png"
@@ -28,17 +58,12 @@ export async function generateMetadata({
         : system.image === "sunset"
           ? "/images/sunset.jpg"
           : null;
-  return {
-    title: `${system.name} | Pecunia Studios`,
-    description,
-    alternates: { canonical: `/services/${system.slug}` },
-    openGraph: {
-      title: `${system.name} | Pecunia Studios`,
-      description,
-      url: `/services/${system.slug}`,
-      ...(image ? { images: [image] } : {}),
-    },
-  };
+  return routeMetadata(
+    system.seoTitle,
+    system.seoDescription,
+    `/services/${system.slug}`,
+    image,
+  );
 }
 
 export default async function ServicePage({

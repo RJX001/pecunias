@@ -2,173 +2,101 @@
   overflow-x: clip;
 }
 
-.top {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: 28px 60px;
-  align-items: start;
+.intro {
+  max-width: 40rem;
+  min-width: 0;
 }
 
-.top :global(.ps-h2) {
-  margin-bottom: 18px;
+.intro :global(.ps-h2) {
+  margin-bottom: 12px;
 }
 
-.lead {
+.support {
   margin: 0;
   color: var(--fg);
-  font-size: 17px;
-  font-weight: 800;
-  line-height: 1.6;
-}
-
-.copy p {
-  margin: 0 0 17px;
-  color: var(--fg-dim);
-  font-size: 15px;
-  line-height: 1.8;
-}
-
-.copy p:last-child {
-  margin-bottom: 0;
-}
-
-.disconnected {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
-  margin: 30px 0 0;
-  padding: 25px 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  list-style: none;
-  counter-reset: disconnected;
-}
-
-.disconnected li {
-  margin: 0;
-  color: var(--fg);
-  font-size: clamp(18px, 2vw, 22px);
+  font-size: clamp(20px, 2.3vw, 28px);
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.25;
-  counter-increment: disconnected;
 }
 
-.disconnected li::before {
-  content: counter(disconnected, decimal-leading-zero);
-  display: block;
-  margin-bottom: 8px;
+.explanation {
+  max-width: 38rem;
+  margin: 12px 0 0;
   color: var(--fg-dim);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  line-height: 1.4;
-}
-
-.bridge {
-  margin: 22px 0 0;
-  color: var(--green-text);
-  font-size: 15px;
-  font-weight: 800;
-  line-height: 1.7;
-}
-
-.closingLine {
-  margin: 8px 0 0;
-  color: var(--fg);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
   line-height: 1.6;
 }
 
-.audience {
-  margin-top: 36px;
+.capabilities {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 16px 60px;
-  align-items: start;
-}
-
-.audience :global(.ps-h2) {
-  grid-column: 1;
-  grid-row: 1 / span 2;
-  max-width: none;
-  margin: 0;
-}
-
-.headingLine {
-  display: block;
-}
-
-.audienceCopy,
-.audienceEmphasis {
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.8;
-}
-
-.audienceCopy {
-  grid-column: 2;
-  grid-row: 1;
-  color: var(--fg);
-}
-
-.audienceEmphasis {
-  grid-column: 2;
-  grid-row: 2;
-  color: var(--green-text);
-  font-weight: 800;
-}
-
-.statements {
-  grid-column: 1 / -1;
-  grid-row: 3;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
-  margin: 8px 0 0;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px 16px;
+  margin: 26px 0 0;
   padding: 0;
   list-style: none;
 }
 
-.statements li {
+.capabilities li {
+  min-width: 0;
   margin: 0;
-  padding-top: 14px;
+  padding: 12px 4px 0;
   border-top: 1px solid var(--line);
   color: var(--fg);
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.35;
+  text-align: center;
 }
 
-.resolve {
-  color: var(--green-text);
+.closing {
+  margin: 26px 0 0;
+  color: var(--fg);
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.35;
 }
 
-@media (max-width: 800px) {
-  .top,
-  .audience {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
-  }
-
-  .audience :global(.ps-h2),
-  .audienceCopy,
-  .audienceEmphasis,
-  .statements {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
+.audience {
+  max-width: 40rem;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
 }
 
-@media (max-width: 640px) {
-  .disconnected,
-  .statements {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
+.audienceTitle,
+.audienceNote {
+  margin: 0;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.audienceTitle {
+  color: var(--fg);
+  font-size: 16px;
+}
+
+.audienceNote {
+  margin-top: 4px;
+  color: var(--fg-dim);
+  font-size: 14px;
+}
+
+@media (max-width: 960px) {
+  .capabilities {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .capabilities {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 10px;
   }
 
-  .disconnected li {
-    font-size: 18px;
+  .capabilities li {
+    font-size: 12px;
   }
 }

@@ -1,7 +1,7 @@
-/* Homepage services — green accordion panels (approved-design.html .pg-services). */
+/* Homepage services accordion (layout: approved-design.html .pg-services). */
 
 .section {
-  --panel-green: #23FA6C;
+  --panel-green: #B9E9BC;
   --panel-ink: #181410;
   --panel-ease: cubic-bezier(0.4, 0, 0.2, 1);
 

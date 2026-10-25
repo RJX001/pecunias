@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  useRef,
-  useState,
-  type KeyboardEvent,
-  type PointerEvent,
-} from "react";
+import { useRef, useState, type KeyboardEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -25,9 +20,6 @@ const IMAGES: Record<GrowthImageKey, string> = {
   sunset: "/images/sunset.jpg",
 };
 
-/** Matches the horizontal accordion layout in GrowthStack.module.css. */
-const HOVER_ACTIVATE_QUERY = "(min-width: 601px)";
-
 const HEADING_SPLIT = GROWTH_STACK_HEADING.indexOf(" — ");
 const HEADING_LEAD = GROWTH_STACK_HEADING.slice(0, HEADING_SPLIT);
 const HEADING_TAIL = GROWTH_STACK_HEADING.slice(HEADING_SPLIT + 3);
@@ -35,17 +27,9 @@ const HEADING_TAIL = GROWTH_STACK_HEADING.slice(HEADING_SPLIT + 3);
 const ART_SIZES = "(max-width: 600px) 88vw, (max-width: 999px) 80vw, 620px";
 
 export function GrowthStack() {
+  // Open panel changes only when a trigger is activated. Hover must not select.
   const [activeIndex, setActiveIndex] = useState(0);
   const triggerRefs = useRef<(HTMLButtonElement | null)[]>([]);
-
-  const onPanelPointerEnter = (
-    event: PointerEvent<HTMLElement>,
-    index: number,
-  ) => {
-    if (event.pointerType !== "mouse") return;
-    if (!window.matchMedia(HOVER_ACTIVATE_QUERY).matches) return;
-    setActiveIndex(index);
-  };
 
   const onTriggerKeyDown = (
     event: KeyboardEvent<HTMLButtonElement>,
@@ -104,7 +88,6 @@ export function GrowthStack() {
                 key={service.slug}
                 className={styles.panel}
                 data-active={active ? "true" : undefined}
-                onPointerEnter={(event) => onPanelPointerEnter(event, index)}
               >
                 <h3 className={styles.panelHeading}>
                   <button

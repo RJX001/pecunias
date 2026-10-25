@@ -7,50 +7,54 @@
     sans-serif;
 }
 
-.section h3 {
-  margin: 0 0 8px;
+.heading {
+  margin: 0;
   color: var(--fg);
-  font-size: 12px;
+  font-size: clamp(22px, 2.4vw, 28px);
   font-weight: 800;
-  letter-spacing: 0.14em;
-  line-height: 1.4;
-  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
 }
 
-.note,
+.label,
 .hint {
   margin: 0;
   color: var(--fg-dim);
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 800;
   line-height: 1.5;
 }
 
-.note {
+.label {
   max-width: 42ch;
-  margin-bottom: 18px;
+  margin: 6px 0 18px;
 }
 
 .deck {
+  display: grid;
   position: relative;
-  width: min(100%, 420px);
-  max-width: 100%;
+  width: min(100%, 400px);
+  max-width: calc(100% - 16px);
+  margin-left: 8px;
   touch-action: pan-y;
 }
 
 .card {
+  grid-area: 1 / 1;
   box-sizing: border-box;
   width: 100%;
-  min-height: 440px;
+  min-height: 240px;
+  align-self: stretch;
   margin: 0;
-  padding: 22px 22px 20px;
+  padding: 26px 22px 20px;
   border: 1px solid var(--line);
-  border-radius: 20px;
+  border-radius: 22px;
   background: var(--bg);
   color: var(--fg);
-  box-shadow: 0 18px 36px #00000014;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  touch-action: pan-y;
 }
 
 .card[data-depth="0"] {
@@ -62,9 +66,6 @@
 
 .card[data-depth="1"],
 .card[data-depth="2"] {
-  position: absolute;
-  top: 0;
-  left: 0;
   z-index: 1;
   pointer-events: none;
 }
@@ -78,31 +79,12 @@
   transform: rotate(-5deg);
 }
 
-.draft {
-  align-self: flex-start;
-  margin: 0 0 8px;
-  padding: 4px 8px;
-  border: 1px solid var(--fg);
-  border-radius: 999px;
-  color: var(--fg);
-  font-size: 11px;
-  font-weight: 800;
-  line-height: 1.35;
-}
-
-.quoteMark {
-  color: var(--green);
-  font-size: 48px;
-  font-weight: 800;
-  line-height: 0.8;
-}
-
-.card blockquote {
-  margin: 12px 0 20px;
+.summary {
+  margin: 0 0 20px;
   color: var(--fg);
   font-size: 16px;
-  font-weight: 500;
-  line-height: 1.6;
+  font-weight: 800;
+  line-height: 1.55;
 }
 
 .card figcaption {
@@ -126,8 +108,7 @@
 }
 
 .name,
-.business,
-.site {
+.business {
   display: block;
 }
 
@@ -138,21 +119,11 @@
   line-height: 1.4;
 }
 
-.business,
-.site {
+.business {
   color: var(--fg-dim);
   font-size: 12px;
-  font-weight: 500;
-  line-height: 1.5;
-}
-
-.site {
-  width: fit-content;
-  margin-top: 2px;
-  color: var(--fg);
   font-weight: 800;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  line-height: 1.5;
 }
 
 .controls {
@@ -160,6 +131,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
+  max-width: 100%;
   margin-top: 22px;
 }
 
@@ -177,8 +149,7 @@
   cursor: pointer;
 }
 
-.controls button:focus-visible,
-.site:focus-visible {
+.controls button:focus-visible {
   outline: 2px solid var(--fg);
   outline-offset: 3px;
 }
@@ -220,10 +191,11 @@
 @media (max-width: 700px) {
   .deck {
     width: 100%;
+    padding-bottom: 18px;
   }
 
   .card {
-    min-height: 420px;
+    min-height: 220px;
     transform: none;
   }
 
